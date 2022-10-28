@@ -68,12 +68,12 @@ export default function CartComponent() {
                         <div className="flex justify-between mx-5 w-9/12 md:5/12 pt-3">
                           <div className="left">
                             <small className="text-yellow-300">
-                              Colour : {cartItem.clr}
+                           {cartItem.clr !== "" ? (<><span>Colour : </span> {cartItem.clr}</>) : ""}
                             </small>
                           </div>
                           <div className="right">
                             <small className="text-yellow-300">
-                              Size : {cartItem.size}
+                            {cartItem.size !== "" ? (<><span>Size : </span> {cartItem.size}</>) : ""}
                             </small>
                           </div>
                         </div>
@@ -157,6 +157,7 @@ export default function CartComponent() {
             </select>
             <Link
               to="/comfirm_order"
+              onClick={hideCart}
               className="bg-orange-400 py-1 px-4 rounded-md mt-3 font-bold"
             >
               Procced to Pay

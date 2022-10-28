@@ -26,7 +26,7 @@ function Navbar() {
   const [filtered, setFiltered] = useState([]);
 
   const getProducts = async () => {
-    const res = await axios.get("http://localhost:3001/api/v1");
+    const res = await axios.get("https://ennmart.herokuapp.com/api/v1");
     setProducts(res.data);
   };
   //whenever search value gets updated, we will update patience list
@@ -46,8 +46,8 @@ function Navbar() {
   }
   return (
     <>
-      <div className="black-strap">Limited Stocks remaining. Shop Now</div>
-      <div className="nav py-3 px-6">
+      <div className="black-strap  ">Limited Stocks remaining. Shop Now</div>
+      <div className="nav py-3 px-6 ">
         <div>
           <Link to="/" className="text-xl font-bold themeClrText"> Buy And Grab</Link>
         </div>
@@ -65,9 +65,10 @@ function Navbar() {
             <i className=" text-xl  fa-solid fa-magnifying-glass"></i>
           </div>
 
-          <div  className="showSrcResults  w-full  max-h-32 overflow-hidden absolute z-[5]">
-            {filtered && filtered.length > 0
+            <div  className="showSrcResults  w-full  max-h-32 overflow-hidden absolute z-[5]">
+            {searchValue !== "" &&  filtered && filtered.length > 0
               ? filtered.map((item) => (
+                    <Link to={'/product/'+ item._id} >
                   <div className="showSrcResults bg-white  border-b-2 py-3 flex flex-row justify-between px-3 ">
                     <div className="img w-6 h-6 flex justify-center items-center">
                       <img src={item.image} alt="" />
@@ -76,8 +77,10 @@ function Navbar() {
                     <div className="title">{item.title.slice(0, 33)} ...</div>
                     <div className="price">{item.price}</div>
                   </div>
+                    </Link>
                 ))
               : ""}
+
           </div>
         </div>
 

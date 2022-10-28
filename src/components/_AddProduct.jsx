@@ -17,14 +17,12 @@ export default function _AddProduct() {
   });
 
   const [fields, setFields] = useState([
-    {
-      id: "",
-      heading: "general",
-      headings: allHeadings,
-      name: "",
-      value: "",
-    },
+   
   ]);
+
+
+  const [clrFields, setClrFields] = useState([])
+  const [sizeFields, setSizeFields] = useState([])
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -83,8 +81,10 @@ try {
             image: first.data.url,
             gallary: gall,
             specifications: fields,
+            colours : clrFields,
+            sizes : sizeFields
           };
-        const third = await    axios.post("http://localhost:3001/api/v1/add_new", allData)
+        const third = await    axios.post("https://ennmart.herokuapp.com/api/v1/add_new", allData)
         console.log(third.data , 'third data')
         if(third){
           console.log('reload page')
@@ -130,6 +130,46 @@ try {
     console.log(allHeadings);
   };
 
+
+
+
+  //clrfield functions 
+  const onChangeClrField = async(e , ind) =>{
+    const tem = clrFields
+
+    tem[ind][e.target.name] = e.target.value;
+    setClrFields([...tem])
+  }
+
+const addClrField = () =>{
+  setClrFields([...clrFields , {
+    id: uuidv4(),
+    value : ""},
+  ])
+}
+
+const delClrField = (x) =>{
+  const temp = clrFields.filter((obj) => obj.id !== x)
+  setClrFields(temp)
+}
+
+ //sizeFields functions 
+ const onChangeSizeField = async(e , ind) =>{
+  const temp = sizeFields;
+  temp[ind][e.target.name] = e.target.value;
+  setSizeFields([...temp])
+ }
+const addSizeField = (e) =>{
+setSizeFields([...sizeFields , {
+  id: uuidv4(),
+  value : ""},])
+}
+
+
+const delSizeField = (x) =>{
+const delArray = sizeFields.filter(obj => obj.id !== x)
+setSizeFields(delArray)
+}
   return (
     <>
       <div className="form-main-container my-5 w-11/12 mx-auto md:w-[76%] mr-5 ml-auto ">
@@ -251,6 +291,60 @@ try {
               </button>
             </div>
           </div>
+
+
+
+                  <div className="bg-gray-200 py-3 rounded-md mt-2">
+                    <p className="text-gray-900 ml-3">Colours : </p>
+                    {clrFields.map((clrfield , ind) =>(<div className="flex flex-row mx-3 mt-2 " key={clrfield.id}>
+                      <input type="text" placeholder="Add colour" name="value" className="w-9/12 block  mx-auto py-1 px-3   "
+                      id=""  onChange={(e) =>{onChangeClrField( e, ind)}}/>
+                        <button
+                    type="button"
+                    className=" bg-white rounded-md py-1 px-2 mr-2"
+                    onClick={(e) => delClrField(clrfield.id)}
+                  >
+                    <MdDeleteSweep color="red" size={23} />
+                  </button>
+                      </div>
+                    ))}
+                    <button
+                     className="bg-[#ffff] mt-4 ml-8 rounded-md text-sm px-5 font-bold  py-1 "
+                     type="button" onClick={(e)=>{addClrField(e)}}> +  Colour</button>
+                  </div>
+
+
+
+
+                  <div className="bg-gray-200 py-3 mt-2 rounded-md">
+                    <p className="text-gray-900 ml-3">Sizez : </p>
+                    {sizeFields.map((sizefield , ind) =>(<div className="flex flex-row  mt-2 " key={sizefield.id}>
+                      <input type="text" placeholder="Add size"  className="w-9/12 block mx-auto py-1 px-3  "
+                      name="value"
+                      id=""  onChange={(e) =>{onChangeSizeField( e, ind)}}/>
+                        <button
+                    type="button"
+                    className=" bg-white rounded-md py-1 px-2 mr-2"
+                    onClick={(e) => delSizeField(sizefield.id)}
+                  >
+                    <MdDeleteSweep color="red" size={23} />
+                  </button>
+                      </div>
+                    ))}
+                    <button
+                     className="bg-[#ffff] mt-4 ml-8 rounded-md text-sm px-5 font-bold  py-1 "
+                     type="button" onClick={(e)=>{addSizeField(e)}}> + Size</button>
+                  </div>
+
+
+
+
+
+
+
+
+
+
           <div className="input-div w-full flex flex-row items-center  justify-evenly mt-3 bg-gray-200 py-3">
             <p className="hidden md:block">Select Thumbnail : </p>
             <input

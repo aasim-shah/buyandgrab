@@ -4,7 +4,6 @@ import { addToCart } from "../features/cartSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation } from "swiper";
-
 import "swiper/css/navigation";
 
 export default function ViewProductHero({ product }) {
@@ -24,11 +23,12 @@ export default function ViewProductHero({ product }) {
     setQty((prev) => prev - 1);
   };
   const handleATC = (product) => {
+    console.log(product)
     // here will be condion of  if product.sizes && size === ""
-    if (size === "") {
+    if (product.sizes.length > 0 &&  size === "") {
       setSizeErr("Select a sieze firsrt");
       // here will be condion of  if product.clrs && clr === ""
-    } else if (clr === "") {
+    } else if (product.colours.length > 0 &&  clr === "") {
       setSizeErr("");
       setClrErr("Please Select a coulr first ");
     } else {
@@ -73,13 +73,13 @@ export default function ViewProductHero({ product }) {
             <div className="viewproduct-hero-inner-left  ">
               <div className="inner-grid mt-3">
                 <div className="product-img">
-                  <Swiper navigation={true} modules={[Navigation]} className="w-60">
+                  <Swiper navigation={true} modules={[Navigation]} className="w-72">
                   {product.gallary.length > 0 ? product.gallary.map(gImage => (
-                     <SwiperSlide className="">
-                       <img src={gImage.url} alt="" className="w-24" />
+                     <SwiperSlide >
+                       <img src={gImage.url} alt="" className="w-40" />
                        </SwiperSlide>
                   )) : (
-                    <img src={product.image} alt="" className="w-24" />
+                    <img src={product.image} alt="" className="w-40" />
                     )}
                     </Swiper>
                 </div>
@@ -108,6 +108,16 @@ export default function ViewProductHero({ product }) {
                       RS :234 <span className="ml-4 text-[1rem]">-30%</span>
                     </span>
                   </div>
+                  <div className="my-5">
+                    <p className=" ml-3 themeClrText">Features : </p>
+                    {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
+                     <div className="flex flex-row  mt-2 ">
+                      <p className=" w-full text-center uppercase ">{spec.name} </p>
+                      <p className=" w-full text-center"> : </p>
+                      <p className=" w-full font-bold">  {spec.value}</p>
+                     </div>
+                    )) : '' }
+                  </div>
                 </div>
               </div>
 
@@ -120,101 +130,60 @@ export default function ViewProductHero({ product }) {
               <div className="atc-title">
                 <p className="px-2 py-3">{product.title}</p>
               </div>
-              {product && !product.sizes ? (
+              {product && product.sizes.length > 0 ? (
                 <div className=" ml-4 my-3">
                   <p className="mb-3 themeClrText">
                     sizes <small className="text-red-400 ml-2">{sizeErr}</small>
                   </p>
 
-                  <input
+                  {product.sizes.map((_size ) => ( 
+                    <>
+                     <input
                     className="hidden"
                     type="radio"
                     name="desk-size"
-                    id="sx"
-                    value="sx"
+                    id={_size.value}
+                    value={_size.value}
                     onChange={handleSize}
-                    checked={size === "sx"}
+                    checked={size === _size.value}
                   />
-                  <label htmlFor="sx" className="lbl lbl-box">
-                    <span className="size-text">sx</span>
+                  <label htmlFor={_size.value} className="lbl lbl-box">
+                    <span className="size-text">{_size.value}</span>
                   </label>
+                    </>
+                  ))}
+                 
 
-                  <input
-                    className="hidden"
-                    type="radio"
-                    name="desk-size"
-                    id="s"
-                    value="s"
-                    onChange={handleSize}
-                    checked={size === "s"}
-                  />
-                  <label htmlFor="s" className="lbl lbl-box">
-                    <span className="size-text">s</span>
-                  </label>
-
-                  <input
-                    className="hidden"
-                    type="radio"
-                    name="desk-size"
-                    id="md"
-                    value="md"
-                    onChange={handleSize}
-                    checked={size === "md"}
-                  />
-                  <label htmlFor="md" className="lbl lbl-box">
-                    <span className="size-text">md</span>
-                  </label>
-
-                  <input
-                    className="hidden"
-                    type="radio"
-                    name="desk-size"
-                    id="lg"
-                    value="lg"
-                    onChange={handleSize}
-                    checked={size === "lg"}
-                  />
-                  <label htmlFor="lg" className="lbl lbl-box">
-                    <span className="size-text">lg</span>
-                  </label>
+                 
                 </div>
-              ) : (
-                " no sizes avaible"
-              )}
+              ) : null}
 
-              {product && !product.colours ? (
+              {product && product.colours.length > 0 ? (
                 <div className="ml-4 my-6">
                   <p className="mb-3 themeClrText">
                     Colour <small className="ml-2 text-red-400">{clrErr}</small>
                   </p>
-                  <input
-                    type="radio"
-                    name="colorr"
-                    id="red"
-                    className="hidden"
-                    value="red"
-                    checked={clr === "red"}
-                    onChange={handleClr}
-                  />
-                  <label htmlFor="red" className="lbl lbl-box ">
-                    <span className="color-text">redd</span>
-                  </label>
 
+                  {product.colours.map((_clr ) => ( 
+                      <>
                   <input
                     type="radio"
                     name="colorr"
-                    id="blue"
-                    checked={clr === "blue"}
+                    id={_clr.value}
                     className="hidden"
-                    value="blue"
+                    value={_clr.value}
+                    checked={clr === _clr.value}
                     onChange={handleClr}
-                  />
-                  <label htmlFor="blue" className="lbl lbl-box ">
-                    <span className="color-text">blue</span>
+                    />
+                  <label htmlFor={_clr.value} className="lbl lbl-box  ">
+                    <span className="color-text">{_clr.value}</span>
                   </label>
+                    </>
+                  ))}
+                 
                 </div>
               ) : (
-                " no colours"
+                ""
               )}
 
               <div className="atc-price product-price ml-4 my-6">

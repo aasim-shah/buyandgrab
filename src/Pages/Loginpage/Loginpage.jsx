@@ -57,6 +57,7 @@ export default function Loginpage() {
 
   const handleGoogleLogin = async () => {
     const result = await signInWithPopup(Auth, GoogleProvider);
+    console.log(result)
     dispatch(loggedIn(result.user)) 
     setTimeout(() => {
       dispatch(loggedOut())

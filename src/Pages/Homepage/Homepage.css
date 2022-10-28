@@ -97,7 +97,7 @@ color: white;
 
 .slider{
     background-color: var(--themeColour);
-    min-height: 40vh;
+    min-height: 70vh;
     display: flex;
     justify-content: center;
     color: white;

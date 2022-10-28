@@ -10,7 +10,7 @@ export default function _ViewAllProducts() {
 
     // get data from api
   const getProducts = async () => {
-    const res = await axios.get('http://localhost:3001/api/v1');
+    const res = await axios.get('https://ennmart.herokuapp.com/api/v1');
     setProducts(res.data);
   }
 

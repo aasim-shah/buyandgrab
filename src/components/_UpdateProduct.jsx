@@ -60,7 +60,7 @@ export default function _UpdateProduct() {
 
 
   const getProduct = async ()=>{
-    const res = await axios.get(`http://localhost:3001/api/v1/products/${id}`)
+    const res = await axios.get(`https://ennmart.herokuapp.com/api/v1/products/${id}`)
     const data = res.data;
     setProduct(data)
     setUpperFields({ name :data.title , description : data.description , price : data.price})
@@ -122,7 +122,7 @@ try {
             gallary: gall,
             specifications: fields,
           };
-        const third = await    axios.post("http://localhost:3001/dd", allData)
+        const third = await    axios.post("https://ennmart.herokuapp.com/api/v1", allData)
         console.log(third.data , 'third data')
     
         }else{

@@ -28,7 +28,7 @@ function Homepage() {
     <Hero/>
     <TopCategories/>
     <SuggestedProducts/>
-    <AllCategories/>
+    {/* <AllCategories/> */}
     {/* <BestSeller/> */}
     <TopOffers/>
     <NewArrivals/>

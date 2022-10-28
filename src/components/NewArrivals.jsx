@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useDispatch  } from 'react-redux/es/exports';
 import { Navigation} from 'swiper';
 import { Link } from 'react-router-dom';
+import {MdArrowForwardIos} from 'react-icons/md'
 
 
 // Import Swiper styles
@@ -24,7 +25,7 @@ export default function NewArrivals() {
 
     // get data from api
       const getProducts = async () => {
-        const res = await axios.get('http://localhost:3001/api/v1');
+        const res = await axios.get('https://ennmart.herokuapp.com/api/v1');
         setProducts(res.data);
       }
     
@@ -37,9 +38,11 @@ export default function NewArrivals() {
   return (
     <>
   <div className="grid grid-cols-12 mt-4 md:w-11/12 mx-auto">
-    <div className="col-span-2 hidden md:flex flex justify-center flex-col items-center py-3 bg-green-400 rounded-md">
-    <p className="text-[1.5rem]  font-bold px-2">New Arrivals</p>
-        <div className="viewAll py-1 px-3 bg-violet-600 text-white font-bold rounded-[2rem] mt-4">View All</div>
+    <div className="col-span-2 hidden md:flex relative flex justify-center flex-col items-center py-3 bg-[#355c7d54] rounded-md">
+    <p className="text-[1.5rem]  font-bold px-2 mb-6">New Arrivals</p>
+        <div className="viewAll py-1 px-3 themeClrBg text-white font-bold rounded-[2rem] mt-4">View All</div>
+        <div className="absolute right-0  themeClrText  opacity-[0.7] "><MdArrowForwardIos size={40}/></div>
+
     </div>
     <div className="col-span-12 md:col-span-10">
     <div className="onPhone block md:hidden">
@@ -58,10 +61,10 @@ export default function NewArrivals() {
         <img src={product.image} className='w-full h-40' alt="" />
        </div>
        <div className="to-title text-center ml-2 font-bold">
-            <p className="text-sm ">Lorem ipsum dolor sit amet  </p>
+            <p className="text-sm ">{product.title.slice(0, 30)} </p>
         </div>
        <div className="to-price ml-4">
-        <span>From</span>
+        <span className='text-sm text-gray-700'>From</span>
         <span className='ml-2'> RS.3432</span>
        </div> </Link>
     </SwiperSlide>

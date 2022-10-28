@@ -14,7 +14,7 @@ function SuggestedProducts() {
 
 // get data from api
   const getProducts = async () => {
-    const res = await axios.get('http://localhost:3001/api/v1/');
+    const res = await axios.get('https://ennmart.herokuapp.com/api/v1/');
     console.log(res.data)
     setProducts(res.data);
   }

@@ -24,7 +24,7 @@ export default function TopOffers() {
 
     // get data from api
       const getProducts = async () => {
-        const res = await axios.get('http://localhost:3001/api/v1');
+        const res = await axios.get('https://ennmart.herokuapp.com/api/v1');
         setProducts(res.data);
       }
     
@@ -37,10 +37,10 @@ export default function TopOffers() {
   return (
     <>
   <div className="grid grid-cols-12 mt-5  mx-auto md:w-11/12">
-    <div className="col-span-2 relative hidden md:flex flex justify-center flex-col items-center py-3 bg-amber-400 rounded-md">
+    <div className="col-span-2 relative hidden md:flex flex justify-center flex-col items-center py-3 bg-[#355c7d54] rounded-md">
     <p className="text-[1.5rem] font-bold mb-6">Top Offers</p>
-        <div className="viewAll py-1 px-3 bg-violet-600 text-white font-bold rounded-[2rem] mt-4">View All</div>
-    <div className="absolute right-0 py-3 px-3 bg-black text-white  opacity-[0.5]"><MdArrowForwardIos size={20}/></div>
+        <div className="viewAll py-1 px-3 themeClrBg text-white font-bold rounded-[2rem] mt-4">View All</div>
+        <div className="absolute right-0  themeClrText  opacity-[0.7] "><MdArrowForwardIos size={40}/></div>
     </div>
     <div className="col-span-12 md:col-span-10">
     <div className="onPhone block md:hidden">
@@ -55,13 +55,13 @@ export default function TopOffers() {
         <SwiperSlide  key={product.id} className='top-offer-slide bg-gray-100 pb-2 rounded-md'>
           <Link to={`/product/${product._id}`}>
        <div className="to-img mb-2">
-        <img src={product.image} className='w-full h-40' alt="" />
+        <img src={product.image} className='w-full h-40 ' alt="" />
        </div>
        <div className="to-title text-center ml-2 font-bold">
-            <p className="text-sm ">Lorem ipsum dolor sit amet  </p>
+            <p className="text-sm ">{product.title.slice(0,30)}</p>
         </div>
        <div className="to-price ml-4">
-        <span>From</span>
+        <span className='text-sm text-gray-700'>From</span>
         <span className='ml-2'> RS.3432</span>
        </div></Link>
     </SwiperSlide>
