@@ -17,7 +17,7 @@ const getProductDetails = async()=>{
 }
 useEffect(() => {
  getProductDetails();
-}, [])
+}, [id])
   return (
     <>
     <Navbar/>

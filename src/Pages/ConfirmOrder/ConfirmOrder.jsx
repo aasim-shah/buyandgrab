@@ -62,7 +62,7 @@ export default function ConfirmOrder() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel=""
       >
         <div className="flex flex-row justify-end">
         <button onClick={closeModal} className="py-2 px-4 themeClrBg rounded-full font-bold">x</button>

@@ -60,7 +60,7 @@ export default function NewArrivals() {
        <div className="to-img mb-2">
         <img src={product.image} className='w-full h-40' alt="" />
        </div>
-       <div className="to-title text-center ml-2 font-bold">
+       <div className="to-title text-center ml-2 h-12 font-bold">
             <p className="text-sm ">{product.title.slice(0, 30)} </p>
         </div>
        <div className="to-price ml-4">

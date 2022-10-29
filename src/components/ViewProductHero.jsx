@@ -5,8 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation } from "swiper";
 import "swiper/css/navigation";
+import {AiFillStar} from "react-icons/ai"
+import AddReview from "./AddReview";
+import ThankingModal from "./ThankingModal";
+
 
 export default function ViewProductHero({ product }) {
+
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const [qty, setQty] = useState(1);
@@ -22,15 +27,17 @@ export default function ViewProductHero({ product }) {
   const decQty = () => {
     setQty((prev) => prev - 1);
   };
+
+  const ratingArray = Array(5).fill(0);
+
   const handleATC = (product) => {
-    console.log(product)
     // here will be condion of  if product.sizes && size === ""
     if (product.sizes.length > 0 &&  size === "") {
-      setSizeErr("Select a sieze firsrt");
+      setSizeErr("Select Your Size First !!");
       // here will be condion of  if product.clrs && clr === ""
     } else if (product.colours.length > 0 &&  clr === "") {
       setSizeErr("");
-      setClrErr("Please Select a coulr first ");
+      setClrErr("Please Select Your Colour First !!! ");
     } else {
       const tempProduct = {
         qty: qty,
@@ -51,6 +58,12 @@ export default function ViewProductHero({ product }) {
   const handleSize = (event) => {
     setSize(event.target.value);
   };
+
+
+
+
+
+
 
   return (
     <>
@@ -88,15 +101,13 @@ export default function ViewProductHero({ product }) {
                     <p className="">{product.title}</p>
                   </div>
                   <div className="product-rating ">
-                    <span className="text-yellow-300">
-                      <small className="text-black">Ratings</small>
-                      <i className="fa-solid fa-star  ml-1"></i>
-                      <i className="fa-solid fa-star ml-1"></i>
-                      <i className="fa-solid fa-star ml-1"></i>
-                      <i className="fa-solid fa-star-half ml-1"></i>
-                    </span>
+                    <div className="flex flex-row  ml-5">
+                      {ratingArray.map((_,ind) =>(
+                        <AiFillStar size={20} color={product.rating.ratings > ind ? "orange" : "gray"} />
+                      ))}
+                    </div>
                     <small>
-                      Reviews <span className="text-[1rem]">(40)</span>
+                       <span className=" ml-4">({product.rating.ratingCount})</span>
                     </small>
                   </div>
                   <div className="product-price my-4">
@@ -111,7 +122,7 @@ export default function ViewProductHero({ product }) {
                   <div className="my-5">
                     <p className=" ml-3 themeClrText">Features : </p>
                     {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
-                     <div className="flex flex-row  mt-2 ">
+                     <div className="flex flex-row  mt-2 " key={spec._id}>
                       <p className=" w-full text-center uppercase ">{spec.name} </p>
                       <p className=" w-full text-center"> : </p>
                       <p className=" w-full font-bold">  {spec.value}</p>
@@ -137,7 +148,7 @@ export default function ViewProductHero({ product }) {
                   </p>
 
                   {product.sizes.map((_size ) => ( 
-                    <>
+                    <div key={_size._id}>
                      <input
                     className="hidden"
                     type="radio"
@@ -150,7 +161,7 @@ export default function ViewProductHero({ product }) {
                   <label htmlFor={_size.value} className="lbl lbl-box">
                     <span className="size-text">{_size.value}</span>
                   </label>
-                    </>
+                    </div>
                   ))}
                  
 
@@ -165,7 +176,7 @@ export default function ViewProductHero({ product }) {
                   </p>
 
                   {product.colours.map((_clr ) => ( 
-                      <>
+                      <div key={_clr._id}>
                   <input
                     type="radio"
                     name="colorr"
@@ -178,7 +189,7 @@ export default function ViewProductHero({ product }) {
                   <label htmlFor={_clr.value} className="lbl lbl-box  ">
                     <span className="color-text">{_clr.value}</span>
                   </label>
-                    </>
+                    </div>
                   ))}
                  
                 </div>
@@ -517,6 +528,13 @@ export default function ViewProductHero({ product }) {
         ) : (
           ""
         )}
+      </div>
+
+
+
+      <div className="bg-yellow-200">
+          <AddReview btnTitle={"Post Review"} btnStyle={" py-1 px-3 rounded-md bg-gray-300 font-bold mx-auto"}/>
+          <ThankingModal btnTitle={""} btnStyle={"hidden"} modalText={"Thanks For Your Valueable Review  😍🔥"} />
       </div>
     </>
   );

@@ -138,6 +138,12 @@
   height: 88%;
   top: 1rem;
 }
+
+.swiper {
+z-index: 0 !important;
+}
+
+
 .swiper-button-prev , .swiper-button-next{
   color: var(--themeColour);
   margin: 0px .5rem;
