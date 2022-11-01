@@ -10,9 +10,7 @@ import {useSelector , useDispatch} from 'react-redux'
 
 export default function ConfirmOrder() {
   const dispatch = useDispatch()
-  const ThankingModalRedux = useSelector((state) => state.global)
-  const [openModal, setOpenModal] = useState(false)
-
+  
   return (
     <>
     <Navbar />

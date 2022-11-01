@@ -70,9 +70,8 @@ color: white;
 
   
 .card-img-a:hover{
-    transform: scale(0.9);
-    filter: saturate(2);
     transition: all 0.7s;
+    filter:contrast(1.2);
   }
 
 .card-title{
@@ -198,7 +197,7 @@ color: white;
     display: flex;
     padding: .5rem;
     flex-direction: column;
-    width: 15rem;
+    width: 20rem;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 1rem;
@@ -243,12 +242,11 @@ color: white;
 .card-img{
     width: 15rem;
     height: 15rem;
-    
 }
 
 .card-img-a{
-    width: 15rem;
-    height: 15rem;
+    width: 20rem;
+    max-height: 20rem;
     
 }
 .free-courses{
@@ -285,7 +283,6 @@ text-decoration: line-through;
 }
 .top-categories-main-container{
     background-color: #fdfdfd;
- 
  }
  .top-categories-container{
      display: flex;

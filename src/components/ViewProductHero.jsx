@@ -92,10 +92,10 @@ export default function ViewProductHero({ product }) {
                   <Swiper navigation={true} modules={[Navigation]} className="w-72">
                   {product.gallary.length > 0 ? product.gallary.map(gImage => (
                      <SwiperSlide key={gImage._id} >
-                       <img src={gImage.url} alt="" className="w-40" />
+                       <img src={gImage.url} alt="" className="w-44" />
                        </SwiperSlide>
                   )) : (
-                    <img src={product.image} alt="" className="w-40" />
+                    <img src={product.image} alt="" className="w-44" />
                     )}
                     </Swiper>
                 </div>
@@ -125,10 +125,9 @@ export default function ViewProductHero({ product }) {
                   <div className="my-5">
                     <p className=" ml-3 themeClrText">Features : </p>
                     {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
-                     <div className="flex flex-row  mt-2 " key={spec._id}>
-                      <p className=" w-full text-center uppercase font-bold">{spec.name} </p>
-                      <p className=" w-full text-center"> : </p>
-                      <p className=" w-full ">  {spec.value}</p>
+                     <div className="grid grid-cols-12  border-b py-1 mt-2 " key={spec._id}>
+                      <p className=" col-span-4 ml-2 text-sm uppercase font-bold">{spec.name} </p>
+                      <p className=" col-span-8 text-sm ">  {spec.value}</p>
                      </div>
                     )) : '' }
                   </div>
@@ -379,11 +378,10 @@ export default function ViewProductHero({ product }) {
               Features :
             </p>
             {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
-              <div className="flex flex-row  mt-2 " key={spec._id}>
-              <p className=" w-full text-center uppercase font-bold ">{spec.name} </p>
-              <p className=" w-full text-center"> : </p>
-              <p className=" w-full ">  {spec.value}</p>
-             </div>
+             <div className="grid grid-cols-12  border-b py-1 mt-2 " key={spec._id}>
+             <p className=" col-span-4 ml-2 text-sm  uppercase font-bold">{spec.name} </p>
+             <p className=" col-span-8 text-sm">  {spec.value}</p>
+            </div>
             )) : (<p className="my-1 ml-6 text-sm text-green-800">Latest Arrivals</p>)
  }
 
@@ -432,7 +430,7 @@ export default function ViewProductHero({ product }) {
                 />
               <label
                 htmlFor={_size.value}
-                className="inline-flex lbl justify-center items-center w-10 h-10 rounded-md border-2 border-grey-400 "
+                className="inline-flex lbl justify-center items-center py-1 px-2 rounded-md border-2 border-grey-400 "
               >
              <span className="size-text">{_size.value}</span>
                 </label>

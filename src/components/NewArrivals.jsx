@@ -65,7 +65,7 @@ export default function NewArrivals() {
         </div>
        <div className="to-price ml-4">
         <span className='text-sm text-gray-700'>From</span>
-        <span className='ml-2'> RS.3432</span>
+        <span className='ml-2 themeClrText'> Rs. {product.price}</span>
        </div> </Link>
     </SwiperSlide>
     ))}
@@ -76,7 +76,7 @@ export default function NewArrivals() {
 {/* show on phone screen only */}
 <Swiper  className='w-11/12 flex md:hidden'
      spaceBetween={10}
-     slidesPerView={3}
+     slidesPerView={2}
       modules={[Navigation]}
       navigation={true}
     >
