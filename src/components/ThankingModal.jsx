@@ -15,10 +15,11 @@ const customStyles = {
       left: '50%',
       right: 'auto',
       bottom: 'auto',
-      width : '78%',
+      width : '80vw',
       minHeight : '20vh' ,
       overflow : 'hidden',
-      maxHeight : '80vh' ,
+      maxHeight : '70vh' ,
+      maxWidth : '500px' ,
       boxShadow : "0px 0px 12px gray",
       zIndex : "4" ,
       marginRight: '-50%',
@@ -32,9 +33,7 @@ const closeModalFunc = () =>{
 }
 
 
-setTimeout(() => {
-    dispatch(closeThankingModal())
-}, 2000);
+
   return (
     <div>
   
@@ -43,8 +42,9 @@ setTimeout(() => {
     onRequestClose={closeModalFunc}
     style={customStyles}
     >
-    {/* <div className="absolute right-7 top-3 cursor-pointer py-2 px-3 bg-white " onClick={closeModalFunc}><FaTimes size={27}/></div> */}
-    <p className="text-green-600 flex justify-center items-center bg-white  text-white font-bold text-2xl  absolute right-0 left-0 top-0 bottom-0">{modalText}</p>
+    <div className="absolute right-1 z-[3] top-1 cursor-pointer py-2 px-3 bg-white " onClick={closeModalFunc}><FaTimes size={23} className="themeClrText"/></div>
+    <p className="text-green-600 flex justify-center items-center bg-white  text-white font-bold text-sm md:text-2xl   absolute right-0 left-0 top-0 bottom-0">{modalText}</p>
+
     </ReactModal>
 
     </div>

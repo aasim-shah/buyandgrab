@@ -7,6 +7,7 @@ import { Navigation } from "swiper";
 import "swiper/css/navigation";
 import {AiFillStar} from "react-icons/ai"
 import AddReview from "./AddReview";
+import {BsArrowBarDown} from "react-icons/bs"
 import ThankingModal from "./ThankingModal";
 
 
@@ -17,6 +18,8 @@ export default function ViewProductHero({ product }) {
   const [qty, setQty] = useState(1);
   const [clr, setClr] = useState("");
   const [size, setSize] = useState("");
+  const [decCollapsed, setDecCollapsed] = useState(true);
+
   const [clrErr, setClrErr] = useState("");
   const [sizeErr, setSizeErr] = useState("");
 
@@ -88,7 +91,7 @@ export default function ViewProductHero({ product }) {
                 <div className="product-img">
                   <Swiper navigation={true} modules={[Navigation]} className="w-72">
                   {product.gallary.length > 0 ? product.gallary.map(gImage => (
-                     <SwiperSlide >
+                     <SwiperSlide key={gImage._id} >
                        <img src={gImage.url} alt="" className="w-40" />
                        </SwiperSlide>
                   )) : (
@@ -103,7 +106,7 @@ export default function ViewProductHero({ product }) {
                   <div className="product-rating ">
                     <div className="flex flex-row  ml-5">
                       {ratingArray.map((_,ind) =>(
-                        <AiFillStar size={20} color={product.rating.ratings > ind ? "orange" : "gray"} />
+                        <AiFillStar key={ind} size={20} color={product.rating.ratings > ind ? "orange" : "gray"} />
                       ))}
                     </div>
                     <small>
@@ -123,9 +126,9 @@ export default function ViewProductHero({ product }) {
                     <p className=" ml-3 themeClrText">Features : </p>
                     {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
                      <div className="flex flex-row  mt-2 " key={spec._id}>
-                      <p className=" w-full text-center uppercase ">{spec.name} </p>
+                      <p className=" w-full text-center uppercase font-bold">{spec.name} </p>
                       <p className=" w-full text-center"> : </p>
-                      <p className=" w-full font-bold">  {spec.value}</p>
+                      <p className=" w-full ">  {spec.value}</p>
                      </div>
                     )) : '' }
                   </div>
@@ -147,8 +150,11 @@ export default function ViewProductHero({ product }) {
                     sizes <small className="text-red-400 ml-2">{sizeErr}</small>
                   </p>
 
+
+
+                <div className="flex flex-row">
                   {product.sizes.map((_size ) => ( 
-                    <div key={_size._id}>
+                    <div key={_size._id} >
                      <input
                     className="hidden"
                     type="radio"
@@ -163,6 +169,7 @@ export default function ViewProductHero({ product }) {
                   </label>
                     </div>
                   ))}
+                  </div>
                  
 
                  
@@ -175,6 +182,7 @@ export default function ViewProductHero({ product }) {
                     Colour <small className="ml-2 text-red-400">{clrErr}</small>
                   </p>
 
+                  <div className="flex flex-row">
                   {product.colours.map((_clr ) => ( 
                       <div key={_clr._id}>
                   <input
@@ -191,11 +199,11 @@ export default function ViewProductHero({ product }) {
                   </label>
                     </div>
                   ))}
-                 
+                  </div>
                 </div>
               ) : (
                 ""
-              )}
+                )}
 
               <div className="atc-price product-price ml-4 my-6">
                 <div className=" themeClrText">Price</div>
@@ -343,6 +351,8 @@ export default function ViewProductHero({ product }) {
           <div className="flex flex-col ">
             <div className="">
               <Swiper navigation={true} modules={[Navigation]}>
+              {product.gallary.length > 0 ? product.gallary.map(gImage => (
+
                 <SwiperSlide>
                   <img
                     src={product.image}
@@ -350,24 +360,42 @@ export default function ViewProductHero({ product }) {
                     alt=""
                   />
                 </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src={product.image}
-                    className="h-[50vh] rounded-md w-[45vh] mx-auto "
-                    alt=""
-                  />
-                </SwiperSlide>
+              )): (<img
+                src={product.image}
+                className="h-[50vh] rounded-md w-[45vh] mx-auto "
+                alt=""
+              />)}
+               
               </Swiper>
             </div>
             <div className="title my-3 px-3">
-              <p className="font-bold my-4 themeClrText ">{product.title}</p>
+              <p className="font-bold mt-3 themeClrText ">{product.title}</p>
             </div>
+            <div className="title  px-3" onClick={()=>{setDecCollapsed(prev => !prev)}} title="Click to View More">
+              <p className=" text-sm  ">{decCollapsed ? product.description.slice(0,80) + " ....." : product.description}</p>
+            </div> 
+
+            <p className="ml-3 text-gray-400 mt-2">
+              Features :
+            </p>
+            {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
+              <div className="flex flex-row  mt-2 " key={spec._id}>
+              <p className=" w-full text-center uppercase font-bold ">{spec.name} </p>
+              <p className=" w-full text-center"> : </p>
+              <p className=" w-full ">  {spec.value}</p>
+             </div>
+            )) : (<p className="my-1 ml-6 text-sm text-green-800">Latest Arrivals</p>)
+ }
+
+
+
+
             <div className="flex flex-row mb-3 mx-3 gap-4">
               <div className="price">
                 <p>
                   <small>From : </small>
                 </p>
-                <span className=" text-xl font-bold text-green-400 mr-2">
+                <span className=" text-xl font-bold themeClrText mr-2">
                   Rs. {product.price}
                 </span>
                 <small>
@@ -375,14 +403,15 @@ export default function ViewProductHero({ product }) {
                 </small>
               </div>
               <div className="rating ml-auto mr-5 ">
-                <span className="bg-green-200 py-1 px-3 rounded-md mr-1">
-                  {" "}
-                  4 strt
+                <span className="bg-green-200 py-1 px-3 inline-flex rounded-md mr-1">
+                 
+                  {product.rating.ratings} <AiFillStar  size={20} color="orange" className="ml-2 mt-1"/>
                 </span>
-                <small>400</small>
+                <small>{product.rating.ratingCount}</small>
               </div>
             </div>
 
+            {product && product.sizes.length > 0 ? (<>
             <p className="ml-3 text-gray-400">
               Sizes : <small className="text-red-400"> {sizeErr}</small>
             </p>
@@ -390,127 +419,59 @@ export default function ViewProductHero({ product }) {
               id="pScreen-sizes"
               className="flex flex-row gap-5 mb-4 justify-center "
             >
-              <input
+              {product.sizes.map((_size) =>(
+                <div key={_size._id}>
+                <input
                 type="radio"
                 name="size"
                 className="hidden"
-                id="size1"
-                value="sx"
+                id={_size.value}
+                value={_size.value}
                 onChange={handleSize}
-                checked={size === "sx"}
-              />
+                checked={size === _size.value}
+                />
               <label
-                htmlFor="size1"
+                htmlFor={_size.value}
                 className="inline-flex lbl justify-center items-center w-10 h-10 rounded-md border-2 border-grey-400 "
               >
-                <span className="text-[12px] font-bold">sx</span>
-              </label>
-
-              <input
-                type="radio"
-                name="size"
-                className="hidden"
-                id="size2"
-                value="md"
-                onChange={handleSize}
-                checked={size === "md"}
-              />
-              <label
-                htmlFor="size2"
-                className="inline-flex lbl justify-center items-center w-10 h-10 rounded-md border-2 border-grey-400 "
-              >
-                <span className="text-[12px] font-bold">md</span>
-              </label>
-
-              <input
-                type="radio"
-                name="size"
-                className="hidden"
-                id="size3"
-                value="lg"
-                onChange={handleSize}
-                checked={size === "lg"}
-              />
-              <label
-                htmlFor="size3"
-                className="inline-flex lbl justify-center items-center w-10 h-10 rounded-md border-2 border-grey-400 "
-              >
-                <span className="text-[12px] font-bold">lg</span>
-              </label>
-
-              <input
-                type="radio"
-                name="size"
-                className="hidden"
-                id="size4"
-                value="xl"
-                onChange={handleSize}
-                checked={size === "xl"}
-              />
-              <label
-                htmlFor="size4"
-                className="inline-flex lbl justify-center items-center w-10 h-10 rounded-md border-2 border-grey-400 "
-              >
-                <span className="text-[12px] font-bold">xl</span>
-              </label>
-            </div>
-
+             <span className="size-text">{_size.value}</span>
+                </label>
+                
+            </div>))}
+            </div></>
+            ): ""}
+            
+{product && product.sizes.length > 0 ? (<>
             <p className="ml-3 text-gray-400">
               Colours : <small className="ml-2 text-red-400"> {clrErr}</small>
             </p>
             <div
               id="pScreen-colors"
-              className="flex flex-row gap-5 mb-4 justify-center "
+              className="flex flex-row gap-5 mb-4 justify-center  mt-1"
             >
-              <input
+              {product.colours.map((_clr) =>(
+                <div key={_clr._id}>
+                <input
                 type="radio"
                 name="color"
-                checked={clr === "blue"}
+                checked={clr === _clr.value}
                 className="hidden"
-                value="blue"
-                id="blue"
+                value={_clr.value}
+              id={_clr.value}
                 onChange={handleClr}
               />
               <label
-                htmlFor="blue"
-                className="lbl inline-flex justify-center items-center  w-12 h-12 border-2 border-white bg-blue-300 rounded-md"
+                htmlFor={_clr.value}
+                className={`lbl inline-flex justify-center  items-center  py-2 px-3 font-bold border-2 border-white rounded-md bg-${_clr.value}-400 bg-${_clr.value} text-white text-gray-500`}
               >
-                <span className="text-[12px] font-bold">blue</span>
+                <span className="text-[12px] font-bold">{_clr.value}</span>
               </label>
+                </div>
+              ))}
+              
 
-              <input
-                type="radio"
-                name="color"
-                checked={clr === "red"}
-                className="hidden"
-                value="red"
-                id="red"
-                onChange={handleClr}
-              />
-              <label
-                htmlFor="red"
-                className=" lbl inline-flex justify-center items-center w-12 h-12 border-2 border-white bg-red-300 rounded-md"
-              >
-                <span className="text-[12px] font-bold">red</span>
-              </label>
-
-              <input
-                type="radio"
-                name="color"
-                checked={clr === "green"}
-                className="hidden"
-                value="green"
-                id="green"
-                onChange={handleClr}
-              />
-              <label
-                htmlFor="green"
-                className="lbl inline-flex justify-center items-center  w-12 h-12 border-2 border-white bg-green-300 rounded-md"
-              >
-                <span className="text-[12px] font-bold">green</span>
-              </label>
             </div>
-
+  </>): ""}
             <div className="flex gap-2 mx-2">
               <button className="border-2 border-[#355C7D] py-2 rounded-md w-full">
                 Buy Now

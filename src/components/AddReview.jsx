@@ -11,6 +11,7 @@ function AddReview({btnTitle , btnStyle}) {
     const ThankingModalRedux = useSelector((state) => state.global)
         const [selectedRating, setSelectedRating] = useState(null)
         const [hoveredRating, setHoveredRating] = useState(null)
+        const [inputText , setInputText] = useState('')
     const [openModal, setOpenModal] = useState(false)
 
 
@@ -46,6 +47,9 @@ const closeModalFunc = () =>{
 }
 
 const handleSubmit = () =>{
+    setHoveredRating(null)
+    setInputText('')
+    setSelectedRating(null)
     dispatch(openThankingModal())
 
 }
@@ -66,6 +70,8 @@ const onStarHover = value =>{
         </div>
     <ReactModal
     isOpen={openModal}
+    ariaHideApp={false}
+    contentLabel="Add Review"
     onRequestClose={closeModalFunc}
     style={customStyles}
     >
@@ -85,7 +91,7 @@ const onStarHover = value =>{
         </div>
 
         <div className="textArea">
-            <textarea name="reviewText" id="" cols="80" rows="5" className='border-2 mt-5 py-3 px-3 rounded-md outline-none' placeholder='Post Your Review Here !!'></textarea>
+            <textarea name="reviewText" id="" className='border-2 w-9/12 mx-auto block h-24 mt-5 py-3 px-3 rounded-md outline-none' placeholder='Post Your Review Here !!' onChange={(e)=>{setInputText(e.target.value)}} value={inputText}></textarea>
         </div>
         <div className="flex flex-row justify-center mt-5">
             <button className='themeClrBg rounded-md text-white font-bold py-1 px-4' onClick={handleSubmit}>Submit</button>

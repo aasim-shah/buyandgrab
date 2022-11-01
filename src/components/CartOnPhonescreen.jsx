@@ -51,8 +51,8 @@ export default function CartOnPhonescreen() {
                     <span>{cartItem.title.slice(0, 40)} ...</span>  
                     </p>
                     <div className="absolute top-7 right-4">
-                      <small>clr : {cartItem.clr}<span className={`inline-flex w-3 h-3 mx-1 rounded-sm bg-${cartItem.clr}-500`}></span></small>, 
-                      <small className="ml-2"> size : {cartItem.size} </small>
+                      <small>{cartItem.clr !== "" ? (<><span>Size : </span> {cartItem.clr} <span className={`inline-flex w-3 h-3 mx-1 rounded-sm bg-${cartItem.clr}-500 bg-${cartItem.clr}`}></span></>) : ""}</small>
+                      <small className="ml-2">  {cartItem.size !== "" ? (<><span> Size : </span> {cartItem.size}</>) : ""} </small>
                     </div>
                     <div className="qty-price  flex  mx-3  mt-1 flex-row justify-between">
                       <div className="qty flex flex-row gap-5">
@@ -97,7 +97,7 @@ export default function CartOnPhonescreen() {
             <span>RS. {cart.totalCount.toFixed(2)}</span>
           </div>
           <div className="checkout flex flex-row justify-center mt-2">
-            <Link to="/comfirm_order" className="bg-green-800 w-11/12 flex flex-row justify-center text-white py-2 rounded-md  font-bold">
+            <Link to="/comfirm_order" className="bg-green-800 w-11/12 flex flex-row justify-center text-white py-2 rounded-md  font-bold" onClick={()=>{dispatch(showCart())}}>
               CheckOut
             </Link>
           </div>
