@@ -9,6 +9,8 @@ import {AiFillStar} from "react-icons/ai"
 import AddReview from "./AddReview";
 import {BsArrowBarDown} from "react-icons/bs"
 import ThankingModal from "./ThankingModal";
+import Highlights from "./Highlights";
+import AllReviews from "./AllReviews";
 
 
 export default function ViewProductHero({ product }) {
@@ -74,18 +76,24 @@ export default function ViewProductHero({ product }) {
         <div className="viewproduct-hero-main-container hidden md:block">
           <div className="breadcrumb-container ">
             <div className="breadcrumb-inner-main">
-              <span className=" text-[#1a9cb7] mr-3">Men </span>
-              <span className=" text-[#1a9cb7] ">
+              <span className=" text-[#1a9cb7] ">Men </span>
+              <span className=" text-[#1a9cb7] ml-2">
                 <i className="fa-solid fa-chevron-right themeClrText "></i>
                 <span className="ml-2">{product.category}</span>
               </span>
+              {product.subCategory !== "" ? (
+                 <span className=" text-[#1a9cb7] ml-2">
+                 <i className="fa-solid fa-chevron-right themeClrText "></i>
+                 <span className="ml-2">{product.subCategory}</span>
+               </span>
+              ) : ""}
               <span className=" text-[#1a9cb7] mr-3">
                 <i className="fa-solid fa-chevron-right themeClrText ml-2"></i>
                 <span className="ml-2">{product.title}</span>{" "}
               </span>
             </div>
           </div>
-          <div className="viewproduct-hero-inner ">
+          <div className="viewproduct-hero-inner pt-1 pb-3 ">
             <div className="viewproduct-hero-inner-left  ">
               <div className="inner-grid mt-3">
                 <div className="product-img">
@@ -123,13 +131,13 @@ export default function ViewProductHero({ product }) {
                     </span>
                   </div>
                   <div className="my-5">
-                    <p className=" ml-3 themeClrText">Features : </p>
-                    {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
+                    <p className=" ml-3 themeClrText">Details : </p>
+                    {product.specifications.length > 0 && product.specifications.filter(x => x.heading === "details").map(spec =>(
                      <div className="grid grid-cols-12  border-b py-1 mt-2 " key={spec._id}>
                       <p className=" col-span-4 ml-2 text-sm uppercase font-bold">{spec.name} </p>
                       <p className=" col-span-8 text-sm ">  {spec.value}</p>
                      </div>
-                    )) : '' }
+                    )) }
                   </div>
                 </div>
               </div>
@@ -163,7 +171,7 @@ export default function ViewProductHero({ product }) {
                     onChange={handleSize}
                     checked={size === _size.value}
                   />
-                  <label htmlFor={_size.value} className="lbl lbl-box">
+                  <label htmlFor={_size.value} className="lbl lbl-box bg-gray-200">
                     <span className="size-text">{_size.value}</span>
                   </label>
                     </div>
@@ -193,8 +201,8 @@ export default function ViewProductHero({ product }) {
                     checked={clr === _clr.value}
                     onChange={handleClr}
                     />
-                  <label htmlFor={_clr.value} className="lbl lbl-box  ">
-                    <span className="color-text">{_clr.value}</span>
+                  <label htmlFor={_clr.value} className={`lbl lbl-box bg-${_clr.value}-400 bg-${_clr.value}`}>
+                    <span className={`color-text `}>{_clr.value}</span>
                   </label>
                     </div>
                   ))}
@@ -206,7 +214,7 @@ export default function ViewProductHero({ product }) {
 
               <div className="atc-price product-price ml-4 my-6">
                 <div className=" themeClrText">Price</div>
-                <span className="del-price">RS : 23423</span>
+                <span className="del-price">Rs. {product.price*1.2} </span>
                 <span className="font-bold themeClrText ml-4 ">
                   RS : {product.price}
                 </span>
@@ -241,14 +249,19 @@ export default function ViewProductHero({ product }) {
                 <button
                   onClick={() => {
                     handleATC(product);
-                  }}
-                  className="bg-black text-white w-full rounded-sm py-1"
+                  } }
+                  className="bg-black text-white w-full rounded-sm py-1 font-bold "
                 >
                   Add To Bag
                 </button>
               </div>
             </div>
           </div>
+          <AllReviews product={product}/>
+          <div className="mt-3">
+          <AddReview  btnTitle={"Post Review"} product={product} btnStyle={" py-1 px-3 rounded-md bg-gray-300 font-bold mx-auto"}/>
+          </div>
+
         </div>
       ) : (
         <>
@@ -345,16 +358,16 @@ export default function ViewProductHero({ product }) {
           </div>
         </>
       )}
-      <div className="block md:hidden bg-gray-100 py-3  my-4">
+      <div className="block md:hidden bg-gray-100 py-3  mt-4">
         {product ? (
           <div className="flex flex-col ">
             <div className="">
               <Swiper navigation={true} modules={[Navigation]}>
               {product.gallary.length > 0 ? product.gallary.map(gImage => (
 
-                <SwiperSlide>
+                <SwiperSlide key={gImage._id}>
                   <img
-                    src={product.image}
+                    src={gImage.url}
                     className="h-[50vh] rounded-md w-[45vh] mx-auto "
                     alt=""
                   />
@@ -375,9 +388,9 @@ export default function ViewProductHero({ product }) {
             </div> 
 
             <p className="ml-3 text-gray-400 mt-2">
-              Features :
+              Details :
             </p>
-            {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "highlights").map(spec =>(
+            {product.specifications.length > 0 ? product.specifications.filter(x => x.heading === "details").map(spec =>(
              <div className="grid grid-cols-12  border-b py-1 mt-2 " key={spec._id}>
              <p className=" col-span-4 ml-2 text-sm  uppercase font-bold">{spec.name} </p>
              <p className=" col-span-8 text-sm">  {spec.value}</p>
@@ -388,7 +401,7 @@ export default function ViewProductHero({ product }) {
 
 
 
-            <div className="flex flex-row mb-3 mx-3 gap-4">
+            <div className="flex flex-row mb-3 mt-2 mx-3 gap-4">
               <div className="price">
                 <p>
                   <small>From : </small>
@@ -430,7 +443,7 @@ export default function ViewProductHero({ product }) {
                 />
               <label
                 htmlFor={_size.value}
-                className="inline-flex lbl justify-center items-center py-1 px-2 rounded-md border-2 border-grey-400 "
+                className="inline-flex lbl  justify-center items-center py-1 px-2 rounded-md border-2 border-grey-400 "
               >
              <span className="size-text">{_size.value}</span>
                 </label>
@@ -478,7 +491,7 @@ export default function ViewProductHero({ product }) {
                 onClick={() => {
                   handleATC(product);
                 }}
-                className="themeClrBg  py-2 w-full rounded-md text-white font-bold"
+                className="themeClrBg   py-2 w-full rounded-md text-white font-bold"
               >
                 Add to Bag
               </button>
@@ -489,10 +502,13 @@ export default function ViewProductHero({ product }) {
         )}
       </div>
 
+      {/* view all reviews */}
+      <div className="bg-white w-11/12 mx-auto">
+      
+          </div>
 
-
-      <div className="bg-yellow-200">
-          <AddReview btnTitle={"Post Review"} btnStyle={" py-1 px-3 rounded-md bg-gray-300 font-bold mx-auto"}/>
+    {/* add review */}
+      <div className="">
           <ThankingModal btnTitle={""} btnStyle={"hidden"} modalText={"Thanks For Your Valueable Review  😍🔥"} />
       </div>
     </>

@@ -1,6 +1,6 @@
 
 .viewproduct-hero-main-container{
-  min-height: 85vh;
+  /* min-height: 85vh; */
 }
 .gridd{
     border: 1px solid rebeccapurple;
@@ -168,7 +168,7 @@ opacity: 0.25;
   margin-left: 1rem;
   margin-top: .25rem;
   align-items: center;
-  background-color: rgba(128, 128, 128, 0.412);
+  /* background-color: rgba(128, 128, 128, 0.412); */
 }
 
 input[type=radio]:checked +.lbl{

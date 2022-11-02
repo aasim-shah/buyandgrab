@@ -7,13 +7,16 @@ import { useDropzone } from "react-dropzone";
 export default function _AddProduct() {
   const [files, setFiles] = useState([]);
   const [gall, setGall] = useState([]);
-  const [headingText, setHeadingText] = useState("general");
-  const [allHeadings, setallHeadings] = useState(["general"]);
+  const [headingText, setHeadingText] = useState("details");
+  const [allHeadings, setallHeadings] = useState(["details"]);
   const [img, setImg] = useState("");
+  const [gallUploaded, setGallUploaded] = useState(false);
   const [upperFields, setUpperFields] = useState({
     name: "",
     description: "",
     price: 0,
+    category : '',
+    subCategory : ""
   });
 
   const [fields, setFields] = useState([
@@ -46,6 +49,7 @@ export default function _AddProduct() {
 
   const handleGallary = async (e) => {
     e.preventDefault()
+    setGallUploaded(true)
         files.forEach( async(file) =>{
           const data = new FormData();
           data.append("file", file);
@@ -56,6 +60,7 @@ export default function _AddProduct() {
             data
           )
           setGall(prev => [...prev , {url : res.data.url}])
+          console.log('files uploading !!')
         })
 
   }
@@ -73,11 +78,13 @@ try {
   data.append("cloud_name", "dy9crvf1i");
   const first = await axios.post("https://api.cloudinary.com/v1_1/dy9crvf1i/image/upload", data)
     
-        if(files.length === gall.length) {
+        if(files.length === gall.length ) {
           const allData = {
             name: upperFields.name,
             description: upperFields.description,
             price: upperFields.price,
+            category : upperFields.category,
+            subCategory : upperFields.subCategory,
             image: first.data.url,
             gallary: gall,
             specifications: fields,
@@ -176,10 +183,6 @@ setSizeFields(delArray)
         <p className="text-xs font-bold ml-3 my-1">*Add New Product</p>
         <form >
           <div className="bg-gray-200 py-2 rounded-md mb-2">
-            <div className="input-div w-full flex flex-row items-center justify-center mt-3">
-              <p className="font-bold  mr-4  hidden md:block">
-                Product Name :{" "}
-              </p>
               <input
                 type="text"
                 name="name"
@@ -188,12 +191,9 @@ setSizeFields(delArray)
                 }}
                 value={upperFields.name || ""}
                 placeholder="Product name .."
-                className="w-9/12 border-2 border-gray-300 py-1 px-3"
+                className="w-9/12 border-2 border-gray-300 py-1 px-3  block mx-auto"
               />
-            </div>
 
-            <div className="input-div w-full flex flex-row items-center justify-center mt-3 mb-1">
-              <p className="font-bold  mr-4 hidden md:block">Product Description : </p>
               <input
                 type="text"
                 name="description"
@@ -202,14 +202,9 @@ setSizeFields(delArray)
                 }}
                 value={upperFields.description || ""}
                 placeholder="Product Description .."
-                className="w-9/12 border-2 border-gray-300 py-1 px-3"
+                className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
               />
-            </div>
 
-            <div className="input-div w-full flex flex-row items-center justify-center mt-3 mb-1">
-              <p className="font-bold  mr-4 hidden md:block">
-                Product Price :{" "}
-              </p>
               <input
                 type="number"
                 name="price"
@@ -217,10 +212,32 @@ setSizeFields(delArray)
                   handleUpperFields(e);
                 }}
                 value={upperFields.price || ""}
-                placeholder="Product Description .."
-                className="w-9/12 border-2 border-gray-300 py-1 px-3"
+                placeholder="Product Price .."
+                className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
               />
-            </div>
+
+<input
+                type="text"
+                name="category"
+                onChange={(e) => {
+                  handleUpperFields(e);
+                }}
+                value={upperFields.category || ""}
+                placeholder="Product category .."
+                className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
+              />
+              
+              <input
+                type="text"
+                name="subCategory"
+                onChange={(e) => {
+                  handleUpperFields(e);
+                }}
+                value={upperFields.subCategory || ""}
+                placeholder="Product subCategory .."
+                className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
+              />
+
           </div>
 
           <div className="dynamicFieldsContainer rounded-md bg-gray-200  py-3">
@@ -385,7 +402,7 @@ setSizeFields(delArray)
               </p>
             )}
           </div>
-          {files.length > 0 ? (<button  className="absolute top-[35%] left-[35%] bg-gray-500 rounded-md w-32 mx-auto py-2  text-white font-bold"  onClick={handleGallary}> UPLOAD</button>) : ""}
+          {files.length > 0 ? (<button  disabled={gallUploaded} className="absolute top-[35%] left-[35%] bg-gray-500 rounded-md w-32 mx-auto py-2  text-white font-bold"  onClick={handleGallary}> UPLOAD</button>) : ""}
             </div>
 
           <button

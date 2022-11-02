@@ -32,7 +32,7 @@ function SuggestedProducts() {
               <div className="card-inner" key={product._id}>
                 <Link to={`/product/${product._id}`} className="card-inner-a">
                   <img src={product.image} alt="" className="card-img-a" />
-                  <small className="free-courses">{product.category}</small>
+                  <small className="free-courses">{product.category} | {product.subCategory}</small>
                   <div className="text-center">
                     {product.title.slice(0, 36) + " ..."}
                   </div>

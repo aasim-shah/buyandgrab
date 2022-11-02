@@ -7,7 +7,7 @@ import { Auth, GoogleProvider } from "../../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import "./Loginpage.css";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc , setDoc } from "firebase/firestore";
 import { useSelector , useDispatch } from "react-redux";
 import { loggedIn, loggedOut  } from "../../features/authSlice";
 
@@ -28,22 +28,16 @@ export default function Loginpage() {
     try {
       const user = await signInWithEmailAndPassword(Auth, email, password);
       if (user.user.uid) {
-      
         const docRef = doc(db, "users", user.user.uid);
         const docSnap = await getDoc(docRef);
-
         if (docSnap.exists()) {
-          dispatch(loggedIn({user , isAdmin : docSnap.data().isAdmin })) 
+          dispatch(loggedIn({user : user.user , isAdmin : docSnap.data().isAdmin })) 
         navigate("/");
-        setTimeout(() => {
-          dispatch(loggedOut())
-        }, 1000 * 60 * 60 * 3 );     
+   
         } else {
-          dispatch(loggedIn({user , isAdmin : false })) 
+          dispatch(loggedIn({user : user.user , isAdmin : false })) 
           navigate("/");
-          setTimeout(() => {
-            dispatch(loggedOut())
-          }, 1000 * 60 * 60 * 3 );    
+           
         }
 
 
@@ -58,10 +52,23 @@ export default function Loginpage() {
   const handleGoogleLogin = async () => {
     const result = await signInWithPopup(Auth, GoogleProvider);
     console.log(result)
-    dispatch(loggedIn(result.user)) 
-    setTimeout(() => {
-      dispatch(loggedOut())
-    }, 1000 * 60 * 60 * 3 ); 
+    if(result.user.uid){
+
+      const docRef = doc(db, "users", result.user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+           dispatch(loggedIn({user : result.user , isAdmin : docSnap.data().isAdmin })) 
+      }else{
+        await setDoc(doc(db, "users", result.user.uid), {
+          "email" : result.user.email,
+          "userName" : result.user.displayName,
+          "profilePic" : result.user.photoURL
+           });
+        dispatch(loggedIn({user : result.user , isAdmin : false})) 
+      }
+     
+    }
+
   };
 
   return (

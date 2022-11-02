@@ -43,7 +43,7 @@ const closeModalFunc = () =>{
     style={customStyles}
     >
     <div className="absolute right-1 z-[3] top-1 cursor-pointer py-2 px-3 bg-white " onClick={closeModalFunc}><FaTimes size={23} className="themeClrText"/></div>
-    <p className="text-green-600 flex justify-center items-center bg-white  text-white font-bold text-sm md:text-2xl   absolute right-0 left-0 top-0 bottom-0">{modalText}</p>
+    <p className="text-green-600 flex justify-center items-center bg-white  text-white font-bold text-sm md:text-lg   absolute right-0 left-0 top-0 bottom-0">{modalText}</p>
 
     </ReactModal>
 
