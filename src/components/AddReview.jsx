@@ -61,7 +61,7 @@ const handleSubmit = async() =>{
             const userName = docSnap.data().userName;
             const profilePic = docSnap.data().profilePic;
           if(inputText !== null  && selectedRating !== null ){
-            const res =await axios.post('http://localhost:8000/api/v1/product/add_review' , {
+            const res =await axios.post('https://ennmart.herokuapp.com/api/v1/product/add_review' , {
                 userId : auth.userId,
                 userName : userName,
                 profilePic : profilePic,

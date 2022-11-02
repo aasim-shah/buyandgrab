@@ -8,7 +8,7 @@ function AllReviews({product}) {
   const [productt, setProductt] = useState(null)
     console.log(product)
     const getProduct = async () =>{
-      const res = await axios.get(`http://localhost:8000/api/v1/products/${product._id}`)
+      const res = await axios.get(`https://ennmart.herokuapp.com/api/v1/products/${product._id}`)
       setProductt(res.data)
     }
     const starsArray  = Array(5).fill(0);
