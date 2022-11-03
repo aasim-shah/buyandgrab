@@ -11,6 +11,7 @@ import { BsArrowBarDown } from "react-icons/bs";
 import ThankingModal from "./ThankingModal";
 import Highlights from "./Highlights";
 import AllReviews from "./AllReviews";
+import {FaStar} from 'react-icons/fa'
 
 export default function ViewProductHero({ product }) {
   const dispatch = useDispatch();
@@ -56,7 +57,6 @@ export default function ViewProductHero({ product }) {
 
   const handleClr = (event) => {
     setClr(event.target.value);
-    console.log(event.target.value);
   };
   const handleSize = (event) => {
     setSize(event.target.value);
@@ -168,7 +168,8 @@ export default function ViewProductHero({ product }) {
             </div>
             <div className="  viewproduct-hero-inner-right">
               <div className="atc-title">
-                <p className="px-2 py-3">{product.title}</p>
+                <p className="px-2 pt-3">{product.title}</p>
+                <p className="px-3 text-sm text-gray-600">{product.category} | {product.subCategory}</p>
               </div>
               {product && product.sizes.length > 0 ? (
                 <div className=" ml-4 my-3">
@@ -391,7 +392,7 @@ export default function ViewProductHero({ product }) {
                     <SwiperSlide key={gImage._id}>
                       <img
                         src={gImage.url}
-                        className="h-[50vh] rounded-md w-[45vh] mx-auto "
+                        className="h-[50vh] rounded-md w-[53vh] mx-auto "
                         alt=""
                       />
                     </SwiperSlide>
@@ -452,15 +453,15 @@ export default function ViewProductHero({ product }) {
                   Rs. {product.price}
                 </span>
                 <small>
-                  <del>Rs. 0900</del>
+                  <del>Rs. {product.price * 1.2}</del>
                 </small>
               </div>
               <div className="rating ml-auto mr-5 ">
-                <span className="bg-green-200 py-1 px-3 inline-flex rounded-md mr-1">
-                  {product.rating.ratings}{" "}
-                  <AiFillStar size={20} color="orange" className="ml-2 mt-1" />
-                </span>
-                <small>{product.rating.ratingCount}</small>
+              <span className='flex flex-row gap-1'>{ratingArray.map((_, ind) =>(
+            <FaStar size={15} key={ind} color={product.rating.ratings > ind ? "orange" : "gray"}/>
+            ))}
+                <small>( {product.rating.ratingCount} )</small>
+            </span>
               </div>
             </div>
 

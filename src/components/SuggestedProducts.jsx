@@ -11,7 +11,6 @@ function SuggestedProducts() {
   // get data from api
   const getProducts = async () => {
     const res = await axios.get("https://ennmart.herokuapp.com/api/v1/");
-    console.log(res.data);
     setProducts(res.data);
   };
 
@@ -50,10 +49,10 @@ function SuggestedProducts() {
    */}
                     <div className="card-ratings flex justify-between items-center mt-2">
                         <span className="rating-stars">
-                          {product.rating.ratings}
+                          {(product.rating.ratings).toFixed(2)}
                           <i className="fa-solid fa-star text-sm ml-2 text-yellow-600"></i>{" "}
                         </span>
-                        <span className="rating-count text-[13px] ml-1">
+                        <span className="rating-count text-[13px] ml-2">
                           {product.rating.ratingCount}
                         </span>
                     </div>
@@ -109,7 +108,7 @@ function SuggestedProducts() {
                           {product.rating.ratings}
                           <i className="fa-solid fa-star text-sm ml-2 text-yellow-600"></i>{" "}
                         </span>
-                        <span className="rating-count text-[13px] ml-1">
+                        <span className="rating-count text-[13px] ml-2">
                           {product.rating.ratingCount}
                         </span>
                     </div>

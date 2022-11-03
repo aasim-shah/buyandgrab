@@ -7,8 +7,6 @@ import {openThankingModal , closeThankingModal} from "../features/globalSlice"
 function ThankingModal({btnTitle , btnStyle , modalText}) {
     const dispatch = useDispatch()
     const ThankingModalRedux = useSelector((state) => state.global)
-
-        console.log(ThankingModalRedux)
 const customStyles = {
     content: {
       top: '50%',

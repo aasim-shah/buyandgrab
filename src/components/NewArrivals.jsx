@@ -54,8 +54,8 @@ export default function NewArrivals() {
 
     >
     {products && products.reverse().map((product)=>(
-        <SwiperSlide  key={product.id} className='top-offer-slide bg-gray-100 pb-2 rounded-md'>
-                    <Link to={`/product/${product.id}`}>
+        <SwiperSlide  key={product._id} className='top-offer-slide bg-gray-100 pb-2 rounded-md'>
+                    <Link to={`/product/${product._id}`}>
 
        <div className="to-img mb-2">
         <img src={product.image} className='w-full h-40' alt="" />
@@ -81,8 +81,8 @@ export default function NewArrivals() {
       navigation={true}
     >
     {products && products.map((product)=>(
-        <SwiperSlide key={product.id} className='top-offer-slide bg-gray-100 pb-2 rounded-md'>
-     <Link to={`/product/${product.id}`}>
+        <SwiperSlide key={product._id} className='top-offer-slide bg-gray-100 pb-2 rounded-md'>
+     <Link to={`/product/${product._id}`}>
        <div className="to-img mb-2">
         <img src={product.image} className='w-full h-40' alt="" />
        </div>

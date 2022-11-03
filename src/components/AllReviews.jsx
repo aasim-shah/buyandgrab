@@ -1,24 +1,14 @@
-import axios from 'axios'
-import {useState , useEffect} from 'react'
 import {BiUser} from "react-icons/bi"
 import {FaStar} from 'react-icons/fa'
 
 
 function AllReviews({product}) {
-  const [productt, setProductt] = useState(null)
-    console.log(product)
-    const getProduct = async () =>{
-      const res = await axios.get(`https://ennmart.herokuapp.com/api/v1/products/${product._id}`)
-      setProductt(res.data)
-    }
-    const starsArray  = Array(5).fill(0);
-    useEffect(()=>{
-      getProduct()
-    },[])
+  const starsArray  = Array(5).fill(0);
+ 
   return (
     <>
      <p className="mb-3 themeClrText my-4 mx-3">Reviews  </p>
-    {productt && productt.reviews.length > 0 ? productt.reviews.map((review , ind) =>(
+    {product && product.reviews.length > 0 ? product.reviews.map((review , ind) => ind <  10  && (
   <div className="grid grid-cols-12 mt-3  bg-white w-11/12 mx-auto rounded-md py-2 border-b-2" key={review._id}>
   <div className="col-span-3 flex justify-center items-center">
       <span className='bg-gray-100 rounded-full py-2 px-2'>

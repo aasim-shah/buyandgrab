@@ -20,7 +20,7 @@ export default function BottomTabBarPhone() {
         if(times){
          (searchBarPhone.style.top = "0px")
         }else{
-           (searchBarPhone.style.top = "-10rem")
+           (searchBarPhone.style.top = "-30rem")
         }
         setTimes((prev) => !prev)
     }

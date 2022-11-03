@@ -16,7 +16,7 @@ function Navbar() {
   const auth = useSelector((state) => state.auth);
   const cartItems = cart.cartItems;
   const dispatch = useDispatch();
-  const cartHidden = cart.hidden;
+  const cartShowen = cart.hidden;
   const showcartBtn = () => {
     dispatch(showCart());
   };
@@ -42,6 +42,7 @@ function Navbar() {
 
   const toggeSrcRusultPhone = () =>{
     setFiltered([]);
+  setSearchValue('')
     console.log('toggeSrcRusultPhone');
   }
   return (
@@ -130,13 +131,13 @@ function Navbar() {
           onChange={(e) => setSearchValue(e.target.value)}
           value={searchValue}
         />
-        <span className="bg-gray-200  h-12 top-10 w-16 rounded-md flex items-center justify-center absolute right-4 ">
-         {searchValue !== '' ? (<FaTimes size={20}  onClick={toggeSrcRusultPhone}/>) : (<RiSearchLine size={20}/>)}
+        <span onClick={toggeSrcRusultPhone} className="bg-gray-200  h-12 top-10 w-16 rounded-md flex items-center justify-center absolute right-4 ">
+         {searchValue !== '' ? (<FaTimes size={20}  />) : (<RiSearchLine size={20}/>)}
         </span>
         <div id="showSrcResultsPhone" className="showSrcResultsPhone  scrolable  w-full absolute  max-h-32 overflow-hidden z-[5]">
           {filtered && filtered.length > 0
             ? filtered.map((item) => (
-                <div className="  w-11/12 mx-auto  border-b-2 py-5 mt-2 flex flex-row justify-between px-3 ">
+                <Link   to={`/product/${item._id}`} className="  w-11/12 mx-auto  border-b-2 py-5 mt-2 flex flex-row justify-between px-3 ">
                   <div className="img w-6 h-6 flex justify-center items-center">
                     <img src={item.image} alt="" />
                   </div>
@@ -145,13 +146,13 @@ function Navbar() {
                     {item.title.slice(0, 26)} ...
                   </div>
                   <div className="price text-white">{item.price}</div>
-                </div>
+              </Link>
               ))
             : ""}
         </div>
       </div>
 
-      {cart && cartHidden ? <CartComponent /> : ""}
+      {cart && cartShowen ? <CartComponent /> : ""}
     </>
   );
 }

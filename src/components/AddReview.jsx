@@ -4,15 +4,16 @@ import {FaTimes , FaStar} from 'react-icons/fa'
 import {useSelector , useDispatch} from 'react-redux'
 import { doc, getDoc , setDoc } from "firebase/firestore";
 import axios from 'axios'
-import {openThankingModal , closeThankingModal , toggleDarkTheme} from "../features/globalSlice"
+import { toggleDarkTheme} from "../features/globalSlice"
 import { db } from '../firebase'
 import UserDetailsModal from './UserDetailsModal';
+import {  toast } from "react-toastify";
 
 
 function AddReview({btnTitle , btnStyle , product}) {
     const productId = product?._id;
     const dispatch = useDispatch()
-    const ThankingModalRedux = useSelector((state) => state.global)
+    const global = useSelector((state) => state.global)
     const auth = useSelector((state) => state.auth)
         const[reviewErr , setReviewErr] = useState()
         const [selectedRating, setSelectedRating] = useState(null)
@@ -69,17 +70,15 @@ const handleSubmit = async() =>{
                 rating : selectedRating,
                 productId : productId
             })
-            console.log(res)
             if(res.data.success){
-                dispatch(openThankingModal())
                 setHoveredRating(null)
                 setInputText('')
+                toast.success("Review Added !");
                 setSelectedRating(null)
                 closeModalFunc()
             }else{
-                setInputText(res.data.yourReview.reviewText)
-                setSelectedRating(res.data.yourReview.rating)
-                setReviewErr(res.data.msg)
+                 toast.success("Review Updated  !");
+                closeModalFunc()
             }
           }else{
             setReviewErr('Fill All Field Properly !')
@@ -89,6 +88,10 @@ const handleSubmit = async() =>{
            setOpenUserDetailModal(true)
         }
 
+    }else{
+        // redirect ot loginpage
+       console.log('login first')
+        window.location = "/login"
     }
 
 
@@ -97,7 +100,6 @@ const handleSubmit = async() =>{
 }
 
 const onStarClick = (value) => {
-    console.log(value)
     setSelectedRating(value)
 }
 

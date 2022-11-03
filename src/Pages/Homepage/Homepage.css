@@ -96,7 +96,7 @@ color: white;
 
 .slider{
     background-color: var(--themeColour);
-    min-height: 70vh;
+    min-height: 60vh;
     display: flex;
     justify-content: center;
     color: white;
@@ -139,8 +139,8 @@ color: white;
     border: none;
     padding-left: 6rem;
     border-radius: 0.35rem;
-    border: 3px solid rgb(255, 252, 252);
-    background-color: rgba(179, 179, 175, 0.658);
+    box-shadow: 0px 0px 4px var(--themeColour);
+    background-color: rgba(255, 255, 255, 0.973);
 }
 .search-input:focus{
     box-shadow: 0px 0px 3px var(--themeColour);
@@ -148,14 +148,15 @@ color: white;
 .search-btn{
     position: absolute;
     left: 0px;
-    top: 0.26rem;
+    top: 0px;
+    bottom: 0px;
     background-color: var(--themeColour);
     display: flex;
     justify-content: center;
     align-items: center;
     width: 5rem;
     color: #fff;
-    height: 2rem;
+    height: 2.2rem;
 }
 .menu-list{
     list-style: none;
@@ -433,7 +434,7 @@ text-decoration: line-through;
     flex-direction: column;
 }
 .iconBtn-search:focus{
-    background-color: #7de9c4;
+    background-color: #09467c;
 }
 .iconBtn small {
     font-size: 10px;
@@ -454,7 +455,7 @@ text-decoration: line-through;
 }
 .iconBtn-count{
     position: absolute;
-    background-color: #61c9a5;
+    background-color: #21aa9f;
     width: 1.5rem;
     height: 1.5rem;
     left: 13px;
