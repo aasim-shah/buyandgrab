@@ -10,6 +10,7 @@ import AddReview from "./AddReview";
 import { BsArrowBarDown } from "react-icons/bs";
 import ThankingModal from "./ThankingModal";
 import Highlights from "./Highlights";
+import { Link } from 'react-router-dom'
 import AllReviews from "./AllReviews";
 import {FaStar} from 'react-icons/fa'
 
@@ -71,12 +72,12 @@ export default function ViewProductHero({ product }) {
               <span className=" text-[#1a9cb7] ">Men </span>
               <span className=" text-[#1a9cb7] ml-2">
                 <i className="fa-solid fa-chevron-right themeClrText "></i>
-                <span className="ml-2">{product.category}</span>
+                <Link to={`/category/${product.category}`} className="ml-2">{product.category}</Link>
               </span>
               {product.subCategory !== "" ? (
                 <span className=" text-[#1a9cb7] ml-2">
                   <i className="fa-solid fa-chevron-right themeClrText "></i>
-                  <span className="ml-2">{product.subCategory}</span>
+                  <Link to={`/category/${product.category}/${product.subCategory}`} className="ml-2">{product.subCategory}</Link>
                 </span>
               ) : (
                 ""

@@ -12,6 +12,8 @@ import AdminEditProduct from './Pages/Adminhome/AdminEditProduct';
 import AdminViewProducts from './Pages/Adminhome/AdminViewProducts';
 import ConfirmOrder from './Pages/ConfirmOrder/ConfirmOrder';
 import NoPageFound from './Pages/NoPageFound';
+import ViewProductByCat from './Pages/ViewProduct/ViewProductByCat';
+import ViewProductByCatAndSub from './Pages/ViewProduct/ViewProductByCatAndSub';
 
 function App() {
   const dispatch = useDispatch()
@@ -24,6 +26,8 @@ function App() {
     <Route path="/product/:id" element={<ViewProduct />} />
     <Route path="/login"  element={auth.isAuthanticated ? <Navigate to='/' />  : <Loginpage/>}/>
     <Route path="/signup" element={<Signuppage />} />
+    <Route path="/category/:category" element={<ViewProductByCat />} />
+    <Route path="/category/:category/:subCategory" element={<ViewProductByCatAndSub />} />
     <Route path="/cart" element={<Cartpage />} />
     <Route path="/comfirm_order" element={<ConfirmOrder />} />
     <Route path="/admin" element={auth.isAdmin  ?<Adminhome/> : <Navigate to='/login' />  } />
