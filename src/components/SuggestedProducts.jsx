@@ -30,23 +30,24 @@ function SuggestedProducts() {
             products.slice(0, 14).map((product, index) => (
               <div className="card-inner" key={product._id}>
                 <Link to={`/product/${product._id}`} className="card-inner-a">
-                  <img src={product.image} alt="" className="card-img-a" />
+                  <img src={product.image} alt="" className="card-img-a" 
+                    onMouseEnter={e=>e.currentTarget.src = product.hoverImage ? product.hoverImage : product.image}
+                    onMouseLeave={e=>e.currentTarget.src = product.image }
+                  />
                   <small className="free-courses">{product.category} | {product.subCategory}</small>
                   <div className="text-center">
                     {product.title.slice(0, 36) + " ..."}
                   </div>
                 </Link>
                 <div className="card-footer">
-                  <div className="flex flex-row justify-between  mx-2">
+                  <div className="flex flex-row justify-between  items-center mx-4">
                     <div className="card-price mt-3">
                       <span className="text-sm">RS : </span>
-                      <span className="themeClrText">{"$" + product.price}</span>
-                    </div>
-                    {/* <div className="card-discounted-price">
-                  <span className="del-text">RS : {Number(product.price * 1.3).toFixed(2)}</span>
-                  <span className="del-text ml">{Number(product.price * 0.2).toFixed(2)}%</span>
+                      <span className="themeClrText text-start text-xl">{product.price}</span>
+                  <span className="del-text text-sm ml-4 font-noraml text-gray-400">RS : {Number(product.price * 1.2).toFixed(2)}</span>
+                  {/* <span className="del-text ml">{Number(product.price * 0.2).toFixed(2)}%</span> */}
                 </div>
-   */}
+  
                     <div className="card-ratings flex justify-between items-center mt-2">
                         <span className="rating-stars">
                           {(product.rating.ratings).toFixed(2)}
@@ -100,7 +101,7 @@ function SuggestedProducts() {
                   <div className="text-md">
                     <span className="text-sm">Rs . </span>
                     <span className="text-green-800">
-                      {"$" + product.price}
+                      { product.price}
                     </span>
                   </div>
                   <div className="card-ratings flex justify-between items-center ">

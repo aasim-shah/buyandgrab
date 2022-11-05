@@ -5,7 +5,7 @@ export default function SkeltonCard() {
     <>
       
   <div  className="card-inner text-start" >
-  <div className=" w-24 h-24 rounded-full mx-auto skelton"></div>
+  <div className=" w-full h-40  mx-auto skelton"></div>
         <div className="mt-4">
         <p className="text-skelton"></p>
         <p className="text-skelton"></p>
@@ -13,7 +13,8 @@ export default function SkeltonCard() {
         <p className="text-skelton "></p>   
         </div>
         <div className="flex mt-3">
-        <button className="skelton text-white px-2 py-1 mx-auto rounded-md">Add To Bag</button>
+        <button className="skelton text-white px-2 py-3 block mx-auto rounded-md w-16 md:w-32"></button>
+        <button className="skelton text-white px-2 py-3 block mx-auto rounded-md w-16 ml-2 md:w-32"></button>
         </div>
 </div>
     </>

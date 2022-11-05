@@ -1,16 +1,21 @@
-import React from "react";
-import ReactImageZoom from 'react-image-zoom';
-
-export default function MagicZoom({_width , _height , _src}) {
+import React from 'react'
+import ReactZoomify from 'react-zoomify'
 
 
-  const options = {width: _width, height: _height, img:_src  , zoomLensStyle : "background-color:gray; opacity : 0.6;" , zoomStyle : ""} ;
 
+function MagicZoom() {
   return (
-  <> 
-<div className="w-full mx-auto">
-<ReactImageZoom  {...options} />
-</div>
-  </>
-  );
+    <div className="">
+   <ReactZoomify 
+               width={300} 
+               src='images/ecom.png'
+               s={150} 
+               magnification={4}
+               zoomedImgLeft={500}
+               zoomedImgTop={100}
+               />
+    </div>
+  )
 }
+
+export default MagicZoom

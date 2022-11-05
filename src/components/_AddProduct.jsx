@@ -9,7 +9,7 @@ export default function _AddProduct() {
   const [gall, setGall] = useState([]);
   const [headingText, setHeadingText] = useState("details");
   const [allHeadings, setallHeadings] = useState(["details"]);
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState([]);
   const [gallUploaded, setGallUploaded] = useState(false);
   const [upperFields, setUpperFields] = useState({
     name: "",
@@ -69,15 +69,16 @@ export default function _AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 try {
-  console.log(gall)
-
-
+console.log(img)
+  let imgUrls = [];
   const data = new FormData();
-  data.append("file", img);
-  data.append("upload_preset", "okaybosshhh");
-  data.append("cloud_name", "dy9crvf1i");
-  const first = await axios.post("https://api.cloudinary.com/v1_1/dy9crvf1i/image/upload", data)
-    
+  for (let i = 0; i < 2; i++) {
+    data.append("file", img[i]);
+    data.append("upload_preset", "okaybosshhh");
+    data.append("cloud_name", "dy9crvf1i");
+     const urls = await axios.post("https://api.cloudinary.com/v1_1/dy9crvf1i/image/upload", data)
+    imgUrls.push(urls.data.url)  
+  }
         if(files.length === gall.length ) {
           const allData = {
             name: upperFields.name,
@@ -85,14 +86,15 @@ try {
             price: upperFields.price,
             category : upperFields.category,
             subCategory : upperFields.subCategory,
-            image: first.data.url,
+            image: imgUrls[0],
+            hoverImage: imgUrls[1],
             gallary: gall,
             specifications: fields,
             colours : clrFields,
             sizes : sizeFields
           };
-        const third = await    axios.post("https://ennmart.herokuapp.com/api/v1/add_new", allData)
-        // const third = await    axios.post("http://localhost:8000/api/v1/add_new", allData)
+        // const third = await    axios.post("https://ennmart.herokuapp.com/api/v1/add_new", allData)
+        const third = await    axios.post("http://localhost:8000/api/v1/add_new", allData)
         console.log(third.data , 'third data')
         if(third){
           console.log('reload page')
@@ -371,10 +373,26 @@ setSizeFields(delArray)
               id=""
               className="w-8/12"
               onChange={(e) => {
-                setImg(e.target.files[0]);
+                setImg([... img , e.target.files[0]]);
               }}
             />
           </div>
+
+          
+          <div className="input-div w-full flex flex-row items-center mb-3  justify-evenly mt-3 bg-gray-200 py-3">
+            <p className="hidden md:block">Select Hover Image : </p>
+            <input
+              type="file"
+              name="file"
+              id=""
+              className="w-8/12"
+              onChange={(e) => {
+                setImg([... img , e.target.files[0]]);
+
+              }}
+            />
+          </div>
+
               <div className="border-2 relative border-4 border-red-200 py-3">
                 
           <div

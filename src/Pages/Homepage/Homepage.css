@@ -13,7 +13,6 @@
     padding: .8rem;
     flex-direction: column;
     overflow: hidden;
-
     width: 18rem;
     margin-left: auto;
     margin-right: auto;
@@ -198,7 +197,7 @@ color: white;
     display: flex;
     padding: .5rem;
     flex-direction: column;
-    width: 20rem;
+    width: 25rem;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 1rem;
@@ -241,13 +240,13 @@ color: white;
 }
 
 .card-img{
-    width: 15rem;
-    height: 15rem;
+    width: 25rem;
+    height: 25rem;
 }
 
 .card-img-a{
-    width: 20rem;
-    max-height: 20rem;
+    width: 25rem;
+    max-height: 25rem;
     
 }
 .free-courses{
@@ -337,6 +336,8 @@ text-decoration: line-through;
 
  .breadcrumb-inner-main{
         width: 90%;
+        display: flex;
+        align-items: center;
         margin: 0px auto;
         padding: 10px ;
  }

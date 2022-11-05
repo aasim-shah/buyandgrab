@@ -5,17 +5,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation } from "swiper";
 import "swiper/css/navigation";
-import { AiFillStar } from "react-icons/ai";
+import { AiFillStar , AiFillHome} from "react-icons/ai";
 import AddReview from "./AddReview";
-import { BsArrowBarDown } from "react-icons/bs";
 import ThankingModal from "./ThankingModal";
-import Highlights from "./Highlights";
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import AllReviews from "./AllReviews";
 import {FaStar} from 'react-icons/fa'
 
 export default function ViewProductHero({ product }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const cart = useSelector((state) => state.cart);
   const [qty, setQty] = useState(1);
   const [clr, setClr] = useState("");
@@ -69,7 +68,7 @@ export default function ViewProductHero({ product }) {
         <div className="viewproduct-hero-main-container hidden md:block">
           <div className="breadcrumb-container ">
             <div className="breadcrumb-inner-main">
-              <span className=" text-[#1a9cb7] ">Men </span>
+              <span onClick={()=>{navigate('/')}} className="cursor-pointer text-[#1a9cb7] inline-flex pb-2"><AiFillHome size={22}/> </span>
               <span className=" text-[#1a9cb7] ml-2">
                 <i className="fa-solid fa-chevron-right themeClrText "></i>
                 <Link to={`/category/${product.category}`} className="ml-2">{product.category}</Link>
