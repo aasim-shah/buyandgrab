@@ -8,6 +8,7 @@ import { toggleDarkTheme} from "../features/globalSlice"
 import { db } from '../firebase'
 import UserDetailsModal from './UserDetailsModal';
 import {  toast } from "react-toastify";
+import PulseLoader from "react-spinners/PulseLoader";
 
 
 function AddReview({btnTitle , btnStyle , product}) {
@@ -20,6 +21,7 @@ function AddReview({btnTitle , btnStyle , product}) {
         const [hoveredRating, setHoveredRating] = useState(null)
         const [inputText , setInputText] = useState('')
     const [openModal, setOpenModal] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [openUserDetailModal, setOpenUserDetailModal] = useState(false)
 
 
@@ -55,6 +57,7 @@ const closeModalFunc = () =>{
 }
 
 const handleSubmit = async() =>{
+    setIsLoading(true)
     if(auth.userId) {
         const docRef = doc(db, "users", auth.userId);
         const docSnap = await getDoc(docRef);
@@ -96,7 +99,7 @@ const handleSubmit = async() =>{
 
 
     // dispatch(openThankingModal())
-
+    setIsLoading(false)
 }
 
 const onStarClick = (value) => {
@@ -138,8 +141,18 @@ const onStarHover = value =>{
             <textarea name="reviewText" id="" className='border-2 w-9/12 mx-auto block h-24 mt-5 py-3 px-3 rounded-md outline-none' placeholder='Post Your Review Here !!' onChange={(e)=>{setInputText(e.target.value)}} value={inputText}></textarea>
         </div>
         <div className="flex flex-col justify-center mt-5">
-            <button className='themeClrBg rounded-md text-white w-32 mx-auto font-bold py-1 px-4' onClick={handleSubmit}>Submit</button>
+            <button className='themeClrBg rounded-md text-white w-32 mx-auto font-bold py-1 px-4' onClick={handleSubmit}>{isLoading ? ( <PulseLoader
+        color={"white"}
+        loading={isLoading}
+        size={10}
+        className={"pt-1"}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />) : "Submit"}
+          
+            </button>
             <p className="text-center text-sm text-red-600 mt-3">{reviewErr}</p>
+            
         </div>
     </div>
 
