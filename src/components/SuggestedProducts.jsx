@@ -68,6 +68,7 @@ function SuggestedProducts() {
               <SkeltonCard />
               <SkeltonCard />
               <SkeltonCard />
+              <SkeltonCard />
             </>
           )}
         </div>

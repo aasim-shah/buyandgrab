@@ -12,6 +12,7 @@ import { db } from '../../firebase'
 import { doc, getDoc , setDoc, updateDoc } from "firebase/firestore";
 
 export default function ConfirmOrder() {
+  const [inputErr, setInputErr] = useState(null)
   const global = useSelector((state) => state.global)
   const auth = useSelector((state) => state.auth)
   const dispatch = useDispatch()
@@ -33,6 +34,10 @@ const handleChange = (e) => {
 
 const handleSubmit = async (e) =>{
   e.preventDefault()
+  if(userInfo.firstName === '' || userInfo.email === "" || userInfo.address === ""){
+    setInputErr("* Fill All Required Fields Properly !")
+    return
+  }
   console.log(userInfo)
   if(auth.userId){
     console.log(auth.userId)
@@ -97,6 +102,7 @@ const handleSubmit = async (e) =>{
             <div className="w-full mt-3">
             <input type="text" name="address" onChange={(e) => handleChange(e)} className='w-full py-6 px-4 border-2 rounded-md' placeholder='Address' id="" />
             </div>
+            <p className="text-red-500 my-1 text-sm font-bold">{inputErr}</p>
             <div className="w-full flex flex-row justify-center mt-3">
                <button  className="py-1 px-5 themeClrBg text-white font-bold rounded-md" onClick={(e)=>{ handleSubmit(e)
                 } }>Confirm</button>
