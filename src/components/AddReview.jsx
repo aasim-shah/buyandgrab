@@ -4,7 +4,6 @@ import {FaTimes , FaStar} from 'react-icons/fa'
 import {useSelector , useDispatch} from 'react-redux'
 import { doc, getDoc , setDoc } from "firebase/firestore";
 import axios from 'axios'
-import { toggleDarkTheme} from "../features/globalSlice"
 import { db } from '../firebase'
 import UserDetailsModal from './UserDetailsModal';
 import {  toast } from "react-toastify";

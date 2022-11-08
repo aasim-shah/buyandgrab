@@ -14,6 +14,7 @@ import ConfirmOrder from './Pages/ConfirmOrder/ConfirmOrder';
 import NoPageFound from './Pages/NoPageFound';
 import ViewProductByCat from './Pages/ViewProduct/ViewProductByCat';
 import ViewProductByCatAndSub from './Pages/ViewProduct/ViewProductByCatAndSub';
+import Payment from './Pages/Payment/Payment';
 
 function App() {
   const dispatch = useDispatch()
@@ -29,7 +30,8 @@ function App() {
     <Route path="/category/:category" element={<ViewProductByCat />} />
     <Route path="/category/:category/:subCategory" element={<ViewProductByCatAndSub />} />
     <Route path="/cart" element={<Cartpage />} />
-    <Route path="/comfirm_order" element={<ConfirmOrder />} />
+    <Route path="/confirm_order" element={<ConfirmOrder />} />
+    <Route path="/payment/:id" element={<Payment />} />
     <Route path="/admin" element={auth.isAdmin  ?<Adminhome/> : <Navigate to='/login' />  } />
     <Route path="/admin/add_product" element={auth.isAdmin  ?<AdminAddProduct/> : <Navigate to='/login' />  } />
     <Route path="/admin/view_products" element={auth.isAdmin  ?<AdminViewProducts/> : <Navigate to='/login' />  } />
