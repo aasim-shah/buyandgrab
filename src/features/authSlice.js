@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-const data = JSON.parse(localStorage.getItem("auth"));
+const data = JSON.parse(localStorage.getItem("jwt_Token"));
 const initialState = data || {
     isAuthanticated : false,
-    isAdmin : false,
+    token : "",
     userId : ""
 }
 
@@ -12,15 +12,16 @@ export const authSlice = createSlice({
     reducers : {
         loggedIn : (state , action) =>{
             state.isAuthanticated  = true;
-            state.isAdmin  = action.payload.isAdmin;
-            state.userId = action.payload.user.uid;
-            localStorage.setItem('auth' , JSON.stringify(state))
-           
+            state.userId = action.payload.user._id;
+            state.token   = action.payload.token
+            localStorage.setItem('jwt_Token' , JSON.stringify(state))
+            
         },
         loggedOut : (state , action) =>{
             state.isAuthanticated  = false;
             state.userId = {};
-            localStorage.removeItem('auth')
+            state.token   = ''
+            localStorage.removeItem('jwt_Token')
         }
     }
 })

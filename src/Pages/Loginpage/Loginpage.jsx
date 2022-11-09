@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  signInWithPopup,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { Auth, GoogleProvider } from "../../firebase";
+
 import { Link, useNavigate } from "react-router-dom";
-import { db } from "../../firebase";
 import "./Loginpage.css";
-import { doc, getDoc , setDoc } from "firebase/firestore";
 import { useSelector , useDispatch } from "react-redux";
 import { loggedIn, loggedOut  } from "../../features/authSlice";
+import axios from "axios";
 
 
 
@@ -26,22 +21,21 @@ export default function Loginpage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await signInWithEmailAndPassword(Auth, email, password);
-      if (user.user.uid) {
-        const docRef = doc(db, "users", user.user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          dispatch(loggedIn({user : user.user , isAdmin : docSnap.data().isAdmin })) 
-        navigate("/");
-   
-        } else {
-          dispatch(loggedIn({user : user.user , isAdmin : false })) 
-          navigate("/");
-           
-        }
-
-
-           
+      const data = {
+        username : email,
+        password 
+      }
+     const response  = await axios.post("https://ennmart.herokuapp.com/login" , data)
+     if(response.data.success){
+      dispatch(loggedIn({user : response.data.user , token : response.data.token}))
+      window.location = '/'
+     }
+      console.log(response)
+      if(response.data.err){
+        setErrors('Wrong Credintials !')
+      }
+      if(response.data._id){
+        // window.location = "/"
       }
     } catch (error) {
       console.log(error);
@@ -49,27 +43,6 @@ export default function Loginpage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    const result = await signInWithPopup(Auth, GoogleProvider);
-    console.log(result)
-    if(result.user.uid){
-
-      const docRef = doc(db, "users", result.user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-           dispatch(loggedIn({user : result.user , isAdmin : docSnap.data().isAdmin })) 
-      }else{
-        await setDoc(doc(db, "users", result.user.uid), {
-          "email" : result.user.email,
-          "userName" : result.user.displayName,
-          "profilePic" : result.user.photoURL
-           });
-        dispatch(loggedIn({user : result.user , isAdmin : false})) 
-      }
-     
-    }
-
-  };
 
   return (
     <>
@@ -82,7 +55,7 @@ export default function Loginpage() {
         <div className="login-form-div">
           <p className="">{auth.isAuthanticated}</p>
           <p className="text-white mt-4 font-bold">LOGIN To AA-MART</p>
-          <form className="login-form" onSubmit={handleSubmit}>
+          <form className="login-form" method="post" onSubmit={handleSubmit}>
             <input
               type="email"
               name="email"
@@ -110,7 +83,7 @@ export default function Loginpage() {
             </div>
           </form>
           <div className="social-login">
-            <div className="social-login-google" onClick={handleGoogleLogin}>
+            <div className="social-login-google">
               <button
                 className="social-google-head"
                 

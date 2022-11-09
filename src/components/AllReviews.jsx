@@ -17,7 +17,7 @@ function AllReviews({product}) {
   </div>
   <div className="col-span-9 flex flex-col">
       <div className="flex w-11/12 flex-row justify-between">
-          <span className='text-lg font-bold'>{review.userName}</span>
+          <span className='text-lg font-bold'>{review.firstName}</span>
           <span className='flex flex-row gap-1'>{starsArray.map((_, ind) =>(
             <FaStar size={20} key={ind} color={review.rating > ind ? "orange" : "gray"}/>
           ))}</span>

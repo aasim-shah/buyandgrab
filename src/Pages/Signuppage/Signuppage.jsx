@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {  createUserWithEmailAndPassword } from "firebase/auth";
-import { Auth } from "../../firebase";
 import { Link , useNavigate } from "react-router-dom";
+import { loggedIn, loggedOut  } from "../../features/authSlice";
+import { useSelector , useDispatch } from "react-redux";
+
 import "./Signuppage.css";
+import axios from "axios";
 
 export default function Signuppage() {
+  const dispatch = useDispatch()
+  const auth = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,13 +17,19 @@ export default function Signuppage() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      if(password === cpassword){
-         const user = await createUserWithEmailAndPassword(Auth, email , password)
-          navigate('/')
-      }else{
-        console.log('password doesn\'t matchs')
-        setErrorr('Passwords doesn\'t Matches')
-
+      const data ={
+        email : email,
+        password : password ,
+        Cpassword : cpassword
+      }
+      const res = await axios.post('https://ennmart.herokuapp.com/signup' ,data )
+      dispatch(loggedIn({user : res.data.user , token : res.data.token}))
+      window.location = '/'
+      if(res.data.err){
+        setErrorr('Passwords Does not matchs')
+      }
+      if(res.data._id){
+        window.location = "/login"
       }
     } catch (error) {
       console.log(error.code)

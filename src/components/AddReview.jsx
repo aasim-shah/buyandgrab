@@ -2,9 +2,7 @@ import React ,{ useState} from 'react'
 import ReactModal from 'react-modal'
 import {FaTimes , FaStar} from 'react-icons/fa'
 import {useSelector , useDispatch} from 'react-redux'
-import { doc, getDoc , setDoc } from "firebase/firestore";
 import axios from 'axios'
-import { db } from '../firebase'
 import UserDetailsModal from './UserDetailsModal';
 import {  toast } from "react-toastify";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -57,21 +55,16 @@ const closeModalFunc = () =>{
 
 const handleSubmit = async() =>{
     setIsLoading(true)
-    if(auth.userId) {
-        const docRef = doc(db, "users", auth.userId);
-        const docSnap = await getDoc(docRef);
-        if(docSnap.exists()){
-            const userName = docSnap.data().userName;
-            const profilePic = docSnap.data().profilePic;
-          if(inputText !== null  && selectedRating !== null ){
-            const res =await axios.post('https://ennmart.herokuapp.com/api/v1/product/add_review' , {
-                userId : auth.userId,
-                userName : userName,
-                profilePic : profilePic,
-                reviewText : inputText,
-                rating : selectedRating,
-                productId : productId
-            })
+    if(!auth.isAuthanticated){
+        return window.location = '/login'
+      }
+        if(inputText !== null  && selectedRating !== null ){
+        const res =await axios.post('https://ennmart.herokuapp.com/api/v1/product/add_review' , {
+            userId : auth.userId,
+            reviewText : inputText,
+            rating : selectedRating,
+            productId : productId
+        })
             if(res.data.success){
                 setHoveredRating(null)
                 setInputText('')
@@ -79,25 +72,15 @@ const handleSubmit = async() =>{
                 setSelectedRating(null)
                 closeModalFunc()
             }else{
-                 toast.success("Review Updated  !");
+                    toast.success("Review Updated  !");
                 closeModalFunc()
             }
-          }else{
-            setReviewErr('Fill All Field Properly !')
-          }
-
         }else{
-           setOpenUserDetailModal(true)
+        setReviewErr('Fill All Field Properly !')
         }
 
-    }else{
-        // redirect ot loginpage
-       console.log('login first')
-        window.location = "/login"
-    }
 
 
-    // dispatch(openThankingModal())
     setIsLoading(false)
 }
 

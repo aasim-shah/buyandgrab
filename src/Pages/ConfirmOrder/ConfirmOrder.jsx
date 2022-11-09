@@ -5,11 +5,11 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import axios from 'axios';
 import ThankingModal from '../../components/ThankingModal';
-import {openThankingModal ,addUserDetails} from "../../features/globalSlice"
 import {useSelector , useDispatch} from 'react-redux'
-import { db } from '../../firebase'
+import { ImFrustrated } from 'react-icons/im';
+import { toast, ToastContainer } from 'react-toastify';
 
-import { doc, getDoc , setDoc, updateDoc } from "firebase/firestore";
+
 
 export default function ConfirmOrder() {
   const [inputErr, setInputErr] = useState(null)
@@ -34,41 +34,48 @@ const handleChange = (e) => {
 
 const handleSubmit = async (e) =>{
   e.preventDefault()
+  console.log(auth.userId)
+  if(!auth.isAuthanticated){
+    return window.location = '/login'
+  }
   if(userInfo.firstName === '' || userInfo.email === "" || userInfo.address === ""){
     setInputErr("* Fill All Required Fields Properly !")
     return
   }
-  console.log(userInfo)
-  if(auth.userId){
-    console.log(auth.userId)
-    const userDoc = doc(db , "users" , auth.userId)
-    const user = await getDoc(userDoc)
-    if(user.exists()){
-      await updateDoc(doc(db , "users" , auth.userId),{
-        userInfo
-       })
-    }else{
-      await setDoc(doc(db , "users" , auth.userId),{
-        userInfo
-       })
-    }
+
+
+
+
   const  data = {
       products : global.order.products.map(item => {return item._id}),
-      coupon : global.order.coupon,
       couponApplied : global.order.couponApplied,
       totalAmount : global.order.discountedTotal,
-      user : user.data()
+      user : auth.userId,
+      userInfo : userInfo
     }
-    const res = await axios.post('https://ennmart.herokuapp.com/api/v1/place_order' , data)
-    if(res.data){
-      window.location = `/payment/${res.data._id}`
+    if(global.order.couponApplied){
+      data.coupon =  global.order.coupon._id;
+    }
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      'jwt_Token': auth.token
     }
 
-  }else{
-    window.location = "/login"
-  } 
-}
-
+    const res = await axios.post('https://ennmart.herokuapp.com/api/v1/place_order' , data , {
+      headers: headers,
+      
+    })
+    console.log(res)
+    if(res.data.success){
+    return  toast.success('Order Places Successfully :)')
+    }
+   
+  } catch (error) {
+    console.log(error)
+    toast.error('SomeThing Went Wrong !')
+  }
+  }
 
 
   return (

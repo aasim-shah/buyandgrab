@@ -59,7 +59,7 @@ export default function CartOnPhonescreen() {
       ></div>
       <div
         id="pcart-container"
-        className="block scrollY  md:hidden pcart-container z-[5] fixed  bottom-0 h-[85vh] bg-white w-full"
+        className="block scrollY  md:hidden pcart-container z-[2] fixed  bottom-0 h-[85vh] bg-white w-full"
       >
         <div className="flex justify-between py-4 px-3">
           <span className="font-bold ">Your Cart</span>
