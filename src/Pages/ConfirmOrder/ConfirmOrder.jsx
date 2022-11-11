@@ -42,7 +42,7 @@ const handleSubmit = async (e) =>{
     return
   }
 
-  const  data = {
+  let  data = {
       products : global.order.products.map(item => {return item._id}),
       couponApplied : global.order.couponApplied,
       totalAmount : global.order.discountedTotal,
