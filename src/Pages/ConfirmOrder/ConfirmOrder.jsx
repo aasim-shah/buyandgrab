@@ -14,14 +14,21 @@ export default function ConfirmOrder() {
   const global = useSelector((state) => state.global);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState(null);
   const [InputErr, setInputErr] = useState(null);
 
   const getUserData = async () => {
     const res = await axios.get(
       `https://ennmart.herokuapp.com/user/info/${auth.user._id}`
     );
-    setUserData(res.data);
+    setUserInfo({
+      firstName : res.data.firstName,
+      lastName : res.data.lastName,
+      email : res.data.email,
+      phone : res.data.phone,
+      city : res.data.city,
+      zipCode : res.data.zipCode,
+      address : res.data.address
+    });
   };
 
   const [userInfo, setUserInfo] = useState({
@@ -114,7 +121,7 @@ export default function ConfirmOrder() {
               required
               type="text"
               name="firstName"
-              value={userData?.firstName || userInfo.firstName}
+              value={ userInfo.firstName}
               onChange={(e) => handleChange(e)}
               className="w-full py-1 px-4 border-2 rounded-md mr-2"
               placeholder="First Name .."
@@ -124,7 +131,7 @@ export default function ConfirmOrder() {
               required
               type="text"
               name="lastName"
-              value={userData?.lastName || userInfo.lastName}
+              value={userInfo.lastName}
 
               onChange={(e) => handleChange(e)}
               className="w-full py-1 px-4 border-2 rounded-md ml-2"
@@ -137,7 +144,7 @@ export default function ConfirmOrder() {
               required
               type="text"
               name="email"
-              value={userData?.email || userInfo.email}
+              value={userInfo.email}
               onChange={(e) => handleChange(e)}
               className="w-full py-1 px-4 border-2 rounded-md"
               placeholder="Email Address ...."
@@ -149,7 +156,7 @@ export default function ConfirmOrder() {
               required
               type="number"
               name="phone"
-              value={userData?.phone || userInfo.phone}
+              value={userInfo.phone}
               onChange={(e) => handleChange(e)}
               className="w-full py-1 px-4 border-2 rounded-md"
               placeholder="Phone Number ..."
@@ -162,7 +169,7 @@ export default function ConfirmOrder() {
                 required
                 type="text"
                 name="city"
-                value={userData?.city || userInfo.city}
+                value={userInfo.city}
                 onChange={(e) => handleChange(e)}
                 className="w-full py-1 px-4 border-2 rounded-md mr-2"
                 placeholder="City .."
@@ -171,7 +178,7 @@ export default function ConfirmOrder() {
               <input
                 type="text"
                 name="zipCode"
-                value={userData?.zipCode || userInfo.zipCode}
+                value={ userInfo.zipCode}
                 onChange={(e) => handleChange(e)}
                 className="w-full py-1 px-4 border-2 rounded-md ml-2"
                 placeholder="Zip code ..."
@@ -183,10 +190,11 @@ export default function ConfirmOrder() {
             <input
               type="text"
               name="address"
-              value={userData?.address || userInfo.address}
+              value={ userInfo.address}
+
               onChange={(e) => handleChange(e)}
               className="w-full py-6 px-4 border-2 rounded-md"
-              placeholder="Address"
+              placeholder={"Address"}
               id=""
             />
           </div>
