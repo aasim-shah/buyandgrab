@@ -201,8 +201,8 @@ export default function CartOnPhonescreen() {
                       type="text"
                       name=""
                       onChange={(e) => setInputCouponCode(e.target.value)}
-                      placeholder="Coupon Code .."
-                      className="h-8 px-2"
+                      placeholder="Coupon Code  .."
+                      className="h-8 px-2 w-11/12 border-2 outline-none rounded-md" 
                       id=""
                     />
                   </div>
@@ -212,7 +212,7 @@ export default function CartOnPhonescreen() {
                     onClick={() => {
                       validiateCoupon();
                     }}
-                    className="py-1 px-3 rounded-md bg-gray-500 h-8  mt-7 ml-2"
+                    className="py-1 px-3 rounded-md themeClrBg text-white font-bold h-8  mt-7 mx-2"
                   >
                     Validate
                   </button>

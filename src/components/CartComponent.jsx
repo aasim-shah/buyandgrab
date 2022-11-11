@@ -217,7 +217,8 @@ export default function CartComponent() {
                       name=""
                       onChange={(e) => setInputCouponCode(e.target.value)}
                       placeholder="Coupon Code .."
-                      className="h-8 px-2"
+                      className="h-8 px-2 outline-none rounded-md"
+                      autoComplete={false}
                       id=""
                     />
                   </div>
@@ -227,7 +228,7 @@ export default function CartComponent() {
                     onClick={() => {
                       validiateCoupon();
                     }}
-                    className="py-1 px-3 rounded-md bg-gray-500 h-8  mt-7 ml-2"
+                    className="py-1 px-3 rounded-md bg-orange-400  font-bold h-8  mt-7 ml-2"
                   >
                     Validate
                   </button>
