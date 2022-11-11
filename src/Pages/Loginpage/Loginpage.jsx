@@ -5,6 +5,7 @@ import "./Loginpage.css";
 import { useSelector , useDispatch } from "react-redux";
 import { loggedIn, loggedOut  } from "../../features/authSlice";
 import axios from "axios";
+import  HashLoader from 'react-spinners/HashLoader'
 
 
 
@@ -15,11 +16,13 @@ export default function Loginpage() {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const data = {
         username : email,
@@ -34,11 +37,10 @@ export default function Loginpage() {
       if(response.data.err){
         setErrors('Wrong Credintials !')
       }
-      if(response.data._id){
-        // window.location = "/"
-      }
+      setIsLoading(false)
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
       setErrors(error.code);
     }
   };
@@ -46,6 +48,13 @@ export default function Loginpage() {
 
   return (
     <>
+    {isLoading ? ( <div className="bg-gray-100 opacity-[0.8] absolute h-[100vh] w-full flex flex-row justify-center items-center">
+    <HashLoader
+        color={"#355b7d"}
+        loading={isLoading}
+        size={150}
+      />
+    </div>) : ""}
     <div className="back-navigator">
       <span onClick={() => navigate(-1)}><i className="fa-solid fa-arrow-left-long text-xl"></i></span>
       <span className="logo">LOGO</span>
