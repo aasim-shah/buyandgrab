@@ -88,7 +88,7 @@ export default function ConfirmOrder() {
       console.log(res);
       if (res.data.success) {
         toast.success("Order Places Successfully :)");
-        window.location = `/payment/${res.data._id}`;
+        window.location = `/payment/${res.data.order._id}`;
         return;
       }
     } catch (error) {
