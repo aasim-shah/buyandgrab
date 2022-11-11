@@ -9,15 +9,24 @@ import { toast , ToastContainer } from 'react-toastify'
 function Payment() {
 const params = useParams()
     const handleClick = async (status) =>{
+        let data = {
+            _id : params.id,
+            status : status,
+        }
         if(status === 'accepted'){
+             data = {
+                _id : params.id,
+                status : status,
+                paid : true
+         }
             toast.success('Thanks for ordering !')
         }else{
+            data = {
+                _id : params.id,
+                paid : false
+         }
             toast.warning('Something Went Wrong !')
         }
-    const data = {
-        _id : params.id,
-        status : status
-    }
     const res = await axios.post('https://ennmart.herokuapp.com/api/v1/update/order' , data )
     console.log(res)
     
