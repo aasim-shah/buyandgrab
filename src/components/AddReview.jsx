@@ -60,7 +60,7 @@ const handleSubmit = async() =>{
       }
    console.log(auth.user.firstName)
         if(inputText !== ''  && selectedRating !== null ){
-        const res =await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/product/add_review` , {
+        const res =await axios.post(`https://ennmart.herokuapp.com/api/v1/product/add_review` , {
             userId : auth.userId,
             reviewText : inputText,
             rating : selectedRating,

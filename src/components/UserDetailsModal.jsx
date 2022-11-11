@@ -47,7 +47,7 @@ const handleSubmit = async (e) =>{
     firstName :  userDetails.firstName,
     lastName : userDetails.lastName
   }
-  const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/update` , data )
+  const res = await axios.post(`https://ennmart.herokuapp.com/user/update` , data )
   console.log(res.data)
   if(res.data){
     closeModalFunc()

@@ -60,7 +60,7 @@ export default function CartOnPhonescreen() {
       <div
         id="pcart-container"
         className="block scrollY  md:hidden pcart-container z-[2] fixed  bottom-0 h-[85vh] bg-white w-full"
-      >
+        >
         <div className="flex justify-between py-4 px-3">
           <span className="font-bold ">Your Cart</span>
           <span
@@ -181,7 +181,7 @@ export default function CartOnPhonescreen() {
               </span>
             </div>
 
-            <div className="flex flex-row  justify-center items-center my-2">
+            <div className="flex flex-row ml-4  mt-10">
                   <div className="flex flex-col">
                     <p className="text-sm  font-bold my-1">
                       {couponData ? couponData.isValid ? (
@@ -202,7 +202,7 @@ export default function CartOnPhonescreen() {
                       name=""
                       onChange={(e) => setInputCouponCode(e.target.value)}
                       placeholder="Coupon Code .."
-                      className="h-8 px-2 w-full rounded-md border-2 outline-none"
+                      className="h-8 px-2"
                       id=""
                     />
                   </div>
@@ -212,7 +212,7 @@ export default function CartOnPhonescreen() {
                     onClick={() => {
                       validiateCoupon();
                     }}
-                    className="py-1 px-3 rounded-md bg-green-700 h-8 mt-7 font-bold text-white ml-2"
+                    className="py-1 px-3 rounded-md bg-gray-500 h-8  mt-7 ml-2"
                   >
                     Validate
                   </button>

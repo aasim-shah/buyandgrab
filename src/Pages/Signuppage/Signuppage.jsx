@@ -22,7 +22,7 @@ export default function Signuppage() {
         password : password ,
         Cpassword : cpassword
       }
-      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/signup` ,data )
+      const res = await axios.post(`https://ennmart.herokuapp.com/signup` ,data )
       dispatch(loggedIn({user : res.data.user , token : res.data.token}))
       window.location = '/'
       if(res.data.err){

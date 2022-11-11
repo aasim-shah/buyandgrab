@@ -25,7 +25,7 @@ export default function Loginpage() {
         username : email,
         password 
       }
-     const response  = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login` ,data )
+     const response  = await axios.post(`https://ennmart.herokuapp.com/login` ,data )
      if(response.data.success){
       dispatch(loggedIn({user : response.data.user , token : response.data.token}))
       window.location = '/'

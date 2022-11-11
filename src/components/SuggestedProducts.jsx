@@ -10,7 +10,7 @@ function SuggestedProducts() {
 
   // get data from api
   const getProducts = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/v1`);
+    const res = await axios.get(`https://ennmart.herokuapp.com/api/v1`);
     setProducts(res.data);
     console.log(res)
   };
@@ -64,7 +64,6 @@ function SuggestedProducts() {
             ))
           ) : (
             <>
-              <SkeltonCard />
               <SkeltonCard />
               <SkeltonCard />
               <SkeltonCard />
