@@ -9,10 +9,7 @@ import { toast , ToastContainer } from 'react-toastify'
 function Payment() {
 const params = useParams()
     const handleClick = async (status) =>{
-        let data = {
-            _id : params.id,
-            status : status,
-        }
+        let data = {}
         if(status === 'accepted'){
              data = {
                 _id : params.id,
@@ -23,6 +20,7 @@ const params = useParams()
         }else{
             data = {
                 _id : params.id,
+                status : "pending",
                 paid : false
          }
             toast.warning('Something Went Wrong !')
