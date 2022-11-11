@@ -38,7 +38,7 @@ export const globalSlice = createSlice({
           }
           state.order.couponApplied = action.payload.couponApplied
           state.order.discountedTotal = action.payload.discountedTotal
-        //   localStorage.setItem("global", JSON.stringify(state));
+          localStorage.setItem("global", JSON.stringify(state));
         },
         addUserDetails : (state , action) =>{
             console.log(action.pay)
