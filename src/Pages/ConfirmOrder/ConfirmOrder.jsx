@@ -68,10 +68,10 @@ export default function ConfirmOrder() {
       totalAmount: global.order.discountedTotal,
       user: auth.userId,
       userInfo: userInfo,
+      coupon : global.order.coupon._id
+
     };
-    if (global.order.couponApplied) {
-      data.coupon = global.order.coupon._id;
-    }
+   
     try {
       const headers = {
         "Content-Type": "application/json",
@@ -198,17 +198,17 @@ export default function ConfirmOrder() {
               id=""
             />
           </div>
-          <div className="w-full flex flex-row justify-start my-2 text-red-500 text-sm">
-          {InputErr}
-          </div>
+          <p className="text-red-500 text-sm px-3">{InputErr}</p>
+          <div className="w-full flex flex-row justify-center mt-3">
             <button
               className="py-1 px-5 themeClrBg text-white font-bold rounded-md"
               onClick={(e) => {
                 handleSubmit(e);
               }}
-            >
+              >
               Confirm
             </button>
+              </div>
         </form>        
       </div>
 
