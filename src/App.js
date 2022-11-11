@@ -13,8 +13,10 @@ import AdminViewProducts from './Pages/Adminhome/AdminViewProducts';
 import ConfirmOrder from './Pages/ConfirmOrder/ConfirmOrder';
 import NoPageFound from './Pages/NoPageFound';
 import ViewProductByCat from './Pages/ViewProduct/ViewProductByCat';
+import axios from 'axios';
 import ViewProductByCatAndSub from './Pages/ViewProduct/ViewProductByCatAndSub';
 import Payment from './Pages/Payment/Payment';
+import { useEffect  , useState} from 'react';
 
 function App() {
   const dispatch = useDispatch()
@@ -32,10 +34,10 @@ function App() {
     <Route path="/cart" element={<Cartpage />} />
     <Route path="/confirm_order" element={<ConfirmOrder />} />
     <Route path="/payment/:id" element={<Payment />} />
-    <Route path="/admin" element={auth.isAdmin  ?<Adminhome/> : <Navigate to='/login' />  } />
-    <Route path="/admin/add_product" element={auth.isAdmin  ?<AdminAddProduct/> : <Navigate to='/login' />  } />
-    <Route path="/admin/view_products" element={auth.isAdmin  ?<AdminViewProducts/> : <Navigate to='/login' />  } />
-    <Route path="/admin/edit_product/:id" element={auth.isAdmin  ?<AdminEditProduct/> : <Navigate to='/login' />  } />
+    <Route path="/admin" element={auth.user.isAdmin  ?<Adminhome/> : <Navigate to='/login' />  } />
+    <Route path="/admin/add_product" element={auth.user.isAdmin  ?<AdminAddProduct/> : <Navigate to='/login' />  } />
+    <Route path="/admin/view_products" element={auth.user.isAdmin  ?<AdminViewProducts/> : <Navigate to='/login' />  } />
+    <Route path="/admin/edit_product/:id" element={auth.user.isAdmin  ?<AdminEditProduct/> : <Navigate to='/login' />  } />
     <Route path="/*"  element={ <NoPageFound/>} />
   </Routes>
     )

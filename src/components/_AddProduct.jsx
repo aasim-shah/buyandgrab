@@ -99,10 +99,7 @@ export default function _AddProduct() {
           sizes: sizeFields,
         };
         // const third = await    axios.post("https://ennmart.herokuapp.com/api/v1/add_new", allData)
-        const third = await axios.post(
-          "https://ennmart.herokuapp.com/api/v1/add_new",
-          allData
-        );
+        const third = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/add_new` ,allData )
         console.log(third.data, "third data");
         if (third) {
           console.log("reload page");

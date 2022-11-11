@@ -58,13 +58,25 @@ const handleSubmit = async() =>{
     if(!auth.isAuthanticated){
         return window.location = '/login'
       }
-        if(inputText !== null  && selectedRating !== null ){
-        const res =await axios.post('https://ennmart.herokuapp.com/api/v1/product/add_review' , {
+   console.log(auth.user.firstName)
+        if(inputText !== ''  && selectedRating !== null ){
+        const res =await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/product/add_review` , {
             userId : auth.userId,
             reviewText : inputText,
             rating : selectedRating,
+            firstName : auth.user.firstName,
             productId : productId
         })
+
+        if(res.data.firstNameRequired){
+            setHoveredRating(null)
+            setInputText('')
+            toast.warn("Please Provide FirstName and LastName  !");
+            setSelectedRating(null)
+            setIsLoading(false)
+            closeModalFunc()
+         return   setOpenUserDetailModal(true)
+        }
             if(res.data.success){
                 setHoveredRating(null)
                 setInputText('')

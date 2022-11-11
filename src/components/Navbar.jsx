@@ -62,7 +62,7 @@ function Navbar() {
             onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
           />
-          <div className="search-btn">
+          <div className="search-btnd ">
             <i className=" text-xl  fa-solid fa-magnifying-glass"></i>
           </div>
 

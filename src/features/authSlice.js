@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const data = JSON.parse(localStorage.getItem("jwt_Token"));
 const initialState = data || {
     isAuthanticated : false,
+    user : {},
     token : "",
     userId : ""
 }
@@ -13,16 +14,19 @@ export const authSlice = createSlice({
         loggedIn : (state , action) =>{
             state.isAuthanticated  = true;
             state.userId = action.payload.user._id;
+            state.user = action.payload.user;
             state.token   = action.payload.token
             localStorage.setItem('jwt_Token' , JSON.stringify(state))
             
         },
         loggedOut : (state , action) =>{
             state.isAuthanticated  = false;
-            state.userId = {};
+            state.user = {};
+            state.userId = '';
             state.token   = ''
             localStorage.removeItem('jwt_Token')
-        }
+        },
+        
     }
 })
 
