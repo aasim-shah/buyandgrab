@@ -64,7 +64,10 @@ const handleSubmit = async (e) =>{
     })
     console.log(res)
     if(res.data.success){
-    return  toast.success('Order Places Successfully :)')
+      toast.success('Order Places Successfully :)')
+      window.location = `/payment/${res.data._id}`
+    return  
+    
     }
    
   } catch (error) {
