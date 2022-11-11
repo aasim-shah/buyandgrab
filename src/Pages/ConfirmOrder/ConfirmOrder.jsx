@@ -108,7 +108,7 @@ export default function ConfirmOrder() {
             Total Price : {global.order.discountedTotal}
           </span>
         </div>
-        {userData && userData.phone !== "" ? "" : (<form>
+        <form>
           <div className="flex flex-row w-full">
             <input
               required
@@ -193,9 +193,6 @@ export default function ConfirmOrder() {
           <div className="w-full flex flex-row justify-start my-2 text-red-500 text-sm">
           {InputErr}
           </div>
-        </form>)}
-
-        
             <button
               className="py-1 px-5 themeClrBg text-white font-bold rounded-md"
               onClick={(e) => {
@@ -204,6 +201,7 @@ export default function ConfirmOrder() {
             >
               Confirm
             </button>
+        </form>        
       </div>
 
       <ThankingModal
