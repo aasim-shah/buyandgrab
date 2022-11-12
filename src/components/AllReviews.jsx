@@ -22,7 +22,7 @@ function AllReviews({product}) {
             <FaStar size={20} key={ind} color={review.rating > ind ? "orange" : "gray"}/>
           ))}</span>
       </div>
-      <div className="text-sm pl-2 mt-1">{review.reviewText}</div>
+      <div className="text-sm pl-2 mt-1 flex flex-wrap	">{review.reviewText}</div>
 
   </div>
 </div>

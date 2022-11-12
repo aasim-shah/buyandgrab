@@ -4,7 +4,7 @@ export default function SkeltonCard() {
   return (
     <>
       
-  <div  className="card-inner text-start" >
+  <div  className="card-inner w-40 text-start" >
   <div className=" w-full h-40  mx-auto skelton"></div>
         <div className="mt-4">
         <p className="text-skelton"></p>
