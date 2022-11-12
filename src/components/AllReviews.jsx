@@ -22,11 +22,11 @@ function AllReviews({product}) {
             <FaStar size={20} key={ind} color={review.rating > ind ? "orange" : "gray"}/>
           ))}</span>
       </div>
-      <div className="text-sm pl-2 mt-1 flex flex-wrap	">{review.reviewText}</div>
+      <p className="text-sm pl-2 mt-1 overflow-hidden	">{review.reviewText}</p>
 
   </div>
 </div>
-
+ 
     )) : (<p className='mx-5'>No Review Yet !!</p>)}
 
   
