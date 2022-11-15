@@ -8,12 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import {FaTimes} from "react-icons/fa"
 import {RiSearchLine} from "react-icons/ri"
+import { fetchAllProducts } from "../features/productSlice";
 
 
 function Navbar() {
-  const [products, setProducts] = useState([]);
   const cart = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
+  const {products} = useSelector((state) => state.products);
   const cartItems = cart.cartItems;
   const dispatch = useDispatch();
   const cartShowen = cart.hidden;
@@ -21,14 +22,10 @@ function Navbar() {
     dispatch(showCart());
   };
 
-  //initialise search value
+  //initialise search 
   const [searchValue, setSearchValue] = useState("");
   const [filtered, setFiltered] = useState([]);
 
-  const getProducts = async () => {
-    const res = await axios.get("https://ennmart.herokuapp.com/api/v1");
-    setProducts(res.data);
-  };
   //whenever search value gets updated, we will update patience list
   useEffect(() => {
     if (searchValue !== "") {
@@ -36,7 +33,7 @@ function Navbar() {
         value.title.toLowerCase().includes(searchValue.toLowerCase())
       );
       setFiltered(newPacientes);
-      getProducts();
+      dispatch(fetchAllProducts());
     }
   }, [searchValue]);
 

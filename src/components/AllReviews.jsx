@@ -1,10 +1,22 @@
+import axios from "axios";
+import { useEffect } from "react";
 import {BiUser} from "react-icons/bi"
 import {FaStar} from 'react-icons/fa'
+import {fetchProductById} from '../features/productSlice'
+import {useDispatch , useSelector} from 'react-redux'
 
 
-function AllReviews({product}) {
+function AllReviews({id}) {
+  const dispatch = useDispatch()
+  const {products} = useSelector((state) => state.products)
+  const product = products[0]
+  console.log(product)
   const starsArray  = Array(5).fill(0);
  
+
+  // useEffect(()=>{
+  //   dispatch(fetchProductById(id))
+  // }, [id])
   return (
     <>
      <p className="mb-3 themeClrText my-4 mx-3">Reviews  </p>

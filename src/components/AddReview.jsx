@@ -5,6 +5,7 @@ import {useSelector , useDispatch} from 'react-redux'
 import axios from 'axios'
 import UserDetailsModal from './UserDetailsModal';
 import {  toast } from "react-toastify";
+import { addReview } from '../features/productSlice'
 import PulseLoader from "react-spinners/PulseLoader";
 
 
@@ -56,38 +57,38 @@ const closeModalFunc = () =>{
 
 const handleSubmit = async() =>{
     setIsLoading(true)
+    const reviewData = {
+        userId : auth.userId,
+        reviewText : inputText,
+        rating : selectedRating,
+        firstName : auth.user.firstName,
+        productId : productId
+    }
     if(!auth.isAuthanticated){
         return window.location = '/login'
       }
-   console.log(auth.user.firstName)
         if(inputText !== ''  && selectedRating !== null ){
-        const res =await axios.post(`https://ennmart.herokuapp.com/api/v1/product/add_review` , {
-            userId : auth.userId,
-            reviewText : inputText,
-            rating : selectedRating,
-            firstName : auth.user.firstName,
-            productId : productId
-        })
-
-        if(res.data.firstNameRequired){
-            setHoveredRating(null)
-            setInputText('')
-            toast.warn("Please Provide FirstName and LastName  !");
-            setSelectedRating(null)
-            setIsLoading(false)
-            closeModalFunc()
-         return   setOpenUserDetailModal(true)
-        }
-            if(res.data.success){
-                setHoveredRating(null)
-                setInputText('')
-                toast.success("Review Added !");
-                setSelectedRating(null)
-                closeModalFunc()
-            }else{
-                    toast.success("Review Updated  !");
-                closeModalFunc()
-            }
+        // const res =await axios.post(`https://ennmart.herokuapp.com/api/v1/product/add_review` , reviewData)
+            dispatch(addReview(reviewData))
+        // if(res.data.yourReview.firstNameRequired){
+        //     setHoveredRating(null)
+        //     setInputText('')
+        //     toast.warn("Please Provide FirstName and LastName  !");
+        //     setSelectedRating(null)
+        //     setIsLoading(false)
+        //     closeModalFunc()
+        //  return   setOpenUserDetailModal(true)
+        // }
+        //     if(res.data.success){
+        //         setHoveredRating(null)
+        //         setInputText('')
+        //         toast.success("Review Added !");
+        //         setSelectedRating(null)
+        //         closeModalFunc()
+        //     }else{
+        //             toast.success("Review Updated  !");
+        //         closeModalFunc()
+        //     }
         }else{
         setReviewErr('Fill All Field Properly !')
         }

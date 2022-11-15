@@ -9,13 +9,17 @@ import { AiFillStar , AiFillHome} from "react-icons/ai";
 import AddReview from "./AddReview";
 import ThankingModal from "./ThankingModal";
 import { Link , useNavigate } from 'react-router-dom'
+import { fetchProductById } from "../features/productSlice";
 import AllReviews from "./AllReviews";
 import {FaStar} from 'react-icons/fa'
+import { useEffect } from "react";
 
-export default function ViewProductHero({ product }) {
+export default function ViewProductHero(id) {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const cart = useSelector((state) => state.cart);
+  const {products} = useSelector((state) => state.products);
+  const product = products ? products[0] : null
   const [qty, setQty] = useState(1);
   const [clr, setClr] = useState("");
   const [size, setSize] = useState("");
@@ -32,6 +36,10 @@ export default function ViewProductHero({ product }) {
     setQty((prev) => prev - 1);
   };
 
+  useEffect(()=>{
+    dispatch(fetchProductById(id))
+  },[id])
+  
   const ratingArray = Array(5).fill(0);
 
   const handleATC = (product) => {
@@ -68,7 +76,7 @@ export default function ViewProductHero({ product }) {
         <div className="viewproduct-hero-main-container hidden md:block">
           <div className="breadcrumb-container ">
             <div className="breadcrumb-inner-main">
-              <span onClick={()=>{navigate('/')}} className="cursor-pointer text-[#1a9cb7] inline-flex pb-2"><AiFillHome size={22}/> </span>
+              <span onClick={()=>{navigate('/')}} className="cursor-pointer text-[#1a9cb7] inline-flex pb-2"><AiFillHome size={19}/> </span>
               <span className=" text-[#1a9cb7] ml-2">
                 <i className="fa-solid fa-chevron-right themeClrText "></i>
                 <Link to={`/category/${product.category}`} className="ml-2">{product.category}</Link>
@@ -278,7 +286,7 @@ export default function ViewProductHero({ product }) {
               </div>
             </div>
           </div>
-          <AllReviews product={product} />
+          <AllReviews id={product._id} />
           <div className="mt-3">
             <AddReview
               btnTitle={"Post Review"}

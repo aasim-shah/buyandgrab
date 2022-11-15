@@ -2,23 +2,25 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SkeltonCard from "./SkeltonCard";
-import { useDispatch } from "react-redux/es/exports";
+import { useDispatch , useSelector } from "react-redux/es/exports";
+import { fetchAllProducts  } from "../features/productSlice";
 
 function SuggestedProducts() {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
-
+  const {products} = useSelector((state) => state.products);
   // get data from api
   const getProducts = async () => {
     const res = await axios.get(`https://ennmart.herokuapp.com/api/v1`);
-    setProducts(res.data);
-    console.log(res)
+    // setProducts(res.data);
+    // console.log(res)
   };
 
   //useEffect is a hook that runs a piece of code based on a specific condition.
   useEffect(() => {
-    getProducts();
-  }, []);
+    // getProducts();
+    dispatch(fetchAllProducts())
+  }, [dispatch]);
 
   return (
     <>

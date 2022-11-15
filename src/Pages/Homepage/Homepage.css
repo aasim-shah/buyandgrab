@@ -546,6 +546,11 @@ z-index: 2;
     .card-inner {
     width: auto;
     }
+    
+    .card-img-a{
+        max-height: 12rem;
+        
+    }
     #overlay{
       
         height: 650vh;

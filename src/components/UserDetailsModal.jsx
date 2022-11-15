@@ -2,8 +2,6 @@ import React ,{ useState} from 'react'
 import ReactModal from 'react-modal'
 import {FaTimes , FaStar} from 'react-icons/fa'
 import {useSelector , useDispatch} from 'react-redux'
-import { doc, getDoc , setDoc } from "firebase/firestore";
-import { db } from '../firebase';
 import axios from 'axios';
 
  
@@ -48,7 +46,6 @@ const handleSubmit = async (e) =>{
     lastName : userDetails.lastName
   }
   const res = await axios.post(`https://ennmart.herokuapp.com/user/update` , data )
-  console.log(res.data)
   if(res.data){
     closeModalFunc()
   }
