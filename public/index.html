@@ -14,8 +14,75 @@
     name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-  
+    <style>
+      #pre_loader{
+  height: 95vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #355b7d;
+}
+
+.span{
+  height: 2rem;
+  z-index: 2;
+  position: absolute;
+  transform: translateX(-50%);
+  top: 50%;
+  left: 50%;
+  width: 2rem;
+  border:4px solid rgb(255, 167, 3);
+  border-radius: 50%;
+  background-color: #355b7d;
+  animation: pre_loader  .7s linear infinite ;
+}
+.span:nth-child(1){
+  width: .2rem;
+  left: 51.7%;
+  transform: translateX(-50%);
+
+  top: 51.7%;
+  border: 2px solid  rgb(255, 167, 3);
+  height: .2rem;
+}
+.span:nth-child(2){
+  width: 1.2rem;
+  transform: translateX(-50%);
+
+  left: 50.8%;
+  top: 50.8%;
+  border: 2px solid  rgb(255, 167, 3);
+  height: 1.2rem;
+}
+
+
+
+@keyframes pre_loader {
+  0% { transform:  scale(1); opacity: 1;}
+  33% { transform:  scale(2); opacity: 0.6;}
+  66% { transform:  scale(3); opacity: 0.3;}
+  100% { transform:  scale(4); opacity: 0;}
+ }
+
+ @media only screen and (max-width: 450px) {
+  .span:nth-child(1){
+  width: .2rem;
+  left: 54%;
+  top: 52.4%;
+  border: 2px solid  rgb(252, 143, 0);
+  height: .2rem;
+}
+.span:nth-child(2){
+  width: 1.2rem;
+  left: 51.7%;
+  top: 51%;
+  border: 2px solid  rgb(204, 139, 18);
+  height: 1.2rem;
+}
+ }
+ 
+    </style>
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
    
     <title>Buy And Grab | Pakistan's Best Online Store | KP</title>
@@ -24,6 +91,8 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
       <div id="pre_loader">
+        <span class="span"></span>
+        <span class="span"></span>
         <span class="span"></span>
       </div>
     </div>

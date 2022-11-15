@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import Modal from "react-modal";
+
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import axios from "axios";
 import ThankingModal from "../../components/ThankingModal";
 import { useSelector, useDispatch } from "react-redux";
-import { ImFrustrated } from "react-icons/im";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
+import { loggedOut } from "../../features/authSlice";
 
 export default function ConfirmOrder() {
   const global = useSelector((state) => state.global);
@@ -93,7 +92,9 @@ export default function ConfirmOrder() {
       }
     } catch (error) {
       console.log(error);
-      toast.error("SomeThing Went Wrong !");
+      toast.error("Token Expired Please Login Again to order !");
+      dispatch(loggedOut())
+
     }
   };
 

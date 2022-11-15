@@ -297,28 +297,10 @@ text-decoration: line-through;
 }
 .top-categories-main-container{
     background-color: #fdfdfd;
+    
  }
- .top-categories-container{
-     display: flex;
-     margin: 0px auto;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     overflow-x: scroll;
-     width: 80%;
-     color: rgb(0, 0, 0);
- }
+ 
 
- .top-categories-container-phone{
-    display: flex;
-    margin: 1rem auto;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    overflow-x: scroll;
-    width: 90%;
-    color: rgb(0, 0, 0);
-}
 
 .top-categories-container::-webkit-scrollbar {
     display: none;
@@ -327,12 +309,10 @@ text-decoration: line-through;
     display: none;
 }
 
-
  .top-category-card{
-     font-size: 1.3rem;
+     font-size: 1rem;
      font-weight: bold;
      margin-bottom: 1rem;
-     width: 15rem;
      display: flex;
      justify-content: space-evenly;
      text-align: center;
@@ -347,6 +327,7 @@ text-decoration: line-through;
  .top-category-card-icon{
  margin-left: 2rem;
  }
+
 
  .breadcrumb-inner-main{
         width: 90%;
