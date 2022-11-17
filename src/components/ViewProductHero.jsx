@@ -182,7 +182,7 @@ export default function ViewProductHero(id) {
               {product && product.sizes.length > 0 ? (
                 <div className=" ml-4 my-3">
                   <p className="mb-3 themeClrText">
-                    sizes <small className="text-red-400 ml-2">{sizeErr}</small>
+                    sizes <small className="text-red-500 ml-2">{sizeErr}</small>
                   </p>
 
                   <div className="flex flex-row">
@@ -212,7 +212,7 @@ export default function ViewProductHero(id) {
               {product && product.colours.length > 0 ? (
                 <div className="ml-4 my-6">
                   <p className="mb-3 themeClrText">
-                    Colour <small className="ml-2 text-red-400">{clrErr}</small>
+                    Colour <small className="ml-2 text-red-500">{clrErr}</small>
                   </p>
 
                   <div className="flex flex-row">
@@ -476,7 +476,7 @@ export default function ViewProductHero(id) {
             {product && product.sizes.length > 0 ? (
               <>
                 <p className="ml-3 text-gray-400">
-                  Sizes : <small className="text-red-400"> {sizeErr}</small>
+                  Sizes : <small className="text-red-500"> {sizeErr}</small>
                 </p>
                 <div
                   id="pScreen-sizes"
@@ -511,7 +511,7 @@ export default function ViewProductHero(id) {
               <>
                 <p className="ml-3 text-gray-400">
                   Colours :{" "}
-                  <small className="ml-2 text-red-400"> {clrErr}</small>
+                  <small className="ml-2 text-red-500"> {clrErr}</small>
                 </p>
                 <div
                   id="pScreen-colors"

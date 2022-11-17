@@ -209,7 +209,7 @@ color: white;
 }
 .card-inner {
     display: flex;
-    padding: .5rem;
+    /* padding: .5rem; */
     flex-direction: column;
     width: 25rem;
     margin-left: auto;
@@ -260,7 +260,8 @@ color: white;
 .card-img-a{
     width: 25rem;
     max-height: 25rem;
-    
+    border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
 }
 .free-courses{
     color: gray;
@@ -472,7 +473,7 @@ text-decoration: line-through;
     transition: all 200ms ease-in;
 }
 #pcart-container{
-    transition: all 2s ease-in;
+    transition: all 0.4s ease-in;
 
 }
 

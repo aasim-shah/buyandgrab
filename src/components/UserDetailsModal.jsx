@@ -3,6 +3,7 @@ import ReactModal from 'react-modal'
 import {FaTimes , FaStar} from 'react-icons/fa'
 import {useSelector , useDispatch} from 'react-redux'
 import axios from 'axios';
+import { UpdateUser } from '../features/authSlice';
 
  
 function UserDetailsModal() {
@@ -48,6 +49,8 @@ const handleSubmit = async (e) =>{
   const res = await axios.post(`https://ennmart.herokuapp.com/user/update` , data )
   if(res.data){
     closeModalFunc()
+    console.log('ll')
+    dispatch(UpdateUser(auth.userId))
   }
 }
 

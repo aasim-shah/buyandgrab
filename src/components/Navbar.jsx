@@ -117,7 +117,7 @@ function handleLogOut (){
                 </Link>
               )}
                  {showProfileMenu ? (
-              <div className=" relative z-[3]">
+              <div className=" relative z-[2]">
                 <ul className="absolute bg-white w-48 flex flex-col justify-center items-center right-[-13px] top-2 rounded-md">
                   <li className="text-sm mt-3 flex w-11/12 mx-auto flex-row justify-between  items-center">
                     <span className="">Welcome</span>

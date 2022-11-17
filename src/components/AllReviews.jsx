@@ -10,7 +10,6 @@ function AllReviews({id}) {
   const dispatch = useDispatch()
   const {products} = useSelector((state) => state.products)
   const product = products[0]
-  console.log(product)
   const starsArray  = Array(5).fill(0);
  
 

@@ -57,10 +57,12 @@ const productSlice = createSlice({
         },
 
         [addReview.pending] : (state , {payload}) => {
+            console.log('review add pending')
             state.products = [];
-         
+            
         },
         [addReview.fulfilled] : (state , {payload}) => {
+            console.log('review add fullfled')
             state.products = [payload]
         }
 

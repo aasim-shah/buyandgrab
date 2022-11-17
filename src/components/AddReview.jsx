@@ -21,8 +21,8 @@ function AddReview({btnTitle , btnStyle , product}) {
     const [openModal, setOpenModal] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [openUserDetailModal, setOpenUserDetailModal] = useState(false)
-
-
+    const {products } = useSelector((state) => state.products)
+    const productt = products[0]
     const ratings = Array(5).fill(0);
     const ratingClrs = {
         orange : "orange",
@@ -69,26 +69,27 @@ const handleSubmit = async() =>{
       }
         if(inputText !== ''  && selectedRating !== null ){
         // const res =await axios.post(`https://ennmart.herokuapp.com/api/v1/product/add_review` , reviewData)
-            dispatch(addReview(reviewData))
-        // if(res.data.yourReview.firstNameRequired){
+        // dispatch(addReview(reviewData))
+        if(!auth.user.firstName){
+            setHoveredRating(null)
+            setInputText('')
+            toast.warn("Please Provide FirstName and LastName  !");
+            setSelectedRating(null)
+            setIsLoading(false)
+            closeModalFunc()
+         return   setOpenUserDetailModal(true)
+        }
+        // if(productt._id){
         //     setHoveredRating(null)
         //     setInputText('')
-        //     toast.warn("Please Provide FirstName and LastName  !");
+        //     toast.success("Review Added !");
         //     setSelectedRating(null)
-        //     setIsLoading(false)
         //     closeModalFunc()
-        //  return   setOpenUserDetailModal(true)
+        // }else{
+        //         toast.success("Review Updated  !");
+        //     closeModalFunc()
         // }
-        //     if(res.data.success){
-        //         setHoveredRating(null)
-        //         setInputText('')
-        //         toast.success("Review Added !");
-        //         setSelectedRating(null)
-        //         closeModalFunc()
-        //     }else{
-        //             toast.success("Review Updated  !");
-        //         closeModalFunc()
-        //     }
+        dispatch(addReview(reviewData))
         }else{
         setReviewErr('Fill All Field Properly !')
         }
