@@ -18,9 +18,11 @@ function Hero() {
      pagination={{ clickable: true }}
  
     >
-      <SwiperSlide className='slider flex flex-row justify-center items-center font-bold text-xl md:text-5xl'>Products Coming Soon !</SwiperSlide>
-      <SwiperSlide className='slider flex flex-row justify-center items-center font-bold text-xl md:text-5xl'>Please Stay Tunned  !</SwiperSlide>
-      <SwiperSlide className='slider flex flex-row justify-center items-center font-bold text-xl md:text-5xl'>We Are Planning Something New !</SwiperSlide>
+      <SwiperSlide ><img src="/images/banner.png" className='h-[34rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner1.jpg" className='h-[34rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner4.jpg" className='h-[34rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner2.jpg" className='h-[34rem] w-full' alt="" /></SwiperSlide>
+  
   
     </Swiper>
     </>
