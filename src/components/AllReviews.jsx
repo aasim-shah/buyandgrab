@@ -19,7 +19,7 @@ function AllReviews({id}) {
   // }, [id])
   return (
     <>
-     <p className="mb-3 themeClrText my-4 mx-3">Reviews  </p>
+     <p className="mb-3 themeClrText my-4 ml-12">Reviews  </p>
     {product && product.reviews.length > 0 ? product.reviews.map((review , ind) => ind <  10  && (
   <div className="grid grid-cols-12 mt-3  bg-white w-11/12 mx-auto rounded-md py-2 border-b-2" key={review._id}>
   <div className="col-span-3 flex justify-center items-center">

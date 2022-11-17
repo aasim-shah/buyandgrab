@@ -75,7 +75,7 @@ export default function ViewProductHero(id) {
       {product ? (
         <div className="viewproduct-hero-main-container hidden md:block">
           <div className="breadcrumb-container ">
-            <div className="breadcrumb-inner-main">
+            <div className="breadcrumb-inner-main ">
               <span onClick={()=>{navigate('/')}} className="cursor-pointer text-[#1a9cb7] inline-flex pb-2"><AiFillHome size={19}/> </span>
               <span className=" text-[#1a9cb7] ml-2">
                 <i className="fa-solid fa-chevron-right themeClrText "></i>
@@ -287,7 +287,7 @@ export default function ViewProductHero(id) {
             </div>
           </div>
           <AllReviews id={product._id} />
-          <div className="mt-3">
+          <div className="mt-3 ">
             <AddReview
               btnTitle={"Post Review"}
               product={product}

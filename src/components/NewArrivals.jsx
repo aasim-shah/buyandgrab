@@ -87,11 +87,11 @@ export default function NewArrivals() {
         <img src={product.image} className='w-full h-40' alt="" />
        </div>
        <div className="to-title text-center ml-2 font-bold">
-            <p className="text-sm ">Lorem ipsum dolor sit amet  </p>
+            <p className="text-sm ">{product.title.slice(0,30)} </p>
         </div>
-       <div className="to-price ml-4">
+        <div className="to-price ml-4">
         <small>From</small>
-        <span className='ml-2'> Rs.3432</span>
+        <span className='ml-2 themeClrText'> Rs.{product.price}</span>
        </div>
        {/* <button onClick={()=>{dispatch(addToCart({qty : 1, product : product}))}} className=' flex flex-row justify-center py-1 w-20  py-2 rounded-md mt-2 text-white font-bold  bg-[#355C7D]  mx-auto items-center '><FaCartPlus/></button> */}
        </Link>

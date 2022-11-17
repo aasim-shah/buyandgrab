@@ -9,9 +9,11 @@ import axios from "axios";
 import {FaTimes} from "react-icons/fa"
 import {RiSearchLine} from "react-icons/ri"
 import { fetchAllProducts } from "../features/productSlice";
+import userEvent from "@testing-library/user-event";
 
 
 function Navbar() {
+  const [showProfileMenu, setShowProfileMenu] = useState(false)
   const cart = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
   const {products} = useSelector((state) => state.products);
@@ -36,6 +38,11 @@ function Navbar() {
       dispatch(fetchAllProducts());
     }
   }, [searchValue]);
+
+function handleLogOut (){
+  setShowProfileMenu(false)
+  dispatch(loggedOut())
+}
 
   const toggeSrcRusultPhone = () =>{
     setFiltered([]);
@@ -84,21 +91,7 @@ function Navbar() {
 
         <div className="menu">
           <ul className="menu-list">
-            <li className="list-item text-[2rem]">
-              {auth.isAuthanticated ? (
-                <button
-                  onClick={() => {
-                    dispatch(loggedOut());
-                  }}
-                >
-                  <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                </button>
-              ) : (
-                <Link to={"/login"}>
-                  <i className="fa-solid fa-user"></i>
-                </Link>
-              )}
-            </li>
+        
 
             <li
               onClick={showcartBtn}
@@ -111,6 +104,32 @@ function Navbar() {
               <Link to="/cart">
                 <i className="inline-block md:hidden fa-solid fa-cart-shopping"></i>
               </Link>
+            </li>
+
+            <li className=" text-[2.1rem] relative ml-5">
+           {auth.isAuthanticated ? (
+            <div className="cursor-pointer" onClick={() =>{setShowProfileMenu(prev => !prev)}}>
+            <i  className="fa-solid fa-user"></i>
+            </div>
+              ) : (
+                <Link to={"/login"}>
+                  <i className="fa-solid fa-user"></i>
+                </Link>
+              )}
+                 {showProfileMenu ? (
+              <div className=" relative z-[3]">
+                <ul className="absolute bg-white w-48 flex flex-col justify-center items-center right-[-13px] top-2 rounded-md">
+                  <li className="text-sm mt-3 flex w-11/12 mx-auto flex-row justify-between  items-center">
+                    <span className="">Welcome</span>
+                    <span className="themeClrText ">{auth.user.firstName}</span>
+                    </li>
+                  <li ><Link className="w-40  flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to=''>Show Profile</Link></li>
+                
+                  <li ><Link className="w-40 flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to=''>My Orders</Link></li>
+                  <li><button onClick={(e)=>{handleLogOut()}} className="w-40 flex bg-red-400 mb-2 justify-center bg-white shadow-md text-sm py-1 font-bold text-white px-3 mt-2 rounded-md">LOGOUT</button></li>
+                </ul>
+              </div>
+            ) : ""}
             </li>
           </ul>
         </div>

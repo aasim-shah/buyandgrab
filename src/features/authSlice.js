@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 const data = JSON.parse(localStorage.getItem("jwt_Token"));
 const initialState = data || {
     isAuthanticated : false,
@@ -25,6 +26,7 @@ export const authSlice = createSlice({
             state.userId = '';
             state.token   = ''
             localStorage.removeItem('jwt_Token')
+            toast.warning('Your are logged out  !')
         },
         
     }

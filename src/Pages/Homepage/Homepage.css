@@ -330,11 +330,12 @@ text-decoration: line-through;
 
 
  .breadcrumb-inner-main{
-        width: 90%;
         display: flex;
+        width: 93%;
+
         align-items: center;
         margin: 0px auto;
-        padding: 10px ;
+        padding: 1rem ;
  }
 
  .banner-text{

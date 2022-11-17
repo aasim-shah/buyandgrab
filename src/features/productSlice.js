@@ -1,5 +1,6 @@
 import { createSlice ,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const initialState = {
     products : [],
@@ -26,6 +27,7 @@ export const fetchProductById = createAsyncThunk('product/fetchById' , async({id
 
 export const addReview = createAsyncThunk('product/addReview' , async(reviewData) =>{
     const {data} = await axios.post(`https://ennmart.herokuapp.com/api/v1/product/add_review` , reviewData)
+    toast.success('Review Updated')
     return data
     }
 )
@@ -59,7 +61,6 @@ const productSlice = createSlice({
         },
         [addReview.fulfilled] : (state , {payload}) => {
             state.products = [payload]
-          
         }
 
     } 

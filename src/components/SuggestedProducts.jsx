@@ -81,9 +81,7 @@ function SuggestedProducts() {
       <div className="onPhone block md:hidden">
         <div className="flex justify-between my-3 mx-5">
           <p className="font-bold mb-0 pt-2">Recommended</p>
-          <div className="viewMore themeClrBg  py-1 px-4 rounded-[2rem] text-white font-bold">
-            More
-          </div>
+        
         </div>
         <div className="card-container ">
           {products.length > 0 ? (
@@ -92,6 +90,8 @@ function SuggestedProducts() {
                 <Link to={`/product/${product._id}`} className="card-inner-a">
                   <img
                     src={product.image}
+                    onMouseEnter={e=>e.currentTarget.src = product.hoverImage ? product.hoverImage : product.image}
+                    onMouseLeave={e=>e.currentTarget.src = product.image }
                     alt=""
                     className="card-img-a mx-auto"
                   />
