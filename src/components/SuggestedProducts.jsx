@@ -95,11 +95,11 @@ function SuggestedProducts() {
                     alt=""
                     className="card-img-a mx-auto"
                   />
-                  <div className="text-sm text-blue-400">
+                  <div className="text-sm text-blue-400 px-1 my-1">
                     {product.title.slice(0, 25) + " ..."}
                   </div>
                 </Link>
-                <div className="flex flex-row justify-between mx-1 my-1">
+                <div className="flex flex-row justify-between mx-1 my-1 px-1">
                   
                   <div className="text-md">
                     <span className="text-sm">Rs . </span>

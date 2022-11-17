@@ -84,10 +84,10 @@ export default function NewArrivals() {
         <SwiperSlide key={product._id} className='top-offer-slide bg-gray-100 pb-2 rounded-md'>
      <Link to={`/product/${product._id}`}>
        <div className="to-img mb-2">
-        <img src={product.image} className='w-full h-40' alt="" />
+        <img src={product.image} className='card-img-rounded w-full h-40' alt="" />
        </div>
-       <div className="to-title text-center ml-2 font-bold">
-            <p className="text-sm ">{product.title.slice(0,30)} </p>
+       <div className="mx-1 ">
+              <p className="text-sm themeClrText">{product.title.slice(0,30)} </p>
         </div>
         <div className="to-price ml-4">
         <small>From</small>

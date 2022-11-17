@@ -221,7 +221,6 @@ color: white;
 }
 .card-inner-phone {
     display: flex;
-    padding: .5rem;
     flex-direction: column;
     width: 11rem;
     margin-left: auto;
@@ -506,6 +505,7 @@ z-index: 2;
     /* transition: .3s opacity; */
     /* transform: translate3d(0,0,0); */
     /* z-index: 10; */
+    left: 2.5rem !important;
     padding-right: 5rem;
 }
 .swiper-pagination-bullet {
@@ -531,7 +531,12 @@ z-index: 2;
     
     .card-img-a{
         max-height: 12rem;
-        
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+    }
+    .card-img-rounded{
+        border-top-left-radius: .35rem;
+        border-top-right-radius: .35rem;
     }
     #overlay{
       
