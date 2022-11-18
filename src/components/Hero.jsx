@@ -1,6 +1,6 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Navigation,Autoplay , Pagination, Scrollbar, A11y } from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -13,8 +13,10 @@ function Hero() {
   return (
     <>
      <Swiper
-     modules={[ Pagination]}
+     modules={[ Pagination , Autoplay]}
      slidesPerView={1}
+     loop={true}
+     autoplay={{ delay: 5000, disableOnInteraction: true,  }}
      pagination={{ clickable: true }}
  
     >

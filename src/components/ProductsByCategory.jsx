@@ -1,10 +1,12 @@
 import {useEffect ,useState} from 'react'
 import axios from 'axios'
-import { useParams , Link } from 'react-router-dom'
+import { useParams , Link  , useNavigate} from 'react-router-dom'
 import SkeltonCard from './SkeltonCard'
+import { AiFillHome } from 'react-icons/ai'
 
 function ProductsByCategory() {
     const params = useParams()
+    const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const [products, setProducts] = useState([])
     console.log(params.category)
@@ -27,23 +29,27 @@ useEffect(()=>{
  
 return (
     <>
+    <div className="breadcrumb-inner-main ">
+              <span onClick={()=>{navigate('/')}} className="cursor-pointer text-[#1a9cb7] inline-flex pb-2"><AiFillHome size={19}/> </span>
+              <span className=" text-[#1a9cb7] ml-2">
+                <i className="fa-solid fa-chevron-right themeClrText "></i>
+                <Link to={`/category/${params.category}`} className="ml-2">{params.category}</Link>
+              </span>
+            </div>
       <div className="desktop hidden md:block">
-        <div className="text-lg font-bold mx-4 my-4">
-          <p className="">Products by category : {params.category}</p>
-        </div>
-        <div className="card-container ">
+       <div className="card-container ">
           {products.length > 0 ? (
             products.slice(0, 14).map((product, index) => (
               <div className="card-inner" key={product._id}>
                 <Link to={`/product/${product._id}`} className="card-inner-a">
                   <img src={product.image} alt="" className="card-img-a" />
                   <small className="free-courses">{product.category} | {product.subCategory}</small>
-                  <div className="text-center">
+                  <div className="text-center mx-1">
                     {product.title.slice(0, 36) + " ..."}
                   </div>
                 </Link>
                 <div className="card-footer">
-                  <div className="flex flex-row justify-between  mx-2">
+                  <div className="flex flex-row justify-between pb-3  mx-2">
                     <div className="card-price mt-3">
                       <span className="text-sm">RS : </span>
                       <span className="themeClrText">{"$" + product.price}</span>
@@ -84,10 +90,7 @@ return (
       {/* below code is for phone's screen */}
 
       <div className="onPhone block md:hidden">
-        <div className="flex justify-between my-3 mx-5">
-          <p className="font-bold mb-0 pt-2">Products by category : {params.category}</p>
-          
-        </div>
+     
         <div className="card-container ">
           {products.length > 0 ? (
             products.slice(0, 6).map((product, index) => (
@@ -98,11 +101,11 @@ return (
                     alt=""
                     className="card-img-a mx-auto"
                   />
-                  <div className="text-sm text-blue-400">
+                  <div className="text-sm text-blue-400 mx-1">
                     {product.title.slice(0, 25) + " ..."}
                   </div>
                 </Link>
-                <div className="flex flex-row justify-between mx-1 my-1">
+                <div className="flex flex-row justify-between mx-1  my-1 mx-1">
                   
                   <div className="text-md">
                     <span className="text-sm">Rs . </span>

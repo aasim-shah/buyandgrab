@@ -219,10 +219,18 @@ color: white;
     border-radius: 0.7rem;
     box-shadow: 3px 2px 13px rgb(0 0 0 / 23%);
 }
+.scrollY{
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+
+}
+.scrollY::-webkit-scrollbar {
+    display: none;
+}
 .card-inner-phone {
     display: flex;
     flex-direction: column;
-    width: 11rem;
+    width: 11.5rem;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 1rem;

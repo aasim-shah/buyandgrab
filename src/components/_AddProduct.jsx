@@ -4,12 +4,16 @@ import { v4 as uuidv4 } from "uuid";
 import { MdDeleteSweep } from "react-icons/md";
 import { useDropzone } from "react-dropzone";
 import PulseLoader from "react-spinners/PulseLoader";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function _AddProduct() {
   const [files, setFiles] = useState([]);
   const [gall, setGall] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [allCategoriesList, setAllCategoriesList] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null)
+  const [err, setErr] = useState(null)
   const [headingText, setHeadingText] = useState("details");
   const [allHeadings, setallHeadings] = useState(["details"]);
   const [img, setImg] = useState([]);
@@ -17,9 +21,7 @@ export default function _AddProduct() {
   const [upperFields, setUpperFields] = useState({
     name: "",
     description: "",
-    price: 0,
-    category: "",
-    subCategory: "",
+    price: 0
   });
 
   const [fields, setFields] = useState([]);
@@ -69,6 +71,10 @@ export default function _AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!selectedCategory || !selectedSubCategory){
+      toast.warn('Fill All fileds Properly !')
+       return setErr("Fill All fileds Properly !")
+    }
     try {
       setIsLoading(true);
       console.log(img);
@@ -89,8 +95,8 @@ export default function _AddProduct() {
           name: upperFields.name,
           description: upperFields.description,
           price: upperFields.price,
-          category: upperFields.category,
-          subCategory: upperFields.subCategory,
+          category: selectedCategory,
+          subCategory: selectedSubCategory,
           image: imgUrls[0],
           hoverImage: imgUrls[1],
           gallary: gall,
@@ -187,6 +193,19 @@ export default function _AddProduct() {
     const delArray = sizeFields.filter((obj) => obj.id !== x);
     setSizeFields(delArray);
   };
+
+
+  const getAllCat = async () => {
+    const res = await axios.get("https://ennmart.herokuapp.com/category/");
+    console.log(res);
+    setAllCategoriesList(res.data);
+  };
+
+  useEffect(() => {
+    getAllCat();
+  }, []);
+  console.log(allCategoriesList)
+
   return (
     <>
       <div className="form-main-container my-5 w-11/12 mx-auto md:w-[76%] mr-5 ml-auto ">
@@ -226,7 +245,7 @@ export default function _AddProduct() {
               className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
             />
 
-            <input
+            {/* <input
               type="text"
               name="category"
               onChange={(e) => {
@@ -235,9 +254,16 @@ export default function _AddProduct() {
               value={upperFields.category || ""}
               placeholder="Product category .."
               className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
-            />
+            /> */}
+            <select   onChange={(e)=>{setSelectedCategory(e.target.value)}} name="category" id="" className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
+> 
+<option    className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto" >Select a Category</option>
+              {allCategoriesList && allCategoriesList.length > 0  ? allCategoriesList.map(category => (
+                <option     className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto" value={category.name}>{category.name}</option>
+              )) : ""}
+            </select>
 
-            <input
+            {/* <input
               type="text"
               name="subCategory"
               onChange={(e) => {
@@ -246,7 +272,17 @@ export default function _AddProduct() {
               value={upperFields.subCategory || ""}
               placeholder="Product subCategory .."
               className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
-            />
+            /> */}
+
+
+{/* code for subCategory */}
+<select   onChange={(e)=>{setSelectedSubCategory(e.target.value)}} name="category" id="" className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto"
+> 
+<option >Select a Sub category</option>
+              {allCategoriesList && allCategoriesList.length > 0  ? allCategoriesList.find(catt => catt.name == selectedCategory)?.subCategories.map(cat =>(
+                <option     className="w-9/12 border-2 border-gray-300 py-1 px-3 block mx-auto" value={cat}>{cat}</option>
+              )) : ""}
+            </select>
           </div>
 
           <div className="dynamicFieldsContainer rounded-md bg-gray-200  py-3">
@@ -454,6 +490,7 @@ export default function _AddProduct() {
             )}
           </div>
 
+          {err ? <p className="text-red-500 my-1 px-2 font-bold">*{err}</p> : ""}
           <button
             type="submit"
             className="w-full bg-gray-300  font-bold rounded-md py-2 mt-2 px-3"
@@ -474,6 +511,7 @@ export default function _AddProduct() {
           </button>
         </form>
       </div>
+      <ToastContainer autoClose={1000} position={'top-right'} hideProgressBar={true}/>
     </>
   );
 }

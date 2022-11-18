@@ -1,6 +1,6 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation} from 'swiper';
+import { Navigation  , Autoplay} from 'swiper';
 import {MdArrowForwardIos} from 'react-icons/md'
 import { useDispatch  } from 'react-redux/es/exports';
 import { Link } from 'react-router-dom';
@@ -49,7 +49,9 @@ export default function TopOffers() {
     <Swiper  className='w-11/12 hidden md:flex'
      spaceBetween={20}
      slidesPerView={5}
-  
+     autoplay={{delay : 5000 , disableOnInteraction : true}}
+     modules={[  Autoplay]}
+
     >
     {products && products.map((product)=>(
         <SwiperSlide  key={product._id} className='top-offer-slide bg-gray-100 pb-2 rounded-md'>
@@ -74,7 +76,8 @@ export default function TopOffers() {
 <Swiper  className='w-11/12 flex md:hidden'
      spaceBetween={10}
      slidesPerView={2}
-     modules={[Navigation]}
+     modules={[Navigation , Autoplay]}
+     autoplay={{delay:4000 , disableOnInteraction:true}}
      navigation={true}
  
     >

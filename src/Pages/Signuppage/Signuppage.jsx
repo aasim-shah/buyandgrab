@@ -1,62 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { Link , useNavigate } from "react-router-dom";
-import { loggedIn, loggedOut  } from "../../features/authSlice";
-import { useSelector , useDispatch } from "react-redux";
-import  HashLoader from 'react-spinners/HashLoader'
+import { Link, useNavigate } from "react-router-dom";
+import { loggedIn, loggedOut } from "../../features/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import HashLoader from "react-spinners/HashLoader";
 
 import "./Signuppage.css";
 import axios from "axios";
+import Navbar from "../../components/Navbar";
 
 export default function Signuppage() {
-  const dispatch = useDispatch()
-  const auth = useSelector((state) => state.auth)
-  const [isLoading, setIsLoading] = useState(false)
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorr, setErrorr] = useState('')
+  const [errorr, setErrorr] = useState("");
   const [cpassword, setCpassword] = useState("");
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const data ={
-        email : email,
-        password : password ,
-        Cpassword : cpassword
+      const data = {
+        email: email,
+        password: password,
+        Cpassword: cpassword,
+      };
+      const res = await axios.post(
+        `https://ennmart.herokuapp.com/signup`,
+        data
+      );
+      dispatch(loggedIn({ user: res.data.user, token: res.data.token }));
+      window.location = "/";
+      if (res.data.err) {
+        setErrorr("Passwords Does not matchs");
       }
-      const res = await axios.post(`https://ennmart.herokuapp.com/signup` ,data )
-      dispatch(loggedIn({user : res.data.user , token : res.data.token}))
-      window.location = '/'
-      if(res.data.err){
-        setErrorr('Passwords Does not matchs')
-      }
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
-      console.log(error.code)
-      setErrorr(error.code)
-      setIsLoading(false)
-
-        }
+      console.log(error.code);
+      setErrorr(error.code);
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
-    {isLoading ? ( <div className="bg-gray-100 opacity-[0.8] absolute h-[100vh] w-full flex flex-row justify-center items-center">
-    <HashLoader
-        color={"#355b7d"}
-        loading={isLoading}
-        size={150}
-      />
-    </div>) : ""}
-      <div className="back-navigator">
-      <span onClick={()=>navigate(-1)}><i className="fa-solid fa-arrow-left-long text-xl"></i></span>
-      <span className="logo">LOGO</span>
-    </div>
+      {isLoading ? (
+        <div className="bg-gray-100 opacity-[0.8] absolute h-[100vh] w-full flex flex-row justify-center items-center">
+          <HashLoader color={"#355b7d"} loading={isLoading} size={150} />
+        </div>
+      ) : (
+        ""
+      )}
+      <Navbar/>
       <div className="signup-container bg-[#355C7D]  md:bg-transparent">
         <img className="bg-img hidden md:flex" src="images/login.jpg" alt="" />
         <div className="signup-form-div">
-          <p className="text-white mt-4 font-bold">signup To AA-MART</p>
+          <p className="text-white mt-4 font-bold">Signup</p>
           <form className="signup-form" onSubmit={handleSubmit}>
             <input
               type="email"
@@ -82,20 +82,18 @@ export default function Signuppage() {
               value={cpassword}
               onChange={(e) => setCpassword(e.target.value)}
             />
-           {errorr &&  <small className="text-red-400 mt-2">{errorr}</small>}
+            {errorr && <small className="text-red-400 mt-2">{errorr}</small>}
             <button type="submit" className="bg-[#355C7D]">
               signup
             </button>
             <div className="signup-footer mt-2">
-              <p className="text-white">
-                Already having account ? <Link to={"/login"}> LOGIN</Link>{" "}
+              <p className="text-white text-sm">
+                Already having account ? <Link to={"/login"} className="text-md underline"> LOGIN</Link>{" "}
               </p>
             </div>
           </form>
         </div>
       </div>
-     
-
     </>
   );
 }
