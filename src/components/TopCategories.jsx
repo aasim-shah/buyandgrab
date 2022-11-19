@@ -8,7 +8,6 @@ function TopCategories() {
   const [categories, setCategories] = useState([]);
   const getAllCat = async () => {
     const res = await axios.get("https://ennmart.herokuapp.com/category/");
-    console.log(res);
     setCategories(res.data);
   };
 

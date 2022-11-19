@@ -17,11 +17,22 @@ import axios from 'axios';
 import ViewProductByCatAndSub from './Pages/ViewProduct/ViewProductByCatAndSub';
 import Payment from './Pages/Payment/Payment';
 import { useEffect  , useState} from 'react';
+import  io from 'socket.io-client'
 
 function App() {
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth)
+  let socket;
 
+
+
+  useEffect(() => {
+    socket = io('https://ennmart.herokuapp.com');
+    socket.on('receiveGreet', (data) => {
+      console.log('data::', data);
+    });
+  }, []);
+  console.log(socket)
   return (
    
     <Routes>

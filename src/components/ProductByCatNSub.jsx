@@ -14,7 +14,6 @@ function ProductByCatNSub() {
 const getProducts = async()=>{
     setIsLoading(true)
     const productsByCatNSub = await axios.get(`https://ennmart.herokuapp.com/api/v1/category/${params.category}/${params.subCategory}` )
-    console.log(productsByCatNSub)
     if(productsByCatNSub.data){
         setIsLoading(false)
         setProducts(productsByCatNSub.data)
