@@ -28,9 +28,9 @@ function App() {
 
   useEffect(() => {
     socket = io('https://ennmart.herokuapp.com');
-    socket.on('receiveGreet', (data) => {
-      console.log('data::', data);
-    });
+    socket.on("timeIs" , (data)=>{
+      console.log(data)
+    } )
   }, []);
   console.log(socket)
   return (

@@ -47,6 +47,21 @@ export default function Loginpage() {
     }
   };
 
+
+
+
+  const handleGoogleBtn = async () =>{
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const ress = await axios.get('https://ennmart.herokuapp.com/auth/google' , { headers })
+    console.log(ress)
+    console.log('lcick')
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       {isLoading ? (
@@ -92,8 +107,8 @@ export default function Loginpage() {
             </div>
           </form>
           <div className="social-login">
-            <div className="social-login-google">
-              <button className="social-google-head">
+            <div onClick={(e)=>{handleGoogleBtn()}} className="social-login-google">
+              <button  className="social-google-head">
                 <i className="fa-brands fa-google"></i>
               </button>
               <span className="social-google-tail"></span>
