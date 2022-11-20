@@ -52,12 +52,10 @@ export default function Loginpage() {
 
   const handleGoogleBtn = async () =>{
     try {
-      const headers = {
-        "Content-Type": "application/json",
-      };
-      const ress = await axios.get('https://ennmart.herokuapp.com/auth/google' , { headers })
-    console.log(ress)
-    console.log('lcick')
+    axios({
+      method: "GET",
+      url : "https://ennmart.herokuapp.com/auth/google"
+    }).then(res=>console.log(res)).catch(err => console.log(err))
     } catch (error) {
       console.log(error)
     }
