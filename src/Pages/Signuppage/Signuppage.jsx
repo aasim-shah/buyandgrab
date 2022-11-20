@@ -43,6 +43,13 @@ export default function Signuppage() {
     }
   };
 
+  const handleGoogleBtn = async () =>{
+    try {
+      window.open("http://localhost:8000/auth/google" , '_self')
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       {isLoading ? (
@@ -53,7 +60,7 @@ export default function Signuppage() {
         ""
       )}
       <Navbar/>
-      <div className="signup-container bg-[#355C7D]  md:bg-transparent">
+      <div className="signup-container bg-[#355C7D]  md:bg-transparent py-4">
         <img className="bg-img hidden md:flex" src="images/login.jpg" alt="" />
         <div className="signup-form-div">
           <p className="text-white mt-4 font-bold">Signup</p>
@@ -92,6 +99,14 @@ export default function Signuppage() {
               </p>
             </div>
           </form>
+          <div className="social-login mb-2">
+            <div onClick={(e)=>{handleGoogleBtn()}} className="social-login-google cursor-pointer">
+              <button  className="social-google-head">
+                <i className="fa-brands fa-google"></i>
+              </button>
+              <span className="social-google-tail"></span>
+            </div>
+          </div>
         </div>
       </div>
     </>

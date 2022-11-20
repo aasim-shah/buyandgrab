@@ -52,10 +52,8 @@ export default function Loginpage() {
 
   const handleGoogleBtn = async () =>{
     try {
-      fetch('https://ennmart.herokuapp.com/auth/google' , { method: 'GET',
-      mode: 'cors',})
-      .then((response) => response.json())
-      .then((data) => console.log(data)).catch(err =>console.log(err))
+    window.open("http://localhost:8000/auth/google/" , '_self')
+     
     } catch (error) {
       console.log(error)
     }
@@ -105,7 +103,7 @@ export default function Loginpage() {
             </div>
           </form>
           <div className="social-login">
-            <div onClick={(e)=>{handleGoogleBtn()}} className="social-login-google">
+            <div onClick={(e)=>{handleGoogleBtn()}} className="social-login-google cursor-pointer">
               <button  className="social-google-head">
                 <i className="fa-brands fa-google"></i>
               </button>
