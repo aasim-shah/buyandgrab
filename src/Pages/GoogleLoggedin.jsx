@@ -9,7 +9,6 @@ const getGoogleAuthUser = async()=>{
     setIsLoading(true)
     const {data} = axios.get("https://ennmart.herokuapp.com/auth/success" , {withCredentials:true})
     console.log(data)
-    console.log(data)
     if(data.success){
         setIsLoading(false)
     }
