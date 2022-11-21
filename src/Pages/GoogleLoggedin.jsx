@@ -9,6 +9,7 @@ const getGoogleAuthUser = async()=>{
     setIsLoading(true)
     const {data} = axios.get("https://ennmart.herokuapp.com/auth/success" , {withCredentials:true})
     console.log(data)
+    console.log(data)
     if(data.success){
         setIsLoading(false)
     }
@@ -20,7 +21,7 @@ useEffect(()=>{
 
   return (
     <div className="text-center font-bold bg-[#355b7d] flex justify-center items-center h-[100vh]">
-          <HashLoader color={"#355b7d"} loading={isLoading} size={150} />
+          <HashLoader color={"white"} loading={isLoading} size={150} />
     </div>
   )
 }
