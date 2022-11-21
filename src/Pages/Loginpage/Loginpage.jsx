@@ -28,10 +28,10 @@ export default function Loginpage() {
       const response = await axios.post(
         `https://ennmart.herokuapp.com/login`,
         // 'http://localhost:8000/login',
-        data ,
-        {
-          withCredentials: true
-        }
+        data 
+        // {
+        //   withCredentials: true
+        // }
       );
       console.log(response)
       if(response.data.success){
