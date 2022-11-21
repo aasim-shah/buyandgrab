@@ -67,7 +67,7 @@ const handleSubmit = async (e) =>{
         <p className="text-gray-400 text-center text-sm mt-3 mb-1">Update Your Profile Info</p>
         <input type="text" name="firstName" className='py-1 px-2 border-2 w-full outline-none' onChange={(e) =>{handleChange(e)}} placeholder='First Name .. ' id="" />
         <input type="text" name="lastName" className='py-1 px-2 border-2 w-full mt-2 outline-none'   onChange={(e) =>{handleChange(e)}} placeholder='Last Name  ...' id="" />
-        <button type="button" className='mt-3 py-1 px-4 themeClrBg text-white font-bold rounded-md block mx-auto' onClick={()=>{handleSubmit()}}>Update</button>
+        <button type="button" className='mt-3 py-1 px-4 bg-yellow-500 text-white font-bold rounded-md block mx-auto' onClick={()=>{handleSubmit()}}>Update</button>
     </form>
     </ReactModal>
 

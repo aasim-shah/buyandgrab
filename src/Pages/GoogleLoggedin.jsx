@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { HashLoader } from 'react-spinners'
 function GoogleLoggedin() {
     const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate()
 
 const getGoogleAuthUser = async()=>{
     setIsLoading(true)
@@ -12,6 +14,7 @@ const getGoogleAuthUser = async()=>{
     console.log(data)
     if(data.success){
         setIsLoading(false)
+        navigate('/')
     }
 }
 
