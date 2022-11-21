@@ -22,20 +22,7 @@ import { loggedIn } from './features/authSlice';
 function App() {
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth)
-  const getAuthUser = async()=>{
-    const {data} = await axios.get('https://ennmart.herokuapp.com/auth/success')
-    console.log(data)
-     if(data.success){
-      dispatch(
-        loggedIn({ user: data.user, token: data.token })
-      );
-     }
-  }
-
-
-  useEffect(() => {
-    getAuthUser()
-  }, []);
+  
   return (
    
     <Routes>
