@@ -33,6 +33,7 @@ export default function Loginpage() {
           withCredentials: true
         }
       );
+      console.log(response)
       if(response.data.success){
         window.location="/"
       }
