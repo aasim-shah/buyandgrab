@@ -27,15 +27,22 @@ export default function Loginpage() {
       };
       const response = await axios.post(
         `https://ennmart.herokuapp.com/login`,
-        data
+        // 'http://localhost:8000/login',
+        data ,
+        {
+          withCredentials: true
+        }
       );
-      if (response.data.success) {
-        dispatch(
-          loggedIn({ user: response.data.user, token: response.data.token })
-        );
-        window.location = "/";
+      if(response.data.success){
+        window.location="/"
       }
-      console.log(response);
+      // if (response.data.success) {
+      //   dispatch(
+      //     loggedIn({ user: response.data.user, token: response.data.token })
+      //   );
+      //   window.location = "/";
+      // }
+      // console.log(response);
       if (response.data.err) {
         setErrors("Wrong Credintials !");
       }

@@ -41,7 +41,7 @@ export default function Signuppage() {
       setErrorr(error.code);
       setIsLoading(false);
     }
-  };
+  };  
 
   const handleGoogleBtn = async () =>{
     try {

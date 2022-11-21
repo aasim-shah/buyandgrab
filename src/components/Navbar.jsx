@@ -59,10 +59,8 @@ function handleLogOut (){
         <div className="search-bar hidden relative md:block">
           <input
             type="text"
-            name=""
             placeholder="Seach Store"
             className="search-input"
-            id=""
             onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
           />

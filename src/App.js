@@ -17,22 +17,24 @@ import axios from 'axios';
 import ViewProductByCatAndSub from './Pages/ViewProduct/ViewProductByCatAndSub';
 import Payment from './Pages/Payment/Payment';
 import { useEffect  , useState} from 'react';
-import  io from 'socket.io-client'
+import { loggedIn } from './features/authSlice';
 
 function App() {
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth)
-  let socket;
-
+  const getAuthUser = async()=>{
+    const {data} = await axios.get('https://ennmart.herokuapp.com/auth/success' , {withCredentials :true})
+     if(data.success){
+      dispatch(
+        loggedIn({ user: data.user, token: data.token })
+      );
+     }
+  }
 
 
   useEffect(() => {
-    socket = io('https://ennmart.herokuapp.com');
-    socket.on("timeIs" , (data)=>{
-      console.log(data)
-    } )
+    getAuthUser()
   }, []);
-  console.log(socket)
   return (
    
     <Routes>
