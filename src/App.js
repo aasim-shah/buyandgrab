@@ -18,6 +18,7 @@ import ViewProductByCatAndSub from './Pages/ViewProduct/ViewProductByCatAndSub';
 import Payment from './Pages/Payment/Payment';
 import { useEffect  , useState} from 'react';
 import { loggedIn } from './features/authSlice';
+import GoogleLoggedin from './Pages/GoogleLoggedin';
 
 function App() {
   const dispatch = useDispatch()
@@ -34,6 +35,7 @@ function App() {
     <Route path="/category/:category/:subCategory" element={<ViewProductByCatAndSub />} />
     <Route path="/cart" element={<Cartpage />} />
     <Route path="/confirm_order" element={<ConfirmOrder />} />
+    <Route path="/loggedin" element={<GoogleLoggedin />} />
     <Route path="/payment/:id" element={<Payment />} />
     <Route path="/admin" element={auth.user.isAdmin  ?<Adminhome/> : <Navigate to='/login' />  } />
     <Route path="/admin/add_product" element={auth.user.isAdmin  ?<AdminAddProduct/> : <Navigate to='/login' />  } />
