@@ -107,10 +107,10 @@
 
 @keyframes skelton-animation {
   0%{
-    background-color: hsl(200, 20%, 70%);
+    background-color:hsla(204, 17%, 77%, 0.719);
   }
   100%{
-    background-color: hsl(200, 20%, 95%);
+    background-color: hsla(204, 46%, 42%, 0.719);
   }
 }
 
@@ -147,11 +147,15 @@ z-index: 0 !important;
 .swiper-button-prev , .swiper-button-next{
   color: var(--themeColour);
   margin: 0px .5rem;
+  height: 30px;
+  width: 30px;
+  background-color: rgba(189, 185, 185, 0.678);
+  border-radius: 50%;
   opacity: .8;
 }
 
 .swiper-button-prev::after , .swiper-button-next::after{
-  font-size: 2rem;
+  font-size: 1.2rem;
 }
 
 .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {

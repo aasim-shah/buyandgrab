@@ -24,6 +24,7 @@ export default function ViewProductHero(id) {
   const [clr, setClr] = useState("");
   const [size, setSize] = useState("");
   const [decCollapsed, setDecCollapsed] = useState(true);
+  const [selectedImgUrl, setSelectedImgUrl] = useState(null)
 
   const [clrErr, setClrErr] = useState("");
   const [sizeErr, setSizeErr] = useState("");
@@ -38,6 +39,7 @@ export default function ViewProductHero(id) {
 
   useEffect(()=>{
     dispatch(fetchProductById(id))
+    setSelectedImgUrl(null)
   },[id])
   
   const ratingArray = Array(5).fill(0);
@@ -107,14 +109,16 @@ export default function ViewProductHero(id) {
                     {product.gallary.length > 0 ? (
                       product.gallary.map((gImage) => (
                         <SwiperSlide key={gImage._id}>
-                          <img src={gImage.url} alt="" className="w-44ddd h-[35rem] mx-auto" />
+                          <img src={selectedImgUrl || gImage.url} alt="" className="w-44ddd h-[35rem] mx-auto" />
                         </SwiperSlide>
                       ))
                     ) : (
-                      <img src={product.image} alt="" className="w-44ddd h-[35rem] mx-auto" />
+                      <img src={selectedImgUrl || product.image} alt="" className="w-44ddd h-[35rem] mx-auto" />
                     )}
                   </Swiper>
                 </div>
+
+                
                 <div className="product-details mt-3">
                   <div className="product-title">
                     <p className="">{product.title}</p>
@@ -168,6 +172,17 @@ export default function ViewProductHero(id) {
                   </div>
                 </div>
               </div>
+
+
+              <div className=" h-24 flex flex-row w-7/12">
+                    {product?.gallary.length > 0 && product?.gallary.map((img)=>(
+                     <div className="w-12 mt-2 ml-4">
+                         <img src={img.url} alt="image"  onClick={(e)=>{setSelectedImgUrl(img.url)}} />
+                     </div>
+                    ))}
+                </div>
+
+
 
               <div className="product-desc">
                 <p className="mb-3 themeClrText my-4 mx-3">Description </p>
@@ -390,7 +405,7 @@ export default function ViewProductHero(id) {
           </div>
         </>
       )}
-      <div className="block md:hidden bg-gray-100 py-3  mt-4">
+      <div className="block md:hidden bg-gray-100 pb-3  mt-4">
         {product ? (
           <div className="flex flex-col ">
             <div className="">
@@ -399,20 +414,28 @@ export default function ViewProductHero(id) {
                   product.gallary.map((gImage) => (
                     <SwiperSlide key={gImage._id}>
                       <img
-                        src={gImage.url}
-                        className="h-[50vh] rounded-md w-[53vh] mx-auto "
+                        src={selectedImgUrl || gImage.url}
+                        className=" rounded-md w-[53vh] mx-auto "
                         alt=""
                       />
                     </SwiperSlide>
                   ))
                 ) : (
                   <img
-                    src={product.image}
-                    className="h-[50vh] rounded-md w-[45vh] mx-auto "
+                    src={selectedImgUrl || product.image}
+                    className=" rounded-md w-[45vh] mx-auto "
                     alt=""
                   />
                 )}
               </Swiper>
+
+              <div className=" flex flex-row w-11/12 mx-auto">
+                    {product?.gallary.length > 0 && product?.gallary.map((img)=>(
+                     <div className="w-12 mt-2 ml-4">
+                         <img src={img.url} alt="image"  onClick={(e)=>{setSelectedImgUrl(img.url)}} />
+                     </div>
+                    ))}
+                </div>
             </div>
             <div className="title my-3 px-3">
               <p className="font-bold mt-3 themeClrText ">{product.title}</p>
@@ -464,7 +487,7 @@ export default function ViewProductHero(id) {
                   <del>Rs. {product.price * 1.2}</del>
                 </small>
               </div>
-              <div className="rating ml-auto mr-5 ">
+              <div className="rating ml-auto mr-3 ">
               <span className='flex flex-row gap-1'>{ratingArray.map((_, ind) =>(
             <FaStar size={15} key={ind} color={product.rating.ratings > ind ? "orange" : "gray"}/>
             ))}

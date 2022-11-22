@@ -14,6 +14,7 @@ import TopOffers from '../../components/TopOffers'
 import NewArrivals from '../../components/NewArrivals'
 import CartComponent from '../../components/CartComponent'
 import {useDispatch ,useSelector} from 'react-redux'
+import ProductOfTheDay from '../../components/ProductOfTheDay'
 
 
 
@@ -30,6 +31,7 @@ function Homepage() {
     <SuggestedProducts/>
     {/* <AllCategories/> */}
     {/* <BestSeller/> */}
+    <ProductOfTheDay/>
     <TopOffers/>
     <NewArrivals/>
     <Banner/>

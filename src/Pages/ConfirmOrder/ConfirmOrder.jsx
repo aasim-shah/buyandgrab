@@ -108,12 +108,12 @@ export default function ConfirmOrder() {
 
       <div className="flex flex-col justify-center items-center mx-auto my-5 w-11/12 md:w-5/12">
         <p className="text-gray-400 my-2">Confirm Your ORDER Please !</p>
-        <div className="flex flex-row justify-between bg-gray-200 my-2 py-1 w-full">
+        <div className="flex flex-row justify-between  my-2 py-1 w-full">
           <span className="text-sm">
-            Number of Products : {global.order.products.length}
+            Number of Products : <span className="text-lg themeClrText font-bold">{global.order.products.length}</span>
           </span>
           <span className="text-sm">
-            Total Price : {global.order.discountedTotal}
+            Total Price : <span className="text-lg themeClrText font-bold">{global.order.discountedTotal}</span>
           </span>
         </div>
         <form>
