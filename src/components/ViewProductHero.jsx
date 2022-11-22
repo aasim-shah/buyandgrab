@@ -95,27 +95,27 @@ export default function ViewProductHero(id) {
               </span>
             </div>
           </div>
-          <div className="viewproduct-hero-inner pt-1 pb-3 ">
+          <div className="viewproduct-hero-inner  pb-3 ">
             <div className="viewproduct-hero-inner-left  ">
-              <div className="inner-grid mt-3">
-                <div className="product-img">
+              <div className="inner-grid">
+                <div className="product-imgddd">
                   <Swiper
                     navigation={true}
                     modules={[Navigation]}
-                    className="w-72"
+                    className="w-[23rem]"
                   >
                     {product.gallary.length > 0 ? (
                       product.gallary.map((gImage) => (
                         <SwiperSlide key={gImage._id}>
-                          <img src={gImage.url} alt="" className="w-44" />
+                          <img src={gImage.url} alt="" className="w-44ddd h-[35rem] mx-auto" />
                         </SwiperSlide>
                       ))
                     ) : (
-                      <img src={product.image} alt="" className="w-44" />
+                      <img src={product.image} alt="" className="w-44ddd h-[35rem] mx-auto" />
                     )}
                   </Swiper>
                 </div>
-                <div className="product-details ">
+                <div className="product-details mt-3">
                   <div className="product-title">
                     <p className="">{product.title}</p>
                   </div>
@@ -133,7 +133,7 @@ export default function ViewProductHero(id) {
                     </div>
                     <small>
                       <span className=" ml-4">
-                        ({product.rating.ratingCount})
+                        ({product.rating.ratingCount} reviews)
                       </span>
                     </small>
                   </div>
