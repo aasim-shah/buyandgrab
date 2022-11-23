@@ -30,7 +30,7 @@ function SuggestedProducts() {
         </div>
         <div className="card-container ">
           {products.length > 0 ? (
-            products.slice(0, 14).map((product, index) => (
+            products.slice(0, 14).reverse().map((product, index) => (
               <div className="card-inner" key={product._id}>
                 <Link to={`/product/${product._id}`} className="card-inner-a">
                   <img src={product.image} alt="" className="card-img-a" 

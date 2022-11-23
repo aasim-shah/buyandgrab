@@ -20,10 +20,11 @@ function Hero() {
      pagination={{ clickable: true }}
  
     >
-      <SwiperSlide ><img src="/images/banner.png" className='h-[15rem] md:h-[34rem] w-full' alt="" /></SwiperSlide>
-      <SwiperSlide ><img src="/images/banner1.jpg" className='h-[15rem] md:h-[34rem] w-full' alt="" /></SwiperSlide>
-      <SwiperSlide ><img src="/images/banner4.jpg" className='h-[15rem] md:h-[34rem] w-full' alt="" /></SwiperSlide>
-      <SwiperSlide ><img src="/images/banner2.jpg" className='h-[15rem] md:h-[34rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner.png" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner1.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner2.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner7.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner8.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
   
   
     </Swiper>

@@ -55,7 +55,8 @@ export default function Loginpage() {
 
   const handleGoogleBtn = async () =>{
     try {
-    window.open("https://ennmart.herokuapp.com/auth/google" , '_self')
+    // window.open("https://ennmart.herokuapp.com/auth/google" , '_self')
+    console.log('chill')
     // window.open("http://localhost:8000/auth/google" , '_self')
      
     } catch (error) {

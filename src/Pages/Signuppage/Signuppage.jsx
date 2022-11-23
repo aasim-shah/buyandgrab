@@ -45,7 +45,8 @@ export default function Signuppage() {
 
   const handleGoogleBtn = async () =>{
     try {
-      window.open("https://ennmart.herokuapp.com/auth/google/" , '_self')
+      // window.open("https://ennmart.herokuapp.com/auth/google/" , '_self')
+      console.log('chill')
     } catch (error) {
       console.log(error)
     }

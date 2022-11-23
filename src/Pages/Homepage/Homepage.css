@@ -216,7 +216,7 @@ color: white;
     margin-right: auto;
     margin-bottom: 1rem;
     position: relative;
-    border-radius: 0.7rem;
+    border-radius: 0.4rem;
     box-shadow: 3px 2px 13px rgb(0 0 0 / 23%);
 }
 .scrollY{
@@ -540,8 +540,8 @@ z-index: 2;
     
     .card-img-a{
         max-height: 12rem;
-        border-top-left-radius: .5rem;
-        border-top-right-radius: .5rem;
+        border-top-left-radius: .4rem;
+        border-top-right-radius: .4rem;
     }
     .card-img-rounded{
         border-top-left-radius: .35rem;

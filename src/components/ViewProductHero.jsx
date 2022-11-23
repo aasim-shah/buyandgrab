@@ -174,9 +174,9 @@ export default function ViewProductHero(id) {
               </div>
 
 
-              <div className=" h-24 flex flex-row w-7/12">
+              <div className=" h-20 flex flex-row w-7/12">
                     {product?.gallary.length > 0 && product?.gallary.map((img)=>(
-                     <div className="w-12 mt-2 ml-4">
+                     <div className={selectedImgUrl === img.url ? `w-12 mt-2 mx-2 border-2 rounded-md p-1 border-green-300` : `w-12 mt-2 mx-1 ` }>
                          <img src={img.url} alt="image"  onClick={(e)=>{setSelectedImgUrl(img.url)}} />
                      </div>
                     ))}
@@ -431,7 +431,7 @@ export default function ViewProductHero(id) {
 
               <div className=" flex flex-row w-11/12 mx-auto">
                     {product?.gallary.length > 0 && product?.gallary.map((img)=>(
-                     <div className="w-12 mt-2 ml-4">
+                     <div className={selectedImgUrl === img.url ? `w-12 mt-2 ml-4 border-2 rounded-md p-1 border-green-300` : `w-12 mt-2 ml-4 ` }>
                          <img src={img.url} alt="image"  onClick={(e)=>{setSelectedImgUrl(img.url)}} />
                      </div>
                     ))}

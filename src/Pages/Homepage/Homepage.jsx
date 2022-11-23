@@ -28,10 +28,10 @@ function Homepage() {
     <Navbar/>
     <Hero/>
     <TopCategories/>
+    <ProductOfTheDay/>
     <SuggestedProducts/>
     {/* <AllCategories/> */}
-    {/* <BestSeller/> */}
-    <ProductOfTheDay/>
+    <BestSeller/>
     <TopOffers/>
     <NewArrivals/>
     <Banner/>

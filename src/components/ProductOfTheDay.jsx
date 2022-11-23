@@ -42,14 +42,12 @@ useEffect(()=>{
     <div className='my-10 w-11/12 mx-auto'>
         <div className="grid grid-cols-12 gap-4 ">
             <div className="border-2 border-green-300 hover:shadow-lg  rounded-md  col-span-12 sm:col-span-9 py-3 px-2">
-
             <p className=" border-b mb-6 text-xl py-4 mx-5 themeClrText font-black">Hot Product Of The Day 🔥</p>
-
             <div className=" grid grid-cols-12 ">
             <div className="col-span-12 sm:col-span-6 bg-gray-100 flex flex-col sm:flex-row">
                 <div className=" sm:w-[6rem] flex flex-row sm:flex-col justify-center sm:justify-start my-1">
                     {product?.gallary.length > 0 && product?.gallary.map((img)=>(
-                     <div className="w-12 mt-2 mx-1">
+                     <div className={selectedImgUrl === img.url ? `w-16 mt-2 mx-1 border-2 rounded-md p-1 border-green-300` : `w-12 mt-2 mx-1 ` }>
                          <img src={img.url} alt="image" onClick={(e)=>{setSelectedImgUrl(img.url)}} />
                      </div>
                     ))}
