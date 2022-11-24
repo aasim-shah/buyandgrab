@@ -37,7 +37,7 @@ export default function BestSeller() {
         <div className="col-span-12 sm:col-span-3 bg-gray-400">banner</div>
         <div className="flex flex-wrap col-span-12 py-2  sm:col-span-9  bg-gray-100 ">
         {products &&  products.slice(1, 5).reverse().map((product, index) => (
-          <div className="card-inner sm:min-w-[30rem] bs-slider  " key={product._id}>
+          <div className="card-inner sm:min-w-[25rem] bs-slider  " key={product._id}>
             <Link to={`/product/${product._id}`} className="card-inner-a mt-1">
              
                 <img
