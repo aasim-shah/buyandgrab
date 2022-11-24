@@ -4,6 +4,7 @@ import { AiFillStar , AiFillHome} from "react-icons/ai";
 import { useDispatch , useSelector } from "react-redux/es/exports";
 import { fetchAllProducts } from '../features/productSlice';
 import Countdown from 'react-countdown';
+import { addToCart } from "../features/cartSlice";
 
 
 export default function ProductOfTheDay() {
@@ -11,6 +12,8 @@ export default function ProductOfTheDay() {
     const [clrErr, setClrErr] = useState("");
   const [sizeErr, setSizeErr] = useState("");
   const [clr, setClr] = useState("");
+  const [qty, setQty] = useState(1);
+
   const dispatch = useDispatch();
 
   const {products} = useSelector((state) => state.products);
@@ -32,6 +35,30 @@ useEffect(() => {
     // getProducts();
     dispatch(fetchAllProducts())
   }, [dispatch]);
+
+
+
+  const handleATC = (product) => {
+    // here will be condion of  if product.sizes && size === ""
+    if (product.sizes.length > 0 && size === "") {
+      setSizeErr("Select Your Size First !!");
+      // here will be condion of  if product.clrs && clr === ""
+    } else if (product.colours.length > 0 && clr === "") {
+      setSizeErr("");
+      setClrErr("Please Select Your Colour First !!! ");
+    } else {
+      const tempProduct = {
+        qty: qty,
+        product: product,
+        clr: clr,
+        size: size,
+      };
+      dispatch(addToCart(tempProduct));
+      setClrErr("");
+      setSizeErr("");
+    }
+  };
+
 
 
 useEffect(()=>{
@@ -150,7 +177,12 @@ useEffect(()=>{
 
 
                         <div className="flex justify-center items-center my-6">
-                            <button className='bg-yellow-400 py-2 font-bold w-8/12 px-2 rounded-md'>ADD TO CART</button>
+                            <button
+                            
+                            onClick={() => {
+                              handleATC(product);
+                            }}
+                            className='bg-yellow-400 py-2 font-bold w-8/12 px-2 rounded-md'>ADD TO CART</button>
                         </div>
 
             </div>

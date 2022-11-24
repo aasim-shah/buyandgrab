@@ -38,7 +38,7 @@ export default function NewArrivals() {
   return (
     <>
   <div className="grid grid-cols-12 mt-4 md:w-11/12 mx-auto">
-    <div className="col-span-2 hidden md:flex relative flex justify-center flex-col items-center py-3 bg-[#355c7d54] rounded-md">
+    <div className="col-span-2 hidden md:flex relative flex justify-center flex-col items-center py-3 bg-[#e1b000f5] rounded-md">
     <p className="text-[1.5rem]  font-bold px-2 mb-6">New Arrivals</p>
         <div className="viewAll py-1 px-3 themeClrBg text-white font-bold rounded-[2rem] mt-4">View All</div>
         <div className="absolute right-0  themeClrText  opacity-[0.7] "><MdArrowForwardIos size={40}/></div>

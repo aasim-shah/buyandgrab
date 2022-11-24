@@ -37,10 +37,10 @@ export default function TopOffers() {
   return (
     <>
   <div className="grid grid-cols-12 mt-5  mx-auto md:w-11/12">
-    <div className="col-span-2 relative hidden md:flex flex justify-center flex-col items-center py-3 bg-[#355c7d54] rounded-md">
+    <div className="col-span-2 relative hidden md:flex flex justify-center flex-col items-center py-3 themeClrBg rounded-md">
     <p className="text-[1.5rem] font-bold mb-6">Top Offers</p>
         <div className="viewAll py-1 px-3 themeClrBg text-white font-bold rounded-[2rem] mt-4">View All</div>
-        <div className="absolute right-0  themeClrText  opacity-[0.7] "><MdArrowForwardIos size={40}/></div>
+        <div className="absolute right-0  text-white  opacity-[0.7] "><MdArrowForwardIos size={40}/></div>
     </div>
     <div className="col-span-12 md:col-span-10">
     <div className="onPhone block md:hidden">

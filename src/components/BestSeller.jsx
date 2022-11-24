@@ -47,37 +47,35 @@ export default function BestSeller() {
               />
                 
             <small className="free-courses">{product.category}</small> | <small className="free-courses">{product.subCategory}</small>
-              <div className="card-title pl-3">
+              <div className="card-title pl-5">
                 {product.title.slice(0, 36) + " ..."}
               </div>
               <div className="card-footer">
                 <div className="card-footer-left">
+                  <div className="card-discounted-price flex flex-row items-center pb-2 justify-evenly">
                   <div className="card-price">
                     <span>RS : </span>
-                    <span>{"$" + product.price}</span>
+                    <span className="themeClrText text-xl">{"$" + product.price}</span>
                   </div>
-                  <div className="card-discounted-price">
-                    <span className="del-text">
+                  <div className="left">
+                  <span className="del-text">
                       RS : {Number(product.price * 1.3).toFixed(2)}
                     </span>
                     <span className="del-text ml">
                       {Number(product.price * 0.2).toFixed(2)}%
                     </span>
                   </div>
-
-                  <div className="flex flex-row justify-between my-2 items-center">
-                   <div className="left">
-                   <span className="rating-stars">
+                <div className="right">
+                <span className=" rating-stars">
                       {product.rating.ratings}
                       <i className="fa-solid fa-star text-sm ml-2 text-yellow-600"></i>{" "}
                     </span>
                     <span className="rating-count ml">
                       ({product.rating.ratingCount})
                     </span>
-                   </div>
-                    
-                    <button className="w-32 rounded-md py-2 mr-5 text-white font-bold themeClrBg ">  Add To Bag</button>
-                  </div>
+                </div>
+                  
+                  </div>                  
                 </div>
               </div>
             </Link>
@@ -112,8 +110,9 @@ export default function BestSeller() {
                   <div className="card-footer-left">
                     <div className="card-price">
                       <span>RS : </span>
-                      <span>{"$" + product.price}</span>
+                      <span className="themeClrText text-xl">{"$" + product.price}</span>
                     </div>
+                    <div className="flex flex-row justify-between mx-2 items-center items-center my-2">
                     <div className="card-discounted-price">
                       <span className="del-text">
                         RS : {Number(product.price * 1.3).toFixed(2)}
@@ -123,8 +122,7 @@ export default function BestSeller() {
                       </span>
                     </div>
 
-                    <div className="flex flex-row justify-between items-center my-2">
-                      <div className="lect">
+                      <div className="right">
                       <span className="rating-stars">
                         {product.rating.ratings}
                         <i className="fa-solid fa-star text-sm ml-2 text-yellow-600"></i>{" "}
@@ -133,7 +131,6 @@ export default function BestSeller() {
                         ({product.rating.ratingCount})
                       </span>
                       </div>
-                      <button className="w-32 rounded-md py-2 mr-5 text-white font-bold themeClrBg ">  Add To Bag</button>
                     </div>
                   </div>
                 </div>
