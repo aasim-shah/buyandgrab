@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { MdDeleteSweep } from "react-icons/md";
 import axios from "axios";
 import { useState } from "react";
+import { Fragment } from "react";
 
 export default function CartComponent() {
   const [inputCouponCode, setInputCouponCode] = useState("");
@@ -83,8 +84,8 @@ export default function CartComponent() {
               ""
             )}
             {cart && itemsInCart.length > 0 ? (
-              itemsInCart.map((cartItem) => (
-                <>
+              itemsInCart.map((cartItem , ind) => (
+                <Fragment key={ind}>
                   <tbody>
                     <tr className="">
                       <td>&nbsp;</td>
@@ -159,7 +160,7 @@ export default function CartComponent() {
                       <td className="">{cartItem.priceSum.toFixed(2)}</td>
                     </tr>
                   </tbody>
-                </>
+                </Fragment>
               ))
             ) : (
               <div className="ec-container my-6 mx-auto">
@@ -219,6 +220,7 @@ export default function CartComponent() {
                       onChange={(e) => setInputCouponCode(e.target.value)}
                       placeholder="Coupon Code .."
                       className="h-8 px-2 outline-none rounded-md"
+                      value={inputCouponCode}
                       autoComplete={false}
                       id=""
                     />

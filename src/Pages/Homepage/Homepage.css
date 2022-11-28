@@ -227,6 +227,14 @@ color: white;
 .scrollY::-webkit-scrollbar {
     display: none;
 }
+.scrollYProduct-of-the-day{
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    height: 30rem;
+}
+.scrollYProduct-of-the-day::-webkit-scrollbar {
+    display: none;
+}
 .card-inner-phone {
     display: flex;
     flex-direction: column;

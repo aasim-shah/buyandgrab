@@ -7,6 +7,7 @@ import { loggedIn, loggedOut } from "../../features/authSlice";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import Navbar from '../../components/Navbar'
+import VerfiyOtpWhatsapp from "../../components/V/erfiyOtpWhatsapp";
 
 export default function Loginpage() {
   const dispatch = useDispatch();
@@ -63,7 +64,13 @@ export default function Loginpage() {
       console.log(error)
     }
   }
+
+
+
+
+  
   return (
+    // <VerfiyOtpWhatsapp/>
     <>
       {isLoading ? (
         <div className="bg-gray-100 opacity-[0.8] absolute h-[100vh] w-full flex flex-row justify-center items-center">
