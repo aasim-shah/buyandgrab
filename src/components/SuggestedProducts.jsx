@@ -53,7 +53,7 @@ function SuggestedProducts() {
   
                     <div className="card-ratings flex justify-between items-center mt-2">
                         <span className="rating-stars">
-                          {(product.rating.ratings).toFixed(2)}
+                          {(product.rating.ratings).toFixed()}
                           <i className="fa-solid fa-star text-sm ml-2 text-yellow-600"></i>{" "}
                         </span>
                         <span className="rating-count text-[13px] ml-2">
@@ -110,7 +110,7 @@ function SuggestedProducts() {
                   </div>
                   <div className="card-ratings flex justify-between items-center ">
                         <span className="rating-stars">
-                          {product.rating.ratings}
+                          {product.rating.ratings.toFixed()}
                           <i className="fa-solid fa-star text-sm ml-2 text-yellow-600"></i>{" "}
                         </span>
                         <span className="rating-count text-[13px] ml-2">

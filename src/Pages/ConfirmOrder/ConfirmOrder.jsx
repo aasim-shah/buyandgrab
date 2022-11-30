@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import axios from "axios";
 import ThankingModal from "../../components/ThankingModal";
 import { useSelector, useDispatch } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { loggedOut } from "../../features/authSlice";
 
@@ -14,6 +14,8 @@ export default function ConfirmOrder() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [InputErr, setInputErr] = useState(null);
+
+
 
   const getUserData = async () => {
     const res = await axios.get(
@@ -58,11 +60,16 @@ export default function ConfirmOrder() {
       setInputErr("* Fill All Required Fields Properly !");
       return;
     }
+    
+
+ 
 
     let data = {
-      products: global.order.products.map((item) => {
-        return item._id;
-      }),
+      // products : global.order.products.map((item) => {
+      //   return item._id;
+      // }),
+
+      products : global.order.products,
       couponApplied: global.order.couponApplied,
       totalAmount: global.order.discountedTotal,
       user: auth.userId,

@@ -19,6 +19,7 @@ import Payment from './Pages/Payment/Payment';
 import { useEffect  , useState} from 'react';
 import { loggedIn } from './features/authSlice';
 import GoogleLoggedin from './Pages/GoogleLoggedin';
+import MyOrders from './Pages/Orders/MyOrders';
 
 function App() {
   const dispatch = useDispatch()
@@ -36,6 +37,7 @@ function App() {
     <Route path="/cart" element={<Cartpage />} />
     <Route path="/confirm_order" element={<ConfirmOrder />} />
     <Route path="/loggedin" element={<GoogleLoggedin />} />
+    <Route path="/my_orders" element={<MyOrders />} />
     <Route path="/payment/:id" element={<Payment />} />
     <Route path="/admin" element={auth.user.isAdmin  ?<Adminhome/> : <Navigate to='/login' />  } />
     <Route path="/admin/add_product" element={auth.user.isAdmin  ?<AdminAddProduct/> : <Navigate to='/login' />  } />

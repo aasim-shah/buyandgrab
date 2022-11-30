@@ -194,7 +194,7 @@ export default function CartComponent() {
                     {couponData && couponData.isValid ? Number(cart.totalCount - (cart.totalCount * couponData.amount/100)).toFixed(2)  : cart.totalCount.toFixed(2)}
                   </span>
                   <span className="text-green-300 text-sm ml-2">{couponData  && couponData.isValid ?  (" -" + couponData.amount)  + "%": ""}</span>
-                  <small className="curr ml-2 text-white">USD</small>
+                  <small className="curr ml-2 text-white">PKR</small>
                 </div>
               </div>
               <div className="flex flex-row ">
