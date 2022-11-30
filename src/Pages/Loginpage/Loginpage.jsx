@@ -7,24 +7,37 @@ import { loggedIn, loggedOut } from "../../features/authSlice";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import Navbar from '../../components/Navbar'
-import VerfiyOtpWhatsapp from "../../components/V/erfiyOtpWhatsapp";
+import { LoginSchemaValidation } from "../../schemas/LoginFormSchema";
+import { useFormik } from 'formik';
+
 
 export default function Loginpage() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [myErrors, setMyErrors] = useState(null)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+ 
+  
+
+
+
+  const {values , handleBlur , handleChange , touched , errors, handleSubmit} = useFormik({
+    initialValues : {
+      email : "",
+      password : ""
+    },
+    validationSchema : LoginSchemaValidation,
+   onSubmit : async(values) =>{
+   
+
     setIsLoading(true);
     try {
       const data = {
-        username: email,
-        password,
+        username: values.email,
+        password : values.password
       };
       const response = await axios.post(
         `https://ennmart.herokuapp.com/login`,
@@ -39,19 +52,20 @@ export default function Loginpage() {
         );
         window.location = "/";
       }
-      console.log(response);
-      if (response.data.err) {
-        setErrors("Wrong Credintials !");
+      if(response.data.err){
+        setMyErrors('Wrong Credentials !')
       }
+      console.log(response);
+     
       setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
-      setErrors(error.code);
+    
     }
-  };
 
-
+   }
+  })
+  
 
 
   const handleGoogleBtn = async () =>{
@@ -85,27 +99,34 @@ export default function Loginpage() {
         <div className="login-form-div">
           <p className="">{auth.isAuthanticated}</p>
           <p className="text-white mt-4 font-bold">LOGIN</p>
-          <form className="login-form" method="post" onSubmit={handleSubmit}>
+          <form className="login-form" onSubmit={handleSubmit} >
             <input
               type="email"
               name="email"
               placeholder="Enter your Email..."
               id="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              // onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              onBlur={handleBlur}
+              onChange={handleChange}
             />
+            {errors.email &&  touched.email ? (<p className="text-red-400 mt-1 w-10/12 text-sm">{errors.email}</p>):""}
+           
             <input
               type="password"
               name="password"
               placeholder="Password ...."
-              required
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={values.password}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              // onChange={(e) => setPassword(e.target.value)}
             />
-            {errors && <small className="text-red-400 mt-3">{errors}</small>}
-            <button type="submit" className="bg-[#355C7D]">
+          
+            {errors.password &&  touched.password ? (<p className="text-red-400 mt-1 w-10/12 text-sm">{errors.password}</p>):""}
+          {myErrors &&  <p className="text-red-400 pt-3 text-center w-10/12 text-sm">{myErrors}</p>}
+           
+            <button className="bg-[#355C7D]" type="submit">
               LOGIN
             </button>
             <div className="login-footer mt-2">
