@@ -25,7 +25,7 @@ export default function NewArrivals() {
 
     // get data from api
       const getProducts = async () => {
-        const res = await axios.get(`https://ennmart.herokuapp.com/api/v1` )
+        const res = await axios.get(`https://ennmartserver.up.railway.app/api/v1` )
         setProducts(res.data);
       }
     

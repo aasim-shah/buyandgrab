@@ -31,7 +31,7 @@ export default function CartComponent() {
   const validiateCoupon = async () => {
     const data = { code: inputCouponCode };
     const res = await axios.post(
-      "https://ennmart.herokuapp.com/api/v1/validateCoupon",
+      "https://ennmartserver.up.railway.app/api/v1/validateCoupon",
       // "http://localhost:8000/api/v1/validateCoupon",
       data
     );

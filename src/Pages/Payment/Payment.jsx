@@ -25,7 +25,7 @@ const params = useParams()
          }
             toast.warning('Something Went Wrong !')
         }
-    const res = await axios.post('https://ennmart.herokuapp.com/api/v1/update/order' , data )
+    const res = await axios.post('https://ennmartserver.up.railway.app/api/v1/update/order' , data )
     console.log(res)
     
     }

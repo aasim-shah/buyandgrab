@@ -12,7 +12,7 @@ function ProductsByCategory() {
     console.log(params.category)
 const getProducts = async()=>{
     setIsLoading(true)
-    const productsByCat = await axios.get(`https://ennmart.herokuapp.com/api/v1/category/${params.category}` )
+    const productsByCat = await axios.get(`https://ennmartserver.up.railway.app/api/v1/category/${params.category}` )
     // const productsByCat = await axios.get(`http://localhost:8000/api/v1/category/${params.category}`)
     if(productsByCat.data){
         setIsLoading(false)

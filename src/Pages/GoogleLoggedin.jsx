@@ -9,7 +9,7 @@ function GoogleLoggedin() {
 
 const getGoogleAuthUser = async()=>{
     setIsLoading(true)
-    const {data} = await axios.get("https://ennmart.herokuapp.com/auth/success" , {withCredentials:true})
+    const {data} = await axios.get("https://ennmartserver.up.railway.app/auth/success" , {withCredentials:true})
     // const {data} = await axios.get("http://localhost:8000/auth/success" , {withCredentials:true})
     console.log(data)
     if(data.success){

@@ -20,7 +20,7 @@ export default function CartOnPhonescreen() {
   const validiateCoupon = async () => {
     const data = { code: inputCouponCode };
     const res = await axios.post(
-      "https://ennmart.herokuapp.com/api/v1/validateCoupon",
+      "https://ennmartserver.up.railway.app/api/v1/validateCoupon",
       data
     );
     console.log(res);

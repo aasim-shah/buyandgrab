@@ -8,7 +8,7 @@ function ShowMyOrders() {
   const [ordersList, setOrdersList] = useState([]);
   const getMyOrders = async () => {
     const { data } = await axios.get(
-      `https://ennmart.herokuapp.com/user/${userId}/showOrders`
+      `https://ennmartserver.up.railway.app/user/${userId}/showOrders`
     );
     console.log(data);
     setOrdersList(data.orders);

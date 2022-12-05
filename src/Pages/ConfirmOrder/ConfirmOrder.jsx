@@ -19,7 +19,7 @@ export default function ConfirmOrder() {
 
   const getUserData = async () => {
     const res = await axios.get(
-      `https://ennmart.herokuapp.com/user/info/${auth.user._id}`
+      `https://ennmartserver.up.railway.app/user/info/${auth.user._id}`
     );
     setUserInfo({
       firstName : res.data.firstName,
@@ -85,7 +85,7 @@ export default function ConfirmOrder() {
       };
 
       const res = await axios.post(
-        "https://ennmart.herokuapp.com/api/v1/place_order",
+        "https://ennmartserver.up.railway.app/api/v1/place_order",
         data,
         {
           headers: headers,

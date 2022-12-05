@@ -36,7 +36,7 @@ export default function Signuppage() {
         Cpassword: values.Cpassword,
       };
       const res = await axios.post(
-        `https://ennmart.herokuapp.com/signup`,
+        `https://ennmartserver.up.railway.app/signup`,
         data
       );
       dispatch(loggedIn({ user: res.data.user, token: res.data.token }));
@@ -57,7 +57,7 @@ export default function Signuppage() {
 
   const handleGoogleBtn = async () =>{
     try {
-      // window.open("https://ennmart.herokuapp.com/auth/google/" , '_self')
+      // window.open("https://ennmartserver.up.railway.app/auth/google/" , '_self')
       console.log('chill')
     } catch (error) {
       console.log(error)

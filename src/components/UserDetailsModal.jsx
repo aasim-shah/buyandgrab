@@ -46,7 +46,7 @@ const handleSubmit = async (e) =>{
     firstName :  userDetails.firstName,
     lastName : userDetails.lastName
   }
-  const res = await axios.post(`https://ennmart.herokuapp.com/user/update` , data )
+  const res = await axios.post(`https://ennmartserver.up.railway.app/user/update` , data )
   if(res.data){
     closeModalFunc()
     console.log('ll')

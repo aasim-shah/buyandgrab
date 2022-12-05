@@ -10,7 +10,7 @@ const initialState = data || {
 }
 
 export const UpdateUser = createAsyncThunk('auth/updateUser',async (id)=>{
-    const {data} = await axios.get(`https://ennmart.herokuapp.com/user/info/${id}`)
+    const {data} = await axios.get(`https://ennmartserver.up.railway.app/user/info/${id}`)
     return data
 })
 

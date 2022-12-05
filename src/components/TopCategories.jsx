@@ -7,7 +7,7 @@ function TopCategories() {
   const [showSubCat, setShowSubCat] = useState({});
   const [categories, setCategories] = useState([]);
   const getAllCat = async () => {
-    const res = await axios.get("https://ennmart.herokuapp.com/category/");
+    const res = await axios.get("https://ennmartserver.up.railway.app/category/");
     setCategories(res.data);
   };
 
