@@ -68,7 +68,7 @@ function handleLogOut (){
             <i className=" text-xl  fa-solid fa-magnifying-glass"></i>
           </div>
 
-            <div  className="showSrcResults  w-full  max-h-32 overflow-hidden absolute z-[5]">
+            <div  className="showSrcResults  w-full  overflow-hidden absolute z-[5]">
             {searchValue !== "" &&  filtered && filtered.length > 0
               ? filtered.map((item) => (
                     <Link to={'/product/'+ item._id} >

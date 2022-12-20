@@ -150,8 +150,8 @@ export default function ViewProductHero(id) {
                       RS :234 <span className="ml-4 text-[1rem]">-30%</span>
                     </span>
                   </div>
-                  <div className="my-5">
-                    <p className=" ml-3 themeClrText">Details : </p>
+                    <p className=" ml-3 mt-3 themeClrText">Details : </p>
+                  <div className="px-3">
                     {product.specifications.length > 0 &&
                       product.specifications
                         .filter((x) => x.heading === "details")
