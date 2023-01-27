@@ -49,8 +49,8 @@ function ShowMyProfile() {
             console.log(userDetails)
             console.log(res)
             const ress = await axios.post(
-             // `https://ennmartserver.up.railway.app/user/update`
-                `http://localhost:8000/user/update`
+             `https://ennmartserver.up.railway.app/user/update`
+                // `http://localhost:8000/user/update`
                 , userDetails  , { withCredentials : true})
                 if(ress.status === 200){
                     toast.success('profile updated')
