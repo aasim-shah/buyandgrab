@@ -1,6 +1,6 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation,Autoplay , Pagination, Scrollbar, A11y } from 'swiper';
+import {Autoplay , Pagination} from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -22,7 +22,7 @@ function Hero() {
     >
       <SwiperSlide ><img src="/images/banner.png" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
       <SwiperSlide ><img src="/images/banner1.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
-      <SwiperSlide ><img src="/images/banner2.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
+      <SwiperSlide ><img src="/images/banner4.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
       <SwiperSlide ><img src="/images/banner7.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
       <SwiperSlide ><img src="/images/banner8.jpg" className='h-[15rem] md:h-[40rem] w-full' alt="" /></SwiperSlide>
   

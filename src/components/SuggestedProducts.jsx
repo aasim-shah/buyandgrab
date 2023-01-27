@@ -38,12 +38,12 @@ function SuggestedProducts() {
                     onMouseLeave={e=>e.currentTarget.src = product.image }
                   />
                   <small className="free-courses">{product.category} | {product.subCategory}</small>
-                  <div className="text-center">
+                  <div className="pl-3 pr-1">
                     {product.title.slice(0, 36) + " ..."}
                   </div>
                 </Link>
                 <div className="card-footer">
-                  <div className="flex flex-row justify-between  items-center mx-4">
+                  <div className="flex flex-row pb-2 justify-between  items-center mx-4">
                     <div className="card-price mt-3">
                       <span className="text-sm">RS : </span>
                       <span className="themeClrText text-start text-xl">{product.price}</span>

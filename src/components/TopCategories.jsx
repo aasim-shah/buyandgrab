@@ -37,7 +37,7 @@ function TopCategories() {
               {showSubCat.id == category._id && showSubCat.show ?  (
                 <div className="absolute  bg-gray-100 shadow-md rounded-md  w-[9rem] md:w-[10rem] z-[100] top-[2.6rem] py-2 left-[.8rem] md:left-[1rem] lg:left-[1rem]">
                   <ul className="flex flex-col justify-center items-center">
-                  {category.subCategories.map(item => ( <li key={item}  className="mt-2 font-bold cursor-pointer  hover:text-blue-400 hover:text-xl"><Link to={`/category/${category.name}/${item}`}>{item}</Link></li>) )}
+                  {category.subCategories.map(item => ( <li key={item}  className="mt-2 font-bold cursor-pointer  hover:text-blue-400 "><Link to={`/category/${category.name}/${item}`}>{item}</Link></li>) )}
                    
                   </ul>
                 </div>

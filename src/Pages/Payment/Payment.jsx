@@ -1,12 +1,35 @@
-import { async } from '@firebase/util'
 import axios from 'axios'
 import {AiFillCloseCircle } from 'react-icons/ai'
 import { TiTick} from 'react-icons/ti'
-import { useParams } from 'react-router-dom'
+import {  useParams , useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { toast , ToastContainer } from 'react-toastify'
 
 
 function Payment() {
+    const navigate = useNavigate()
+    const checkUserLogin = async ()=>{
+    try {
+        const ress = await axios.get('http://localhost:8000/private', {
+            withCredentials : true
+        })
+   
+    if(!ress.status === 200){
+        const error = new Error('hhhh')
+        throw error
+    }
+        
+    } catch (error) {
+        console.log(error)
+        navigate('/login')
+    }
+    }
+
+    useEffect(() => {
+     checkUserLogin()
+    }, [])
+    
+
 const params = useParams()
     const handleClick = async (status) =>{
         let data = {}

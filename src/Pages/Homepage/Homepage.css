@@ -81,7 +81,7 @@ color: white;
     color: var(--themeColour);
 }
 .rating-stars{
-    background-color: #66ff2f8c;
+    background-color: #e8f0e6a3;
     padding: 0.04rem 0.5rem;
     border-radius: 0.4rem;
 }
@@ -432,11 +432,12 @@ text-decoration: line-through;
     position: absolute;
     font-size: 2rem;
     right:2rem;
-    padding: 0.3rem 1rem;
+    padding: 0.1rem .7rem;
+    opacity: 0.8;
+    border-radius: 2.4rem;
     color: white;
     bottom: 6rem;
     scroll-behavior: smooth;
-    border-radius: 2px;
     background-color: #355b7d;
 }
 

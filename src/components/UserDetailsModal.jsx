@@ -42,11 +42,14 @@ const handleChange = (e)=>{
 
 const handleSubmit = async (e) =>{
   const data = {
-    id : auth.userId,
+    _id : auth.userId,
     firstName :  userDetails.firstName,
     lastName : userDetails.lastName
   }
-  const res = await axios.post(`https://ennmartserver.up.railway.app/user/update` , data )
+  const res = await axios.post(
+    // `https://ennmartserver.up.railway.app/user/update`
+    `http://localhost:8000/user/update`
+   , data )
   if(res.data){
     closeModalFunc()
     console.log('ll')

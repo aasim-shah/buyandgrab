@@ -1,10 +1,11 @@
 import React from 'react'
 
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BottomTabBarPhone from './BottomTabBarPhone';
 import {  useSelector } from 'react-redux/es/exports';
 import CartOnPhonescreen from './CartOnPhonescreen';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const cart = useSelector((state)=>state.cart)
@@ -12,7 +13,12 @@ export default function Footer() {
   const handleScroll = ()=> window.scrollTo({
     top: 0,
     behavior: 'smooth',
+    
   })
+
+  const handleSubmitNewslatter = ()=>{
+    toast.success("Great 👏 , You have subscribed to Newslatter  ")
+  }
   return (
     <>
     <ToastContainer
@@ -28,23 +34,23 @@ rtl={false}
           <div className=" grid-col col-span-2  flex flex-row justify-around">
             <div className="shop flex flex-col">
               <p className="th font-bold mb-4">Shop</p>
-              <p className="td">Shop Men</p>
-              <p className="td">Shop Women</p>
-              <p className="td">Shop Kids</p>
+              <p className="td"><Link to={'/category/men'}>Shop Men</Link></p>
+              <p className="td"><Link to={'/category/women'}>Shop Women</Link></p>
+              <p className="td"><Link to={'/category/kids'}>Shop Kids</Link></p>
+             
             </div>
             <div className="links">
             <p className="th font-bold mb-4">Links</p>
-              <p className="td">About Us</p>
-              <p className="td">Contact Us</p>
-              <p className="td">Login Page</p>
-              <p className="td">Track My Order</p>
+            <p className="td"><Link to={'/about'}>About Us</Link></p>
+            <p className="td"><Link to={'/contact'}>Contact Us</Link></p>
+            <p className="td"><Link to={'/login'}>Login Page</Link></p>
             </div>
             <div className="help">
             <p className="th font-bold mb-4">Policy</p>
-              <p className="td">Shipping Policy</p>
-              <p className="td">Return Policy</p>
-              <p className="td">Privacy Policy</p>
-              <p className="td">Terms of Service</p>
+            <p className="td"><Link to={'/policies/shipping'}>Shipping Policy</Link></p>
+            <p className="td"><Link to={'/policies/return'}>Return Policy</Link></p>
+            <p className="td"><Link to={'/policies/privacy'}>Privacy Policy</Link></p>
+            <p className="td"><Link to={'/policies/tos'}>Terms of service</Link></p>
             </div>
           </div>
           <div className=" col grid-col-span-1 mt-5 md:mt-0  pl-5">
@@ -52,7 +58,7 @@ rtl={false}
 
             <div className="form ">
               <input type="text" name="email" className='relative py-2 px-3 w-8/12' placeholder='Enter Your Email...' id="" />
-              <button type="submit" className='py-2 px-4 bg-violet-700 text-white font-bold absolute'>submit</button>
+              <button type="submit" onClick={handleSubmitNewslatter} className='py-2 px-4 bg-violet-700 text-white font-bold absolute'>submit</button>
               <p className='text-sm mt-2'>Sign up to receive a 10% discount on your next order.</p>
             </div>
 

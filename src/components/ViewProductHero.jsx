@@ -34,7 +34,8 @@ export default function ViewProductHero(id) {
   };
 
   const decQty = () => {
-    setQty((prev) => prev - 1);
+
+    setQty((prev) => prev > 0 ? prev -1 : 0);
   };
 
   useEffect(()=>{
@@ -144,7 +145,7 @@ export default function ViewProductHero(id) {
                   <div className="product-price my-4">
                     <span className="text-xl ml-4">RS : </span>
                     <span className="text-[1.4rem] themeClrText font-bold mr-4">
-                      ${product.price}
+                      ${product.price.toFixed(2)}
                     </span>
                     <span className="del-price">
                       RS :234 <span className="ml-4 text-[1rem]">-30%</span>
@@ -258,7 +259,7 @@ export default function ViewProductHero(id) {
 
               <div className="atc-price product-price ml-4 my-6">
                 <div className=" themeClrText">Price</div>
-                <span className="del-price">Rs. {product.price * 1.2} </span>
+                <span className="del-price">Rs. {Number(product.price * 1.2).toFixed(2)} </span>
                 <span className="font-bold themeClrText ml-4 ">
                   RS : {product.price}
                 </span>

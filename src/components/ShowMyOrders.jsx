@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment/moment";
 
 function ShowMyOrders() {
   const authUser = useSelector((state) => state.auth);
@@ -27,8 +28,8 @@ function ShowMyOrders() {
           Products 
           </div>
           <div className="col-span-4 sm:col-span-2  text-center font-bold text-lg">order Price</div>
-          <div className="col-span-4 sm:col-span-2  text-center font-bold text-lg">Payment status</div>
           <div className="col-span-4 sm:col-span-2 text-center font-bold text-lg">Order status</div>
+          <div className="col-span-4 sm:col-span-2 text-center font-bold text-lg">Actions</div>
         </div>
 
       {ordersList && ordersList.length > 0  ? ordersList.map((order,ind)=>(  <div key={ind} className="card grid grid-cols-12 mt-3 bg-gray-200 py-2 rounded-md px-1">
@@ -44,8 +45,10 @@ function ShowMyOrders() {
             </div>)) : "No Order Found !"}
           </div>
           <div className="col-span-4 sm:col-span-2 flex justify-center items-center"><span className="text-sm text-gray-800 mr-2">PKR.</span><span className="text-lg font-bold">{order.totalAmount.toFixed(2)}</span></div>
-          <div className="col-span-4 sm:col-span-2 flex justify-center items-center">{order.paid ? (<span className="text-green-500 bg-green-100 rounded-md py-1 px-3 font-bold">Successful</span>) : (<span className="text-red-500 bg-red-100 rounded-md py-1 px-3 font-bold">Pending</span>)}</div>
-          <div className="col-span-4 sm:col-span-2 flex flex-col justify-center items-center"><span>{order.status}</span>
+          <div className="col-span-4 sm:col-span-2 flex flex-col justify-center items-center">
+            <span className="text-sm text-gray-400"> Order Date : <br/> {moment(order.createdAt).format('lll')}</span>
+            {order.status}</div>
+          <div className="col-span-4 sm:col-span-2 flex flex-col justify-center items-center">
           <button className="py-1 px-3 rounded-md border-2 text-sm mt-2 hover:bg-green-400 border-green-400">Tract Order</button>
           </div>
         </div>)) : ""}

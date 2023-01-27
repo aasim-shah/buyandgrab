@@ -37,15 +37,7 @@ export const authSlice = createSlice({
         },
         
     },
-    extraReducers : {
-        // [UpdateUser.pending] : (state , {payload})  =>{
-        //     state.isAuthanticated  = false;
-        //     state.user = {};
-        //     state.userId = '';
-        //     console.log('first')
-        //     state.token   = ''
-        //     localStorage.removeItem('jwt_Token')
-        // },                  
+    extraReducers : {       
         [UpdateUser.fulfilled] : (state , {payload})  =>{
             state.isAuthanticated  = true;
           

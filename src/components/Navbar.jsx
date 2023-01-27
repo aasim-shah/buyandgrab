@@ -104,7 +104,7 @@ function handleLogOut (){
               </Link>
             </li>
 
-            <li className=" text-[2.1rem] relative ml-5">
+            <li className=" text-[2.1rem] relative ml-5 hover:bottom-1">
            {auth.isAuthanticated ? (
             <div className="cursor-pointer" onClick={() =>{setShowProfileMenu(prev => !prev)}}>
             <i  className="fa-solid fa-user"></i>
@@ -121,9 +121,9 @@ function handleLogOut (){
                     <span className="">Welcome</span>
                     <span className="themeClrText ">{auth.user.firstName}</span>
                     </li>
-                  <li ><Link className="w-40  flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to=''>Show Profile</Link></li>
+                  <li ><Link className="w-40  flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to='/user/profile'>Show Profile</Link></li>
                 
-                  <li ><Link className="w-40 flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to='/my_orders'>My Orders</Link></li>
+                  <li ><Link className="w-40 flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to='/user/my_orders'>My Orders</Link></li>
                   <li><button onClick={(e)=>{handleLogOut()}} className="w-40 flex bg-red-400 mb-2 justify-center bg-white shadow-md text-sm py-1 font-bold text-white px-3 mt-2 rounded-md">LOGOUT</button></li>
                 </ul>
               </div>
