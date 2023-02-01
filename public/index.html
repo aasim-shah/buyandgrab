@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -23,6 +23,11 @@
   align-items: center;
   background-color: #355b7d;
 }
+#pre_loader_inner{
+  width: 10rem;
+  position: relative;
+  height: 10rem;
+}
 
 .span{
   height: 2rem;
@@ -39,24 +44,28 @@
 }
 .span:nth-child(1){
   width: .2rem;
-  left: 51.7%;
   transform: translateX(-50%);
 
-  top: 51.7%;
   border: 2px solid  rgb(255, 167, 3);
   height: .2rem;
 }
 .span:nth-child(2){
   width: 1.2rem;
   transform: translateX(-50%);
-
-  left: 50.8%;
-  top: 50.8%;
+  left: 45.8%;
+    top: 44.8%;
   border: 2px solid  rgb(255, 167, 3);
   height: 1.2rem;
 }
 
-
+.span:nth-child(3){
+  width: 1.7rem;
+  transform: translateX(-50%);
+  left: 42.8%;
+  top: 42.8%;
+  border: 2px solid  rgb(255, 167, 3);
+  height: 1.7rem;
+}
 
 @keyframes pre_loader {
   0% { transform:  scale(1); opacity: 1;}
@@ -75,10 +84,17 @@
 }
 .span:nth-child(2){
   width: 1.2rem;
-  left: 51.7%;
-  top: 51%;
+  left: 49.7%;
+    top: 48%;
   border: 2px solid  rgb(204, 139, 18);
   height: 1.2rem;
+}
+.span:nth-child(3){
+  width: 1.6rem;
+  left: 48.7%;
+    top: 47%;
+  border: 2px solid  rgb(204, 139, 18);
+  height: 1.6rem;
 }
  }
  
@@ -91,9 +107,11 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
       <div id="pre_loader">
-        <span class="span"></span>
-        <span class="span"></span>
-        <span class="span"></span>
+        <div id="pre_loader_inner">
+          <span class="span"></span>
+          <span class="span"></span>
+          <span class="span"></span>
+        </div>
       </div>
     </div>
   </body>
