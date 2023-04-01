@@ -47,7 +47,7 @@ const handleSubmit = async (e) =>{
     lastName : userDetails.lastName
   }
   const res = await axios.post(
-    // `https://ennmartserver.up.railway.app/user/update`
+    // `https://buyandgrab-server.onrender.com/user/update`
     `http://localhost:8000/user/update`
    , data )
   if(res.data){

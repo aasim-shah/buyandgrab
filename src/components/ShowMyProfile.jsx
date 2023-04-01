@@ -49,7 +49,7 @@ function ShowMyProfile() {
             console.log(userDetails)
             console.log(res)
             const ress = await axios.post(
-             `https://ennmartserver.up.railway.app/user/update`
+             `https://buyandgrab-server.onrender.com/user/update`
                 // `http://localhost:8000/user/update`
                 , userDetails  , { withCredentials : true})
                 if(ress.status === 200){
@@ -58,8 +58,8 @@ function ShowMyProfile() {
             }
         }
         const ress = await axios.post(
-            // `https://ennmartserver.up.railway.app/user/update`
-               `http://localhost:8000/user/update`
+            `https://buyandgrab-server.onrender.com/user/update`
+            //    `http://localhost:8000/user/update`
                , userDetails  , { withCredentials : true})
                if(ress.status === 200){
                    toast.success('profile updated')
@@ -69,8 +69,8 @@ function ShowMyProfile() {
 
     const handleDelete = async ( )=>{
         const res = await axios.get(
-            // `https://ennmartserver.up.railway.app/user/update`
-            `http://localhost:8000/user/delete/${userDetails._id}`)
+            // `https://buyandgrab-server.onrender.com/user/update`
+            `https://buyandgrab-server.onrender.com/user/delete/${userDetails._id}`)
             if(res.status === 201){
                 toast.warn('profile deleted')
             }
@@ -78,7 +78,7 @@ function ShowMyProfile() {
 
     const userInfo = async () => {
         const { data } = await axios.get(
-            `https://ennmartserver.up.railway.app/user/info/${userId}`
+            `https://buyandgrab-server.onrender.com/user/info/${userId}`
         );
         setUserDetails(data)
         console.log(data)

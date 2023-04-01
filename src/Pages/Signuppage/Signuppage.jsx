@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loggedIn, loggedOut } from "../../features/authSlice";
+import { loggedIn, loggedOut, register } from "../../features/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import HashLoader from "react-spinners/HashLoader";
 import { useFormik } from "formik";
@@ -12,13 +12,11 @@ import Navbar from "../../components/Navbar";
 export default function Signuppage() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [err, setErr] = useState("");
   const [password, setPassword] = useState("");
-  const [errorr, setErrorr] = useState("");
   const [cpassword, setCpassword] = useState("");
-
+  const isLoading = auth.isLoading;
 
   const {values , errors , handleBlur  ,touched, handleChange , handleSubmit} = useFormik({
     initialValues : {
@@ -28,27 +26,26 @@ export default function Signuppage() {
     },
     validationSchema : SignSchemaValidation,
     onSubmit : async(values)=>{
-      setIsLoading(true);
     try {
       const data = {
         email: values.email,
         password: values.password,
         Cpassword: values.Cpassword,
       };
-      const res = await axios.post(
-        `https://ennmartserver.up.railway.app/signup`,
-        data
-      );
-      dispatch(loggedIn({ user: res.data.user, token: res.data.token }));
-      window.location = "/";
-      if (res.data.err) {
-        setErrorr("Something went wrong , please try again letter !");
-      }
-      setIsLoading(false);
-    } catch (error) {
+      
+      dispatch(register(data)).then(res =>{
+        if(res.payload.token){
+          console.log(res)
+          navigate('/')
+        }else{
+          setErr(res.payload.msg)
+        }
+       }).catch(err => {
+
+        console.log(err)
+      })
+       } catch (error) {
       console.log(error.code);
-      setErrorr(error.code);
-      setIsLoading(false);
     }
     }
   })
@@ -57,12 +54,16 @@ export default function Signuppage() {
 
   const handleGoogleBtn = async () =>{
     try {
-      // window.open("https://ennmartserver.up.railway.app/auth/google/" , '_self')
+      // window.open("https://buyandgrab-server.onrender.com/auth/google/" , '_self')
       console.log('chill')
     } catch (error) {
       console.log(error)
     }
   }
+
+
+
+
   return (
     <>
       {isLoading ? (
@@ -105,11 +106,12 @@ export default function Signuppage() {
               name="Cpassword"
               placeholder="Confirm Password ...."
               id="cpassword"
-              value={values.cpassword}
+              value={values.Cpassword}
               onBlur={handleBlur}
               onChange={handleChange}
                   />
         {errors.Cpassword && touched.Cpassword ?  (<p className="text-red-400 mt-1 w-10/12 text-sm">{errors.Cpassword}</p>):""}
+          {err !== "" ? (<p className="text-red-400 mt-1 w-10/12 text-center text-sm">{err}</p>) : ""}
               <button type="submit" className="bg-[#355C7D]">
               signup
             </button>

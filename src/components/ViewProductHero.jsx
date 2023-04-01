@@ -13,6 +13,7 @@ import { fetchProductById } from "../features/productSlice";
 import AllReviews from "./AllReviews";
 import {FaStar} from 'react-icons/fa'
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function ViewProductHero(id) {
   const dispatch = useDispatch();
@@ -48,10 +49,12 @@ export default function ViewProductHero(id) {
   const handleATC = (product) => {
     // here will be condion of  if product.sizes && size === ""
     if (product.sizes.length > 0 && size === "") {
+      toast.warn("Select any size First ")
       setSizeErr("Select Your Size First !!");
       // here will be condion of  if product.clrs && clr === ""
     } else if (product.colours.length > 0 && clr === "") {
       setSizeErr("");
+      toast.warn("Please Select Your Colour First !!! ");
       setClrErr("Please Select Your Colour First !!! ");
     } else {
       const tempProduct = {

@@ -21,8 +21,7 @@ import MyProfile from './Pages/Profile/MyProfile';
 
 function App() {
   const user = useSelector((state) =>state.auth)
-  const isAdmin = user.user.isAdmin
-  console.log(isAdmin)
+  const isAdmin = false;
   return (
    
     <Routes>
@@ -38,10 +37,10 @@ function App() {
     <Route path="/user/my_orders" element={<MyOrders />} />
     <Route path="/user/profile" element={<MyProfile />} />
     <Route path="/payment/:id" element={<Payment />} />
-    <Route path="/admin" element={isAdmin ? <Adminhome/> : <Navigate to={'/'} /> } />
-    <Route path="/admin/add_product" element={isAdmin ? <AdminAddProduct/> : <Navigate to={'/'} /> } />
-    <Route path="/admin/view_products" element={isAdmin ? <AdminViewProducts/> : <Navigate to={'/'} />} />
-    <Route path="/admin/edit_product/:id" element={isAdmin ? <AdminViewProducts/> : <Navigate to={'/'} />  } />
+    <Route path="/user/admin" element={isAdmin ? <Adminhome/> : <Navigate to={'/'} /> } />
+    <Route path="/user/admin/add_product" element={isAdmin ? <AdminAddProduct/> : <Navigate to={'/'} /> } />
+    <Route path="/user/admin/view_products" element={isAdmin ? <AdminViewProducts/> : <Navigate to={'/'} />} />
+    <Route path="/user/admin/edit_product/:id" element={isAdmin ? <AdminViewProducts/> : <Navigate to={'/'} />  } />
     <Route path="/*"  element={ <NoPageFound/>} />
   </Routes>
     )

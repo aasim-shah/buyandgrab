@@ -6,6 +6,7 @@ import { fetchAllProducts } from '../features/productSlice';
 import Countdown from 'react-countdown';
 import { addToCart } from "../features/cartSlice";
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 export default function ProductOfTheDay() {
@@ -27,7 +28,7 @@ export default function ProductOfTheDay() {
     const ratingArray = Array(5).fill(0);
     const [product, setProduct] = useState(null)
     const getProductOfTheDay = async()=>{
-    const {data} = await axios.get('https://ennmartserver.up.railway.app/api/v1/random_product')
+    const {data} = await axios.get('https://buyandgrab-server.onrender.com/api/v1/random_product')
     setProduct(data)
 }
 
@@ -44,10 +45,12 @@ useEffect(() => {
   const handleATC = (product) => {
     // here will be condion of  if product.sizes && size === ""
     if (product.sizes.length > 0 && size === "") {
+      toast.warn("Select Your Size First !!");
       setSizeErr("Select Your Size First !!");
       // here will be condion of  if product.clrs && clr === ""
     } else if (product.colours.length > 0 && clr === "") {
       setSizeErr("");
+      toast.warn("Please Select Your Colour First !!! ");
       setClrErr("Please Select Your Colour First !!! ");
     } else {
       const tempProduct = {

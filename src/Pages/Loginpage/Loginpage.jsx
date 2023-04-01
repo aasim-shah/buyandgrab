@@ -3,77 +3,63 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Loginpage.css";
 import { useSelector, useDispatch } from "react-redux";
-import { loggedIn, loggedOut } from "../../features/authSlice";
+import { loggedIn, loggedOut, login } from "../../features/authSlice";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import Navbar from '../../components/Navbar'
 import { LoginSchemaValidation } from "../../schemas/LoginFormSchema";
 import { useFormik } from 'formik';
+import { toast } from "react-toastify";
 
 
 export default function Loginpage() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [myErrors, setMyErrors] = useState(null)
 
-
- 
-  
+  const isLoading = auth.isLoading;
 
 
 
-  const {values , handleBlur , handleChange , touched , errors, handleSubmit} = useFormik({
-    initialValues : {
-      email : "",
-      password : ""
+
+
+  const { values, handleBlur, handleChange, touched, errors, handleSubmit } = useFormik({
+    initialValues: {
+      email: "",
+      password: ""
     },
-    validationSchema : LoginSchemaValidation,
-   onSubmit : async(values) =>{
-   
+    validationSchema: LoginSchemaValidation,
+    onSubmit: async (values) => {
 
-    setIsLoading(true);
-    try {
-      const data = {
-        username: values.email,
-        password : values.password
-      };
-      const response = await axios.post(
-        `https://ennmartserver.up.railway.app/login`,
-        // `http://localhost:8000/login`,
-        data,{
-          withCredentials:true
-        }
-      );
-      if (response.data.success) {
-        dispatch(
-          loggedIn({ user: response.data.user, token: response.data.token })
-        );
-        window.location = "/";
+
+      try {
+        const data = {
+          username: values.email,
+          password: values.password
+        };
+        dispatch(login(data)).then(res => {
+          if (res.type === "/auth/login/fulfilled") {
+            navigate('/')
+          }
+        })
+
+      } catch (error) {
+        console.log(error);
+
       }
-      if(response.data.err){
-        setMyErrors('Wrong Credentials !')
-      }
-      console.log(response);
-     
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    
+
     }
-
-   }
   })
-  
 
 
-  const handleGoogleBtn = async () =>{
+
+  const handleGoogleBtn = async () => {
     try {
-    // window.open("https://ennmartserver.up.railway.app/auth/google" , '_self')
-    console.log('chill')
-    // window.open("http://localhost:8000/auth/google" , '_self')
-     
+      // window.open("https://buyandgrab-server.onrender.com/auth/google" , '_self')
+      console.log('chill')
+      // window.open("http://localhost:8000/auth/google" , '_self')
+
     } catch (error) {
       console.log(error)
     }
@@ -82,7 +68,6 @@ export default function Loginpage() {
 
 
 
-  
   return (
     // <VerfiyOtpWhatsapp/>
     <>
@@ -93,7 +78,7 @@ export default function Loginpage() {
       ) : (
         ""
       )}
-    <Navbar />
+      <Navbar />
       <div className="login-container bg-[#355C7D]  md:bg-transparent">
         <img className="bg-img hidden md:flex" src="images/login.jpg" alt="" />
         <div className="login-form-div">
@@ -110,8 +95,8 @@ export default function Loginpage() {
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            {errors.email &&  touched.email ? (<p className="text-red-400 mt-1 w-10/12 text-sm">{errors.email}</p>):""}
-           
+            {errors.email && touched.email ? (<p className="text-red-400 mt-1 w-10/12 text-sm">{errors.email}</p>) : ""}
+
             <input
               type="password"
               name="password"
@@ -120,12 +105,12 @@ export default function Loginpage() {
               value={values.password}
               onBlur={handleBlur}
               onChange={handleChange}
-              // onChange={(e) => setPassword(e.target.value)}
+            // onChange={(e) => setPassword(e.target.value)}
             />
-          
-            {errors.password &&  touched.password ? (<p className="text-red-400 mt-1 w-10/12 text-sm">{errors.password}</p>):""}
-          {myErrors &&  <p className="text-red-400 pt-3 text-center w-10/12 text-sm">{myErrors}</p>}
-           
+
+            {errors.password && touched.password ? (<p className="text-red-400 mt-1 w-10/12 text-sm">{errors.password}</p>) : ""}
+            {myErrors && <p className="text-red-400 pt-3 text-center w-10/12 text-sm">{myErrors}</p>}
+
             <button className="bg-[#355C7D]" type="submit">
               LOGIN
             </button>
@@ -136,8 +121,8 @@ export default function Loginpage() {
             </div>
           </form>
           <div className="social-login">
-            <div onClick={(e)=>{handleGoogleBtn()}} className="social-login-google cursor-pointer">
-              <button  className="social-google-head">
+            <div onClick={(e) => { handleGoogleBtn() }} className="social-login-google cursor-pointer">
+              <button className="social-google-head">
                 <i className="fa-brands fa-google"></i>
               </button>
               <span className="social-google-tail"></span>

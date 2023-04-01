@@ -18,10 +18,12 @@ console.log(user)
   const navigate = useNavigate()
   const checkIsAdmin = async () => {
     try {
-      const ress = await axios.get('http://localhost:8000/admin', {
-        withCredentials: true
+      const ress = await axios.get('http://localhost:8000/user/admin',{
+        headers: {
+          jwt_token : user.token
+        }
       })
-
+      console.log(ress)
       if (!ress.status === 200) {
         navigate('/')
 

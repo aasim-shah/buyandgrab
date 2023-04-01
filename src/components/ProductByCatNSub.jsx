@@ -13,7 +13,7 @@ function ProductByCatNSub() {
     console.log(params.category , params.subCategory)
 const getProducts = async()=>{
     setIsLoading(true)
-    const productsByCatNSub = await axios.get(`https://ennmartserver.up.railway.app/api/v1/category/${params.category}/${params.subCategory}` )
+    const productsByCatNSub = await axios.get(`https://buyandgrab-server.onrender.com/api/v1/category/${params.category}/${params.subCategory}` )
     if(productsByCatNSub.data){
         setIsLoading(false)
         setProducts(productsByCatNSub.data)

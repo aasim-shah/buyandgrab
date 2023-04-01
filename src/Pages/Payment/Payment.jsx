@@ -8,27 +8,6 @@ import { toast , ToastContainer } from 'react-toastify'
 
 function Payment() {
     const navigate = useNavigate()
-    const checkUserLogin = async ()=>{
-    try {
-        const ress = await axios.get('http://localhost:8000/private', {
-            withCredentials : true
-        })
-   
-    if(!ress.status === 200){
-        const error = new Error('hhhh')
-        throw error
-    }
-        
-    } catch (error) {
-        console.log(error)
-        navigate('/login')
-    }
-    }
-
-    useEffect(() => {
-     checkUserLogin()
-    }, [])
-    
 
 const params = useParams()
     const handleClick = async (status) =>{
@@ -48,7 +27,7 @@ const params = useParams()
          }
             toast.warning('Something Went Wrong !')
         }
-    const res = await axios.post('https://ennmartserver.up.railway.app/api/v1/update/order' , data )
+    const res = await axios.post('https://buyandgrab-server.onrender.com/api/v1/update/order' , data )
     console.log(res)
     
     }

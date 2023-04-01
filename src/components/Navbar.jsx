@@ -124,7 +124,7 @@ function handleLogOut (){
                   <li ><Link className="w-40  flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to='/user/profile'>Show Profile</Link></li>
                 
                   <li ><Link className="w-40 flex justify-center bg-white shadow-md text-sm py-2 px-3 mt-2 rounded-md" to='/user/my_orders'>My Orders</Link></li>
-                  <li><button onClick={(e)=>{handleLogOut()}} className="w-40 flex bg-red-400 mb-2 justify-center bg-white shadow-md text-sm py-1 font-bold text-white px-3 mt-2 rounded-md">LOGOUT</button></li>
+                  <li><button onClick={(e)=>{handleLogOut()}} className="w-40 flex bg-red-400 mb-2 justify-center bg-white shadow-md text-sm py-1 font-bold text-black px-3 mt-2 rounded-md">LOGOUT</button></li>
                 </ul>
               </div>
             ) : ""}

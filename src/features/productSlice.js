@@ -12,7 +12,7 @@ const initialState = {
 
 
 export const fetchAllProducts = createAsyncThunk('product/fetchAll' , async() =>{
-    const { data } = await axios.get('https://ennmartserver.up.railway.app/api/v1/')
+    const { data } = await axios.get('https://buyandgrab-server.onrender.com/api/v1/')
     return data
     }
 )
@@ -20,13 +20,13 @@ export const fetchAllProducts = createAsyncThunk('product/fetchAll' , async() =>
 
 
 export const fetchProductById = createAsyncThunk('product/fetchById' , async({id}) =>{
-    const { data } = await axios.get(`https://ennmartserver.up.railway.app/api/v1/product/${id}`)
+    const { data } = await axios.get(`https://buyandgrab-server.onrender.com/api/v1/product/${id}`)
     return  data
     }
 )
 
 export const addReview = createAsyncThunk('product/addReview' , async(reviewData) =>{
-    const {data} = await axios.post(`https://ennmartserver.up.railway.app/api/v1/product/add_review` , reviewData)
+    const {data} = await axios.post(`https://buyandgrab-server.onrender.com/api/v1/product/add_review` , reviewData)
     toast.success('Review Updated')
     console.log(data)
     return data
