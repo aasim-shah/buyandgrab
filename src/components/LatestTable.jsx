@@ -4,10 +4,12 @@ import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import ChartComponent from './ChartComponent';
 
 
-function LatestTable({ coinType }) {
+function LatestTable({ selectedRows }) {
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
-    const [sortOrders, setSortOrders] = useState({ name: 'asc', id: 'asc', cmc_rank: "asc"  , 
+    const [extendedData, setExtendedData] = useState([]);
+    const [sortOrders, setSortOrders] = useState({ 
+    name: 'asc', id: 'asc', cmc_rank: "asc"  , 
     percent_change_1h : "asc",
     percent_change_24h : "asc",
     percent_change_7d : "asc",
@@ -17,7 +19,8 @@ function LatestTable({ coinType }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get('https://appslk-second.onrender.com/fetch/latest')
+            // let response = await axios.get('https://appslk-second.onrender.com/fetch/latest')
+            let response = await axios.get('http://localhost:5000/fetch/latest')
             setData(response.data)
             setSortedData(response.data)
         } catch (error) { console.log(`Error ${error}`) }
@@ -35,11 +38,13 @@ function LatestTable({ coinType }) {
             let valueB = b[field];
 
             if(valueA === undefined){
-                valueA = a.quote[coinType][field]
+                valueA = a.quote.USD[field]
             }
             if(valueB=== undefined){
-                valueB = b.quote[coinType][field]
+                valueB = b.quote.USD[field]
             }
+            console.log({valueA})
+            console.log({valueB})
             if (order === 'asc') {
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     return valueA.localeCompare(valueB);
@@ -71,25 +76,53 @@ function LatestTable({ coinType }) {
         const newSortOrder = sortOrders[field] === 'asc' ? 'desc' : 'asc';
         // Sort the data with the new order and specified field
         if (data) {
-            const sortedData = sortDataByField(data, field, newSortOrder);
-            setSortedData(sortedData);
+            const sortedData = sortDataByField(extendedData, field, newSortOrder);
+            setExtendedData(sortedData);
             setFilterBy(field)
-            
         }
     };
 
 
+    // const getCoinInfo = async (id) =>{
+    //  try {
+    //     const resp = await axios.get(`http://localhost:5000/fetch/info/${id}`)
+    //     console.log({resp})
+    //     return resp.data
+    //  } catch (error) {
+    //     console.log(error)
+    //  }
+    // }
 
+    
+  useEffect(() => {
+    // Fetch further data for each item based on item.id
+    const fetchExtendedData = async () => {
+      try {
+        const extendedDataPromises = sortedData?.slice(0, selectedRows).map(async (item) => {
+          const response = await axios.get(`http://localhost:5000/fetch/info/${item.id}`);
+          const newItem = {...item ,  logo : [response.data]}
+          return newItem; // Assuming the server response is the extended data for the given item.id
+        });
+
+        const extendedDataArray = await Promise.all(extendedDataPromises);
+        setExtendedData(extendedDataArray);
+      } catch (error) {
+      }
+    };
+
+    if (sortedData?.length > 0) {
+      fetchExtendedData();
+    }
+  }, [data , selectedRows]);
 
     useEffect(() => {
         fetchData()
     }, [])
 
 
-
     return (
-        <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-100 p-1">
-            <table className="  text-black text-sm">
+        <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
+            <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
                     <th className="px-4 py-2 " onClick={() => handleSort('cmc_rank')}>
@@ -102,7 +135,10 @@ function LatestTable({ coinType }) {
                                 )}
                             </div>
                         </th>
-                        <th className="px-4 py-2 flex flex-row gap-2 justify-center items-center" onClick={() => handleSort('name')}>Name  {filterBy === "name" && sortOrders.name === 'asc' &&
+                        
+                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" onClick={() => handleSort('name')}>
+                           Name
+                              {filterBy === "name" && sortOrders.name === 'asc' &&
                             <AiFillCaretDown />
                         }
                             {filterBy === "name" && sortOrders.name === 'desc' && (
@@ -110,7 +146,7 @@ function LatestTable({ coinType }) {
                             )}</th>
                         
                         
-                        <th className="px-4 py-2">Price in {coinType}</th>
+                        <th className="px-4 py-2">Price</th>
                         <th className="px-4 py-2 " onClick={() => handleSort('percent_change_1h')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 1h%  {filterBy === "percent_change_1h" && sortOrders.percent_change_1h === 'asc' &&
@@ -121,6 +157,7 @@ function LatestTable({ coinType }) {
                                 )}
                             </div>
                         </th>
+                       
                         <th className="px-4 py-2 " onClick={() => handleSort('percent_change_24h')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 24h%  {filterBy === "percent_change_24h" && sortOrders.percent_change_24h === 'asc' &&
@@ -167,20 +204,47 @@ function LatestTable({ coinType }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedData && sortedData.length > 0 ? sortedData.map((item, index) => (
+                    {extendedData && extendedData.length > 0 ? extendedData.slice(0,selectedRows).map((item, index) => (
                 
-                        <tr key={item.id} className={` py-3 ${index % 2=== 0 && "bg-gray-200"}`}>
+                        <tr key={item.id} className={` py-3 ${index % 2=== 0 && "bg-gray-100"}`}>
                             <td className="px-4 py-2 text-center ">{item.cmc_rank}</td>
-                            <td className="px-4 py-2 text-center ">{item.name}</td>
-                            <td className="px-4 py-2 text-center ">{item.quote[`${coinType}`].price}</td>
-                            <td className="px-4 py-2 text-center ">{item.quote.USD.percent_change_1h?.toFixed(2)}</td>
-                            <td className="px-4 py-2 text-center ">{item.quote.USD.percent_change_24h?.toFixed(2)}</td>
-                            <td className="px-4 py-2 text-center ">{item.quote.USD.percent_change_7d?.toFixed(2)}</td>
-                            <td className="px-4 py-2 text-center ">{item.quote[`${coinType}`].market_cap?.toFixed(2)}</td>
-                            <td className="px-4 py-2 text-center ">{item.quote[`${coinType}`].volume_24h?.toFixed(2)}</td>
+                           
+                            <td className="px-4 py-2 text-center">
+                            <div className="flex flex-row  items-center">
+                                {item.logo && (
+                             <img src={item.logo[0]} alt="Logo" className='h-8 w-8 mr-3' />
+                                )}
+                                <p className="text-sm mr-3">{item.name}</p>
+                                <p className="text-sm text-gray-400">{item.symbol}</p>
+                            </div>
+                                </td>
+                            <td className="px-4 py-2 text-center">${item.quote.USD.price.toFixed(2)}</td>
+                            <td className="px-4 py-2 text-center ">
+                                {item.quote.USD.percent_change_1h?.toFixed(2) > 0 ? (
+                                    <p className="text-green-500">{item.quote.USD.percent_change_1h?.toFixed(2)}%</p>
+                                ) : (
+                                    <p className="text-red-500">{item.quote.USD.percent_change_1h?.toFixed(2)}%</p>
+                                )}
+                            </td>
+                            <td className="px-4 py-2 text-center ">
+                                {item.quote.USD.percent_change_24h?.toFixed(2) > 0 ? (
+                                    <p className="text-green-500">{item.quote.USD.percent_change_24h?.toFixed(2)}%</p>
+                                ) : (
+                                    <p className="text-red-500">{item.quote.USD.percent_change_24h?.toFixed(2)}%</p>
+                                )}
+                            </td>
+                            <td className="px-4 py-2 text-center ">
+                                {item.quote.USD.percent_change_7d?.toFixed(2) > 0 ? (
+                                    <p className="text-green-500">{item.quote.USD.percent_change_7d?.toFixed(2)}%</p>
+                                ) : (
+                                    <p className="text-red-500">{item.quote.USD.percent_change_7d?.toFixed(2)}%</p>
+                                )}
+                            </td>
+                            <td className="px-4 py-2 text-center ">{item.quote.USD.market_cap?.toFixed(2)}</td>
+                            <td className="px-4 py-2 text-center ">{item.quote.USD.volume_24h?.toFixed(2)}</td>
                             <td>
                             <ChartComponent chartData={[
-                                {value : Number(item.quote[`${coinType}`].market_cap?.toFixed()) , name : '7days'}
+                                {value : Number(item.quote.USD.market_cap?.toFixed()) , name : '7days'}
                             ]}/>
                             </td>
                         </tr>

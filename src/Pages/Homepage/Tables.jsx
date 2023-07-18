@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom';
 import ChartComponent from '../../components/ChartComponent';
 
 function Tables() {
-  const [cointType, setCointType] = useState("USD")
   const { tableContentType } = useParams();
 
-  const handleOptionChange = (event) => {
-    setCointType(event.target.value);
-  };
+  
+  const [selectedRows, setSelectedRows] = useState(10); // Default selected rows
 
+  // Event handler to update the selected rows
+  const handleRowChange = (event) => {
+    setSelectedRows(parseInt(event.target.value));
+  };
 
   const chartData = [{
     value : 4,
@@ -33,7 +35,7 @@ function Tables() {
       </div>
 
       <div className="flex flex-col sm:flex-row my-2 gap-4 justify-between w-11/12 mx-auto items-center   ">
-        <div className="flex flex-row  items-center overflow-x-scroll sm:overflow-x-auto w-11/12  gap-4">
+        <div className="flex flex-row justify-center items-center   gap-4">
           <Link to={`/tables/spotlight`}  className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'spotlight' && 'text-blue-600 bg-gray-100' }`}>Spotlight</Link>
 
           <Link to={`/tables/gainers`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'gainers' && 'text-blue-600 bg-gray-100' }`} >Gainers</Link>
@@ -48,15 +50,16 @@ function Tables() {
 
         </div>
         <div className="flex flex-row items-center min-w-[8rem]  w-11/12 sm:w-[8rem]  py-1 justify-end gap-3">
-          <p className="text-[12px]">Coin Type</p>
-          <select value={cointType} onChange={handleOptionChange} name="coinType" className='py-1 px-1 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
-            <option value="USD">USD</option>
-            <option value="BTC">BTC</option>
+          <p className="text-[12px]">Rows Count</p>
+          <select value={selectedRows} onChange={handleRowChange} name="coinType" className='py-1 px-1 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
           </select>
         </div>
       </div>
     {tableContentType === "spotlight" && (
-      <LatestTable coinType={cointType} />     
+      <LatestTable selectedRows={selectedRows} />     
     )}
     </div>
   );
