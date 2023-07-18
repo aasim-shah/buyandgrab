@@ -3,6 +3,7 @@ import LatestTable from '../../components/LatestTable';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import ChartComponent from '../../components/ChartComponent';
+import TrendingTable from '../../components/TrendingTable';
 
 function Tables() {
   const { tableContentType } = useParams();
@@ -60,6 +61,9 @@ function Tables() {
       </div>
     {tableContentType === "spotlight" && (
       <LatestTable selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "trending" && (
+      <TrendingTable selectedRows={selectedRows} />     
     )}
     </div>
   );

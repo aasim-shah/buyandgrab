@@ -116,6 +116,12 @@ function LatestTable({ selectedRows }) {
     }
   }, [data , selectedRows]);
 
+
+  const numberWithCommas = (num) => {
+    const nn = parseInt(num)
+    return nn.toLocaleString();
+  };
+  
     useEffect(() => {
         fetchData()
     }, [])
@@ -241,8 +247,8 @@ function LatestTable({ selectedRows }) {
                                     <p className="text-red-500">{item.quote.USD.percent_change_7d?.toFixed(2)}%</p>
                                 )}
                             </td>
-                            <td className="px-4 py-2 text-center ">{item.quote.USD.market_cap?.toFixed(2)}</td>
-                            <td className="px-4 py-2 text-center ">{item.quote.USD.volume_24h?.toFixed(2)}</td>
+                            <td className="px-4 py-2 text-center ">{numberWithCommas(item.quote.USD.market_cap?.toFixed(2))}</td>
+                            <td className="px-4 py-2 text-center ">{numberWithCommas(item.quote.USD.volume_24h?.toFixed(2))}</td>
                             <td>
                             <ChartComponent chartData={[
                                 {value : Number(item.quote.USD.market_cap?.toFixed()) , name : '7days'}
