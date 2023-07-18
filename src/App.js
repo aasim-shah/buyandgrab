@@ -18,6 +18,7 @@ import Payment from './Pages/Payment/Payment';
 import GoogleLoggedin from './Pages/GoogleLoggedin';
 import MyOrders from './Pages/Orders/MyOrders';
 import MyProfile from './Pages/Profile/MyProfile';
+import Tables from './Pages/Homepage/Tables';
 
 function App() {
   const user = useSelector((state) =>state.auth)
@@ -28,6 +29,7 @@ function App() {
     <Route path="/"  element={ <Homepage/>} />
     <Route path="/product/:id" element={<ViewProduct />} />
     <Route path="/login"  element={<Loginpage/>}/>
+    <Route path="/tables/:tableContentType"  element={<Tables/>}/>
     <Route path="/signup" element={<Signuppage />} />
     <Route path="/category/:category" element={<ViewProductByCat />} />
     <Route path="/category/:category/:subCategory" element={<ViewProductByCatAndSub />} />
