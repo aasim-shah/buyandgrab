@@ -19,8 +19,8 @@ function LatestTable({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            // let response = await axios.get('https://appslk-second.onrender.com/fetch/latest')
-            let response = await axios.get('http://localhost:5000/fetch/latest')
+            let response = await axios.get('https://appslk-second.onrender.com/fetch/latest')
+            // let response = await axios.get('http://localhost:5000/fetch/latest')
             setData(response.data)
             setSortedData(response.data)
         } catch (error) { console.log(`Error ${error}`) }
@@ -99,7 +99,8 @@ function LatestTable({ selectedRows }) {
     const fetchExtendedData = async () => {
       try {
         const extendedDataPromises = sortedData?.slice(0, selectedRows).map(async (item) => {
-          const response = await axios.get(`http://localhost:5000/fetch/info/${item.id}`);
+        //   const response = await axios.get(`http://localhost:5000/fetch/info/${item.id}`);
+          const response = await axios.get(`https://appslk-second.onrender.com/fetch/info/${item.id}`);
           const newItem = {...item ,  logo : [response.data]}
           return newItem; // Assuming the server response is the extended data for the given item.id
         });
