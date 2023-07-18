@@ -28,7 +28,7 @@ export default function ProductOfTheDay() {
     const ratingArray = Array(5).fill(0);
     const [product, setProduct] = useState(null)
     const getProductOfTheDay = async()=>{
-    const {data} = await axios.get('https://buyandgrab-server.onrender.com/api/v1/random_product')
+    const {data} = await axios.get('https://buyandgrab-serverv.onrender.com/api/v1/random_product')
     setProduct(data)
 }
 

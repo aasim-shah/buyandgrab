@@ -9,7 +9,7 @@ function ShowMyOrders() {
   const [ordersList, setOrdersList] = useState([]);
   const getMyOrders = async () => {
     const { data } = await axios.get(
-      `https://buyandgrab-server.onrender.com/user/${userId}/showOrders`
+      `https://buyandgrab-serverv.onrender.com/user/${userId}/showOrders`
     );
     console.log(data);
     setOrdersList(data.orders);

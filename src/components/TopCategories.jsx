@@ -7,7 +7,7 @@ function TopCategories() {
   const [showSubCat, setShowSubCat] = useState({});
   const [categories, setCategories] = useState([]);
   const getAllCat = async () => {
-    const res = await axios.get("https://buyandgrab-server.onrender.com/category/");
+    const res = await axios.get("https://buyandgrab-serverv.onrender.com/category/");
     setCategories(res.data);
   };
 

@@ -27,7 +27,7 @@ const params = useParams()
          }
             toast.warning('Something Went Wrong !')
         }
-    const res = await axios.post('https://buyandgrab-server.onrender.com/api/v1/update/order' , data )
+    const res = await axios.post('https://buyandgrab-serverv.onrender.com/api/v1/update/order' , data )
     console.log(res)
     
     }

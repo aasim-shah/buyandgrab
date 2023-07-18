@@ -104,8 +104,8 @@ export default function _AddProduct() {
           colours: clrFields,
           sizes: sizeFields,
         };
-        // const third = await    axios.post("https://buyandgrab-server.onrender.com/api/v1/add_new", allData)
-        const third = await axios.post(`https://buyandgrab-server.onrender.com/api/v1/add_new` ,allData )
+        // const third = await    axios.post("https://buyandgrab-serverv.onrender.com/api/v1/add_new", allData)
+        const third = await axios.post(`https://buyandgrab-serverv.onrender.com/api/v1/add_new` ,allData )
         console.log(third.data, "third data");
         if (third) {
           console.log("reload page");
@@ -196,7 +196,7 @@ export default function _AddProduct() {
 
 
   const getAllCat = async () => {
-    const res = await axios.get("https://buyandgrab-server.onrender.com/category/");
+    const res = await axios.get("https://buyandgrab-serverv.onrender.com/category/");
     console.log(res);
     setAllCategoriesList(res.data);
   };

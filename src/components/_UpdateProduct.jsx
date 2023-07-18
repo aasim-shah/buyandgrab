@@ -60,7 +60,7 @@ export default function _UpdateProduct() {
 
 
   const getProduct = async ()=>{
-    const res = await axios.get(`https://buyandgrab-server.onrender.com/api/v1/products/${id}`)
+    const res = await axios.get(`https://buyandgrab-serverv.onrender.com/api/v1/products/${id}`)
     const data = res.data;
     setProduct(data)
     setUpperFields({ name :data.title , description : data.description , price : data.price})
@@ -122,7 +122,7 @@ try {
             gallary: gall,
             specifications: fields,
           };
-        const third = await    axios.post("https://buyandgrab-server.onrender.com/api/v1", allData)
+        const third = await    axios.post("https://buyandgrab-serverv.onrender.com/api/v1", allData)
         console.log(third.data , 'third data')
     
         }else{

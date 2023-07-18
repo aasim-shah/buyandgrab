@@ -11,7 +11,7 @@ function SuggestedProducts() {
   const {products} = useSelector((state) => state.products);
   // get data from api
   const getProducts = async () => {
-    const res = await axios.get(`https://buyandgrab-server.onrender.com/api/v1`);
+    const res = await axios.get(`hhttps://buyandgrab-serverv.onrender.com/api/v1`);
     // setProducts(res.data);
     // console.log(res)
   };

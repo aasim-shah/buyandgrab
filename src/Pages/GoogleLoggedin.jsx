@@ -9,7 +9,7 @@ function GoogleLoggedin() {
 
 const getGoogleAuthUser = async()=>{
     setIsLoading(true)
-    const {data} = await axios.get("https://buyandgrab-server.onrender.com/auth/success" , {withCredentials:true})
+    const {data} = await axios.get("https://buyandgrab-serverv.onrender.com/auth/success" , {withCredentials:true})
     // const {data} = await axios.get("http://localhost:8000/auth/success" , {withCredentials:true})
     console.log(data)
     if(data.success){

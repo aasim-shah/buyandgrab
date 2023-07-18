@@ -17,7 +17,7 @@ function LatestTable({ coinType }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get('http://localhost:5000/fetch/latest')
+            let response = await axios.get('https://buyandgrab-serverv.onrender.com/fetch/latest')
             setData(response.data)
             setSortedData(response.data)
         } catch (error) { console.log(`Error ${error}`) }

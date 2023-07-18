@@ -12,7 +12,7 @@ const initialState = {
 
 
 export const fetchAllProducts = createAsyncThunk('product/fetchAll' , async() =>{
-    const { data } = await axios.get('https://buyandgrab-server.onrender.com/api/v1/')
+    const { data } = await axios.get('https://buyandgrab-serverv.onrender.com/api/v1/')
     return data
     }
 )

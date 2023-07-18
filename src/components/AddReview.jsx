@@ -68,7 +68,7 @@ const handleSubmit = async() =>{
         return window.location = '/login'
       }
         if(inputText !== ''  && selectedRating !== null ){
-        // const res =await axios.post(`https://buyandgrab-server.onrender.com/api/v1/product/add_review` , reviewData)
+        // const res =await axios.post(`https://buyandgrab-serverv.onrender.com/api/v1/product/add_review` , reviewData)
         // dispatch(addReview(reviewData))
         if(!auth.user.firstName){
             setHoveredRating(null)

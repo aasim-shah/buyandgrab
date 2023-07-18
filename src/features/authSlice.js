@@ -26,7 +26,7 @@ export const login = createAsyncThunk("/auth/login", async ({ username, password
 
 
 export const UpdateUser = createAsyncThunk('auth/updateUser', async (id) => {
-    const { data } = await axios.get(`https://buyandgrab-server.onrender.com/user/info/${id}`)
+    const { data } = await axios.get(`https://buyandgrab-serverv.onrender.com/user/info/${id}`)
     return data
 })
 

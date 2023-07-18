@@ -20,7 +20,7 @@ export default function CartOnPhonescreen() {
   const validiateCoupon = async () => {
     const data = { code: inputCouponCode };
     const res = await axios.post(
-      "https://buyandgrab-server.onrender.com/api/v1/validateCoupon",
+      "https://buyandgrab-serverv.onrender.com/api/v1/validateCoupon",
       data
     );
     console.log(res);
