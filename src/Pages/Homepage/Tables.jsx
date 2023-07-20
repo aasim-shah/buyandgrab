@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react'
 import LatestTable from '../../components/LatestTable';
-import { useParams } from 'react-router-dom';
+import { useParams  , useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import ChartComponent from '../../components/ChartComponent';
 import Token_holders from '../../components/Token_holders';
 import TrendingTable from '../../components/TrendingTable';
 import TransactionTable from '../../components/TransactionsTable';
+import TokenByPlatform from '../../components/TokenByPlatform';
 
 function Tables() {
-  const [cointType, setCointType] = useState("USD")
   const { tableContentType } = useParams();
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const table2ContentType = queryParams.get('platform');
   
   const [selectedRows, setSelectedRows] = useState(10); // Default selected rows
 
@@ -63,6 +65,20 @@ function Tables() {
           </select>
         </div>
       </div>
+
+      <div className="flex flex-col sm:flex-row my-2 gap-4 justify-between w-11/12 mx-auto items-center   ">
+        <div className="flex flex-row justify-center items-center   gap-4">
+          <Link to={`/tables/tokenByPlatform?platform=Ethereum&limit=100`}  className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${table2ContentType === 'Ethereum' && 'text-blue-600 bg-gray-100' }`}>Ethereum</Link>
+
+          <Link to={`/tables/tokenByPlatform?platform=Binance&limit=100`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${table2ContentType === 'Binance' && 'text-blue-600 bg-gray-100' }`} >Binance</Link>
+
+          <Link to={`/tables/tokenByPlatform?platform=Polygon&limit=100`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${table2ContentType === 'Polygon' && 'text-blue-600 bg-gray-100' }`} >Polygon</Link>
+
+          <Link  to={`/tables/tokenByPlatform?platform=Arbitrum&limit=100`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${table2ContentType === 'Arbitrum' && 'text-blue-600 bg-gray-100' }`} >Arbitrum</Link>
+
+         
+        </div>
+        </div>
     {tableContentType === "spotlight" && (
       <LatestTable selectedRows={selectedRows} />     
     )}
@@ -74,6 +90,9 @@ function Tables() {
     )}
     {tableContentType === "transactions" && (
       <TransactionTable selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "tokenByPlatform" && (
+      <TokenByPlatform selectedRows={selectedRows} />     
     )}
     </div>
   );

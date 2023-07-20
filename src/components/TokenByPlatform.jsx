@@ -3,15 +3,24 @@ import axios from 'axios'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import ChartComponent from './ChartComponent';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
-function LatestTable({ selectedRows }) {
+
+function TokenByPlatform({ selectedRows }) {
     console.log({selectedRows})
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
     const [blockNumberINput, setBlockNumberINput] = useState(99999999999)
-
     const [extendedData, setExtendedData] = useState([]);
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const platform = queryParams.get('platform');
+    const limit = queryParams.get('limit');
+
+    console.log({platform})
+    console.log({limit})
     const [sortOrders, setSortOrders] = useState({ 
     name: 'asc', id: 'asc', cmc_rank: "asc"  , 
     percent_change_1h : "asc",
@@ -21,10 +30,16 @@ function LatestTable({ selectedRows }) {
 });
     const [filterBy, setFilterBy] = useState("")
 
+
+    if(!platform){
+        console.log('no plate')
+    }
+
+
     const fetchData = async () => {
         try {
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/latestWithoutPlatform/${selectedRows}`)
-            // let response = await axios.get(`http://localhost:5000/fetch/latestWithoutPlatform/${selectedRows}`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/latestWithPlatform/${platform}/${limit}`)
+            // let response = await axios.get(`http://localhost:5000/fetch/latestWithPlatform/${platform}/100`)
             console.log({responsed : response.data})
             setData(response.data)
             setSortedData(response.data)
@@ -120,7 +135,7 @@ function LatestTable({ selectedRows }) {
   
     useEffect(() => {
         fetchData()
-    }, [selectedRows])
+    }, [selectedRows , platform])
 
 console.log({sortedData})
     return (
@@ -285,4 +300,4 @@ console.log({sortedData})
     )
 }
 
-export default LatestTable
+export default TokenByPlatform
