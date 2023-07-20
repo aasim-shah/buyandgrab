@@ -20,7 +20,7 @@ function Token_holders({ selectedRows }) {
  
     const fetchData = async () => {
         try {
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/token_holders/${tokenId}/${tokenCount}`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/token_holders/${tokenId}`)
             // let response = await axios.get(`http://localhost:5000/fetch/token_holders/${tokenId}/${tokenCount}`)
             console.log({ res: response.data })
             setData(response.data)
