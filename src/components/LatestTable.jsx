@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import ChartComponent from './ChartComponent';
+import { Link } from 'react-router-dom';
 
 
 function LatestTable({ selectedRows }) {
+    console.log({selectedRows})
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
+    const [blockNumberINput, setBlockNumberINput] = useState(99999999999)
+
     const [extendedData, setExtendedData] = useState([]);
     const [sortOrders, setSortOrders] = useState({ 
     name: 'asc', id: 'asc', cmc_rank: "asc"  , 
@@ -19,8 +23,9 @@ function LatestTable({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get('https://appslk-second.onrender.com/fetch/latest')
-            // let response = await axios.get('http://localhost:5000/fetch/latest')
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/latest/${selectedRows}`)
+            // let response = await axios.get(`http://localhost:5000/fetch/latest/${selectedRows}`)
+            console.log({responsed : response.data})
             setData(response.data)
             setSortedData(response.data)
         } catch (error) { console.log(`Error ${error}`) }
@@ -83,15 +88,6 @@ function LatestTable({ selectedRows }) {
     };
 
 
-    // const getCoinInfo = async (id) =>{
-    //  try {
-    //     const resp = await axios.get(`http://localhost:5000/fetch/info/${id}`)
-    //     console.log({resp})
-    //     return resp.data
-    //  } catch (error) {
-    //     console.log(error)
-    //  }
-    // }
 
     
   useEffect(() => {
@@ -124,9 +120,9 @@ function LatestTable({ selectedRows }) {
   
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [selectedRows])
 
-
+console.log({sortedData})
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
@@ -208,6 +204,9 @@ function LatestTable({ selectedRows }) {
                         <th className="px-4 py-2 " >
                             7 days 
                         </th>
+                        <th className="px-4 py-2 " >
+                            TokenCount
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -217,13 +216,13 @@ function LatestTable({ selectedRows }) {
                             <td className="px-4 py-2 text-center ">{item.cmc_rank}</td>
                            
                             <td className="px-4 py-2 text-center">
-                            <div className="flex flex-row  items-center">
+                            <Link to={`/tables/token_holders?tokenId=${item.platform.token_address}&tokenCount=${blockNumberINput}`} className="flex flex-row  items-center">
                                 {item.logo && (
-                             <img src={item.logo[0]} alt="Logo" className='h-8 w-8 mr-3' />
+                                <img src={item.logo[0]} alt="Logo" className='h-8 w-8 mr-3' />
                                 )}
                                 <p className="text-sm mr-3">{item.name}</p>
                                 <p className="text-sm text-gray-400">{item.symbol}</p>
-                            </div>
+                            </Link>
                                 </td>
                             <td className="px-4 py-2 text-center">${item.quote.USD.price.toFixed(2)}</td>
                             <td className="px-4 py-2 text-center ">
@@ -254,6 +253,16 @@ function LatestTable({ selectedRows }) {
                                 {value : Number(item.quote.USD.market_cap?.toFixed()) , name : '7days'}
                             ]}/>
                             </td>
+                            <td className='py-2 px-4 text-center'>
+                                <select value={blockNumberINput} onClick={(event)=>{
+                                     setBlockNumberINput(parseInt(event.target.value));
+                                }} name="coinType" className='py-1 px-1 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
+                                    <option value="1000">1000</option>
+                                    <option value="2000">2000</option>
+                                    <option value="3000">3000</option>
+                                </select>
+                            </td>
+
                         </tr>
                     )) : (
                         <tr>

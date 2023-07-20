@@ -3,9 +3,12 @@ import LatestTable from '../../components/LatestTable';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import ChartComponent from '../../components/ChartComponent';
+import Token_holders from '../../components/Token_holders';
 import TrendingTable from '../../components/TrendingTable';
+import TransactionTable from '../../components/TransactionsTable';
 
 function Tables() {
+  const [cointType, setCointType] = useState("USD")
   const { tableContentType } = useParams();
 
   
@@ -48,10 +51,11 @@ function Tables() {
           <Link  to={`/tables/most-visited`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'most-visited' && 'text-blue-600 bg-gray-100' }`}>Most Visited</Link>
 
           <Link  to={`/tables/recently-added`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'recently-added' && 'text-blue-600 bg-gray-100' }`}>Recently Added</Link>
+         
 
         </div>
         <div className="flex flex-row items-center min-w-[8rem]  w-11/12 sm:w-[8rem]  py-1 justify-end gap-3">
-          <p className="text-[12px]">Rows Count</p>
+            <p className="text-[12px]">Rows</p>
           <select value={selectedRows} onChange={handleRowChange} name="coinType" className='py-1 px-1 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
             <option value="10">10</option>
             <option value="20">20</option>
@@ -64,6 +68,12 @@ function Tables() {
     )}
     {tableContentType === "trending" && (
       <TrendingTable selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "token_holders" && (
+      <Token_holders selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "transactions" && (
+      <TransactionTable selectedRows={selectedRows} />     
     )}
     </div>
   );

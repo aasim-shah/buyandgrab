@@ -84,9 +84,9 @@ function TrendingTable({ selectedRows }) {
                     <th className="px-4 py-2" >
                             Rank
                         </th>
-                        
+
                         <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" onClick={() => handleSort('name')}>
-                           Name
+                           Name     
                               {filterBy === "name" && sortOrders.name === 'asc' &&
                             <AiFillCaretDown />
                         }
@@ -126,7 +126,7 @@ function TrendingTable({ selectedRows }) {
                                 <p className="text-sm text-gray-400">{item.symbol}</p>
                             </div>
                                 </td>
-                            <td className="px-4 py-2 text-center">${Number(item.price_btc)}</td>
+                            <td className="px-4 py-2 text-center">${Number(item.price_btc).toFixed(9)}</td>
                             
                            
                           

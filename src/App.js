@@ -30,6 +30,8 @@ function App() {
     <Route path="/product/:id" element={<ViewProduct />} />
     <Route path="/login"  element={<Loginpage/>}/>
     <Route path="/tables/:tableContentType"  element={<Tables/>}/>
+    <Route path="/tables/:tableContentType/:address/:contract_address"  element={<Tables/>}/>
+    <Route path="/tables/:tableContentType"  element={<Tables/>}/>
     <Route path="/signup" element={<Signuppage />} />
     <Route path="/category/:category" element={<ViewProductByCat />} />
     <Route path="/category/:category/:subCategory" element={<ViewProductByCatAndSub />} />
