@@ -72,6 +72,14 @@ function Token_holders({ selectedRows }) {
     };
 
 
+    function addZerosAtEnd(x) {
+        if (typeof x !== 'number' || x < 0 || !Number.isInteger(x)) {
+          throw new Error('Input must be a non-negative integer');
+        }
+      const newNumber = '1' + '0'.repeat(x);
+        return parseInt(newNumber)
+      }
+
 
     // Function to toggle the sort order when the name column is clicked
     const handleSort = (field) => {
@@ -174,9 +182,7 @@ function Token_holders({ selectedRows }) {
 
 
                             <td className="px-4 py-2  text-center">
-                                {/* <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
-                                    {item.address.slice(0, 8)}.....{item.address.slice(38, item.address.length)}
-                                </Link> */}
+                                
                             <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
                                 {item.address}
                                 </Link>
@@ -184,7 +190,7 @@ function Token_holders({ selectedRows }) {
 
 
                             <td className="px-4 py-2 text-center">{
-                                numberWithCommas(Number(item.balance).toFixed() / Number(item.contract_decimals))
+                                numberWithCommas(item.balance / addZerosAtEnd(item.contract_decimals))
                             }</td>
 
 

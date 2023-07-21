@@ -169,39 +169,7 @@ function TransactionTable({ selectedRows }) {
                             )}
                            </div>
                         </th>
-                        {/* 
-                        <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
-                            <div className="flex flex-row  gap-2 justify-center items-center">
-                                Wallet_Address {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
-                                    <AiFillCaretDown />
-                                }
-                                {filterBy === "price_btc" && sortOrders.price_btc === 'desc' && (
-                                    <AiFillCaretUp />
-                                )}
-                            </div>
-                        </th> */}
-
-                        {/* <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
-                            <div className="flex flex-row  gap-2 justify-center items-center">
-                                Contract_address {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
-                                    <AiFillCaretDown />
-                                }
-                                {filterBy === "price_btc" && sortOrders.price_btc === 'desc' && (
-                                    <AiFillCaretUp />
-                                )}
-                            </div>
-                        </th> */}
-
-                        {/* <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
-                            <div className="flex flex-row  gap-2 justify-center items-center">
-                                Balance {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
-                                    <AiFillCaretDown />
-                                }
-                                {filterBy === "price_btc" && sortOrders.price_btc === 'desc' && (
-                                    <AiFillCaretUp />
-                                )}
-                            </div>
-                        </th> */}
+                       
 
 
 
@@ -219,11 +187,11 @@ function TransactionTable({ selectedRows }) {
                            
                            
                             <td className="px-4 py-2">
-                                <Link to={`#`}>
+                                <a  href={`https://etherscan.io/tx/${item.tx_hash}`}>
                                     {item.tx_hash
                                         .slice(0, 8)}........{item.tx_hash.slice(60, item.tx_hash
                                             .length)}
-                                </Link>
+                                </a>
                             </td>
                             
                             <td className="px-4 py-2 text-center ">
