@@ -35,7 +35,7 @@ function TransactionTable({ selectedRows }) {
         const dataArray = Array.isArray(dataToSort) ? dataToSort : [];
         console.log({ dataArray })
         const sorted = [...dataArray].sort((a, b) => {
-            console.log({ a })
+          
             let valueA = a[field];
             let valueB = b[field];
             if (valueA === undefined) {
@@ -44,8 +44,7 @@ function TransactionTable({ selectedRows }) {
             if (valueB === undefined) {
                 valueB = b.transfers[0][field]
             }
-            console.log({ valueA })
-            console.log({ valueB })
+           
             if (order === 'asc') {
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     return valueA.localeCompare(valueB);
@@ -91,7 +90,8 @@ return filterdArray
         console.log({ field })
         // Sort the data with the new order and specified field
         if (data) {
-            const sorted = sortDataByField(data, field, newSortOrder);
+            console.log({sortedData})
+            const sorted = sortDataByField(sortedData, field, newSortOrder);
             setSortedData(sorted)
             setFilterBy(field)
         }

@@ -74,11 +74,11 @@ function Token_holders({ selectedRows }) {
 
     function addZerosAtEnd(x) {
         if (typeof x !== 'number' || x < 0 || !Number.isInteger(x)) {
-          throw new Error('Input must be a non-negative integer');
+            throw new Error('Input must be a non-negative integer');
         }
-      const newNumber = '1' + '0'.repeat(x);
-        return parseInt(newNumber)
-      }
+        const newNumber = '1' + '0'.repeat(x);
+        return Number(newNumber)
+    }
 
 
     // Function to toggle the sort order when the name column is clicked
@@ -142,7 +142,13 @@ function Token_holders({ selectedRows }) {
                         setupdateData(prev => !prev)
                     }} className="py-2 ml-1 px-2 bg-cyan-400 rounded-md text-white text-center">Update</button></div>
             </div>
-            <table className="table table-auto   w-full  text-black text-sm font-semibold">
+            {isLoading ? (
+                <div className="text-center my-12">
+                    <p className="text-3xl text-gray-400 font-bold ">Loading</p>
+
+                </div>
+            ):(
+                <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
 
@@ -177,24 +183,23 @@ function Token_holders({ selectedRows }) {
                 </thead>
                 <tbody>
                     {sortedData && sortedData.length > 0 ? sortedData.slice(0, selectedRows).map((item, index) => (
-
                         <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
 
-
                             <td className="px-4 py-2  text-center">
-                                
-                            <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
-                                {item.address}
+
+                                <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
+                                    {item.address}
                                 </Link>
                             </td>
 
-
                             <td className="px-4 py-2 text-center">{
-                                numberWithCommas(item.balance / addZerosAtEnd(item.contract_decimals))
+                                numberWithCommas(Number(item.balance) / addZerosAtEnd(item.contract_decimals))
                             }</td>
 
 
                         </tr>
+
+                        
                     )) : (
                         <tr>
                             <td colSpan="12" className='text-center  py-12  font-bold  text-gray-400'>
@@ -204,6 +209,7 @@ function Token_holders({ selectedRows }) {
                     )}
                 </tbody>
             </table>
+            )}
         </div>
     )
 }
