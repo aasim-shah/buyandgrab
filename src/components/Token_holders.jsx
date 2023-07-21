@@ -15,6 +15,7 @@ function Token_holders({ selectedRows }) {
     const [isLoading, setIsLoading] = useState(false)
     const queryParams = new URLSearchParams(location.search);
     const tokenId = queryParams.get('tokenId');
+    const [actualBlockNumber, setactualBlockNumber] = useState(null)
     const [updateData, setupdateData] = useState(false)
 
 
@@ -24,8 +25,9 @@ function Token_holders({ selectedRows }) {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/token_holders/${tokenId}/${blockNumberINput}`)
             // let response = await axios.get(`http://localhost:5000/fetch/token_holders/${tokenId}/${blockNumberINput}`)
             console.log({ res: response.data })
-            setData(response.data)
-            setSortedData(response.data)
+            setData(response.data.data)
+            setSortedData(response.data.data)
+            setactualBlockNumber(response.data.CoinBlockNumber)
             setIsLoading(false)
         } catch (error) {
             console.log(`Error ${error}`)
@@ -112,7 +114,12 @@ function Token_holders({ selectedRows }) {
                         </div>
                     </div>
                 )}
-                <div className="flex flex-row gap-3 ml-auto my-2"> <input type="text" name="" onChange={(event) => {
+                <div className="flex flex-row gap-3 ml-auto my-2"> 
+                        <div className="">
+                            <span className='text-sm'>Inital Block</span>
+                            <p className="text-sm text-green-700 font-semibold">{actualBlockNumber}</p>
+                        </div>
+                <input type="text" name="" onChange={(event) => {
                     setBlockNumberINput(parseInt(event.target.value));
                 }} id="" className='py-1 px-2 w-[8rem] outline-none bg-white rounded-md border-gray-300 border-2 ml-3' placeholder='Block Count' />
                     <button onClick={() => {
@@ -122,16 +129,10 @@ function Token_holders({ selectedRows }) {
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
-                        <th className="px-4 py-2" >
-                            Rank
-                        </th>
-
-
-
-
+                    
                         <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
-                                Wallet_Address {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
+                                Investor Address {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
                                     <AiFillCaretDown />
                                 }
                                 {filterBy === "price_btc" && sortOrders.price_btc === 'desc' && (
@@ -162,7 +163,6 @@ function Token_holders({ selectedRows }) {
                     {sortedData && sortedData.length > 0 ? sortedData.slice(0, selectedRows).map((item, index) => (
 
                         <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
-                            <td className="px-4 py-2 text-center ">{index + 1}</td>
 
 
                             <td className="px-4 py-2  text-center">

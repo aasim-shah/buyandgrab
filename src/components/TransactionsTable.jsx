@@ -72,7 +72,7 @@ function TransactionTable({ selectedRows }) {
     };
     const numberWithCommas = (num) => {
         const nn = Number(num)
-        return nn.toFixed(3)
+        return nn.toLocaleString()
     };
 
 
@@ -108,11 +108,9 @@ function TransactionTable({ selectedRows }) {
                         <th className="px-4 py-2" >
                             Rank
                         </th>
-                        <th className="px-4 py-2" >
-                            Name
-                        </th>
+                       
 
-                        <th className="px-4 py-2 " >
+                        <th className="px-4 py-2 text-start" >
                             Value
                             {/* {filterBy === "name" && sortOrders.name === 'asc' &&
                                 <AiFillCaretDown />
@@ -179,9 +177,8 @@ function TransactionTable({ selectedRows }) {
 
                         <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-200"}`}>
                             <td className="px-4 py-2 text-center ">{index + 1}</td>
-                            <td className="px-4 py-2 text-center ">{item.transfers[0].contract_name}</td>
                             <td className="px-4 py-2 ">{
-                                numberWithCommas(Number(item.transfers[0].delta).toFixed(3) / Number(item.transfers[0].contract_decimals))
+                                numberWithCommas(Number(item.transfers[0].delta).toFixed() / Number(item.transfers[0].contract_decimals))
                             }</td>
                             <td className="px-4 py-2 text-center ">
                                 <Link to={`#`}>
