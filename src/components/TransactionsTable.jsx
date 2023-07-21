@@ -6,8 +6,10 @@ import moment from 'moment';
 
 function TransactionTable({ selectedRows }) {
     const [data, setData] = useState(null)
-    const [sortedData, setSortedData] = useState(null); 
-    const [sortOrders, setSortOrders] = useState({ block_signed_at: 'asc', id: 'asc', price_btc: 'asc' , pretty_delta_quote : "asc"  , delta : "asc"});
+    const [sortedData, setSortedData] = useState(null);
+    const [selectedDateStart, setSelectedDateStart] = useState(null)
+    const [selectedDateEnd, setSelectedDateEnd] = useState(null)
+    const [sortOrders, setSortOrders] = useState({ block_signed_at: 'asc', id: 'asc', price_btc: 'asc', pretty_delta_quote: "asc", delta: "asc" });
     const [filterBy, setFilterBy] = useState("")
     const { tableContentType, address, contract_address } = useParams();
     const [apiResp, setapiResp] = useState(null)
@@ -31,19 +33,19 @@ function TransactionTable({ selectedRows }) {
     const sortDataByField = (dataToSort, field, order) => {
         console.log("sortDataByField")
         const dataArray = Array.isArray(dataToSort) ? dataToSort : [];
-        console.log({dataArray})
+        console.log({ dataArray })
         const sorted = [...dataArray].sort((a, b) => {
-            console.log({a})
+            console.log({ a })
             let valueA = a[field];
-            let valueB = b[field]; 
-            if(valueA === undefined){
+            let valueB = b[field];
+            if (valueA === undefined) {
                 valueA = a.transfers[0][field]
             }
-            if(valueB === undefined){
+            if (valueB === undefined) {
                 valueB = b.transfers[0][field]
             }
-            console.log({valueA})
-            console.log({valueB})
+            console.log({ valueA })
+            console.log({ valueB })
             if (order === 'asc') {
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     return valueA.localeCompare(valueB);
@@ -69,12 +71,24 @@ function TransactionTable({ selectedRows }) {
     };
 
 
+const filterDataByDate =  () =>{
+    
+
+const filterdArray =  data.filter((item) => {
+    console.log({selectedDateStart})
+    console.log({selectedDateEnd})
+    const itemDate = item.block_signed_at;
+    return itemDate >= selectedDateStart && itemDate <= selectedDateEnd;
+  });
+
+return filterdArray
+}
 
     // Function to toggle the sort order when the name column is clicked
     const handleSort = (field) => {
         const newSortOrder = sortOrders[field] === 'asc' ? 'desc' : 'asc';
-        console.log({newSortOrder})
-        console.log({field})
+        console.log({ newSortOrder })
+        console.log({ field })
         // Sort the data with the new order and specified field
         if (data) {
             const sorted = sortDataByField(data, field, newSortOrder);
@@ -90,17 +104,24 @@ function TransactionTable({ selectedRows }) {
 
     function addZerosAtEnd(x) {
         if (typeof x !== 'number' || x < 0 || !Number.isInteger(x)) {
-          throw new Error('Input must be a non-negative integer');
+            throw new Error('Input must be a non-negative integer');
         }
-      const newNumber = '1' + '0'.repeat(x);
+        const newNumber = '1' + '0'.repeat(x);
         return parseInt(newNumber)
-      }
+    }
 
 
 
     useEffect(() => {
         fetchData()
     }, [])
+
+    useEffect(() => {
+        if (selectedDateStart && selectedDateEnd) {
+          const filteredData = filterDataByDate();
+          setSortedData(filteredData);
+        }
+      }, [selectedDateEnd , selectedDateStart]);
 
     console.log({ sortedData })
 
@@ -110,66 +131,80 @@ function TransactionTable({ selectedRows }) {
                 <div className="flex flex-col sm:flex-row  justify-start sm:justify-between   px-10 items-center">
 
                     <div className="flex flex-row my-3  items-center w-full">
-                    <img src={`${sortedData[0].transfers[0].logo_url}`} className={`w-8 h-8 mr-3`} alt="" />
+                        <img src={`${sortedData[0].transfers[0].logo_url}`} className={`w-8 h-8 mr-3`} alt="" />
                         <p className="font-semibold mr-3">{sortedData[0]?.transfers[0].contract_name}</p>
                         <p className="text-sm text-gray-400">{sortedData[0]?.transfers[0].contract_ticker_symbol}</p>
                     </div>
 
                     <div className=" w-full sm:w-4/12">
                         <span className='text-sm'> Investor</span>
-                        <p className="text-sm text-gray-400">{sortedData[0]?.address}</p>
+                        <p className="text-sm text-gray-400">{apiResp?.address}</p>
                     </div>
+                    <div className=" w-full ml-8 sm:w-7/12  " >
+                        <div className="flex flex-row items-center justify-between">
+                            <span className='text-sm text-gray-500'>Start Date</span>
+                        <input type="date" value={selectedDateStart} onChange={(e) =>{
+                            setSelectedDateStart(e.target.value)
+                        }} name="" id=""  className='py-1 px-2 rounded-md border-2 border-gray-200 outline-none'/>
+                        </div>
 
+                        <div className="flex flex-row gap-2 items-center justify-between">
+                            <span className='text-sm text-gray-500'>Ends Date</span>                        <input type="date" value={selectedDateEnd} onChange={(e) =>{
+                            setSelectedDateEnd(e.target.value)
+                        }} name="" id=""  className='py-1 px-2 mt-2 rounded-md border-2 border-gray-200'/>
+                        </div>
+                        </div>
+                   
                 </div>
             )}
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
-                    <th className="px-4 py-2 text-start"  onClick={() => handleSort('block_signed_at')}>
-                           <div className="flex justify-start gap-3 items-center flex-row">
-                           Signed Date
-                              {filterBy === "block_signed_at" && sortOrders.block_signed_at === 'asc' &&
-                                <AiFillCaretDown />
-                            }
-                            {filterBy === "block_signed_at" && sortOrders.block_signed_at === 'desc' && (
-                                <AiFillCaretUp />
-                            )}
-                           </div>
+                        <th className="px-4 py-2 text-start" onClick={() => handleSort('block_signed_at')}>
+                            <div className="flex justify-start gap-3 items-center flex-row">
+                                Signed Date
+                                {filterBy === "block_signed_at" && sortOrders.block_signed_at === 'asc' &&
+                                    <AiFillCaretDown />
+                                }
+                                {filterBy === "block_signed_at" && sortOrders.block_signed_at === 'desc' && (
+                                    <AiFillCaretUp />
+                                )}
+                            </div>
                         </th>
-                   
-                   
-                   
-                       
+
+
+
+
                         <th className="px-4 py-2 text-start" >
-                                Transaction Hash
+                            Transaction Hash
                         </th>
-                     
+
                         <th className="px-4 py-2" >
-                        Transaction Method
+                            Transaction Method
                         </th>
-                        <th className="px-4 py-2 text-start"  onClick={() => handleSort('delta')}>
-                           <div className="flex justify-start gap-3 items-center flex-row">
-                           Transaction Amount
-                              {filterBy === "delta" && sortOrders.delta === 'asc' &&
-                                <AiFillCaretDown />
-                            }
-                            {filterBy === "delta" && sortOrders.delta === 'desc' && (
-                                <AiFillCaretUp />
-                            )}
-                           </div>
+                        <th className="px-4 py-2 text-start" onClick={() => handleSort('delta')}>
+                            <div className="flex justify-start gap-3 items-center flex-row">
+                                Transaction Amount
+                                {filterBy === "delta" && sortOrders.delta === 'asc' &&
+                                    <AiFillCaretDown />
+                                }
+                                {filterBy === "delta" && sortOrders.delta === 'desc' && (
+                                    <AiFillCaretUp />
+                                )}
+                            </div>
                         </th>
-                        <th className="px-4 py-2 text-start"  onClick={() => handleSort('pretty_delta_quote')}>
-                           <div className="flex justify-start gap-3 items-center flex-row">
-                           Quote
-                              {filterBy === "pretty_delta_quote" && sortOrders.pretty_delta_quote === 'asc' &&
-                                <AiFillCaretDown />
-                            }
-                            {filterBy === "pretty_delta_quote" && sortOrders.pretty_delta_quote === 'desc' && (
-                                <AiFillCaretUp />
-                            )}
-                           </div>
+                        <th className="px-4 py-2 text-start" onClick={() => handleSort('pretty_delta_quote')}>
+                            <div className="flex justify-start gap-3 items-center flex-row">
+                                Quote
+                                {filterBy === "pretty_delta_quote" && sortOrders.pretty_delta_quote === 'asc' &&
+                                    <AiFillCaretDown />
+                                }
+                                {filterBy === "pretty_delta_quote" && sortOrders.pretty_delta_quote === 'desc' && (
+                                    <AiFillCaretUp />
+                                )}
+                            </div>
                         </th>
-                       
+
 
 
 
@@ -182,18 +217,18 @@ function TransactionTable({ selectedRows }) {
                         <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-200"}`}>
                             <td className="px-4 py-2 ">{
                                 moment(item.block_signed_at).format('Y-MM-DD .  hh:mm a')
-                                
+
                             }</td>
-                           
-                           
+
+
                             <td className="px-4 py-2">
-                                <a  href={`https://etherscan.io/tx/${item.tx_hash}`}>
+                                <a href={`https://etherscan.io/tx/${item.tx_hash}`}>
                                     {item.tx_hash
                                         .slice(0, 8)}........{item.tx_hash.slice(60, item.tx_hash
                                             .length)}
                                 </a>
                             </td>
-                            
+
                             <td className="px-4 py-2 text-center ">
                                 {apiResp.address === item.transfers[0].to_address && (
                                     <span>IN</span>
