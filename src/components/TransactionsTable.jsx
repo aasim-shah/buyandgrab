@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
-import { Link , useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function TransactionTable({ selectedRows }) {
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
     const [sortOrders, setSortOrders] = useState({ name: 'asc', id: 'asc', price_btc: 'asc' });
     const [filterBy, setFilterBy] = useState("")
-    const { tableContentType, address ,contract_address } = useParams();
-    console.log({tableContentType})
-    console.log({address})
-    console.log({contract_address})
+    const { tableContentType, address, contract_address } = useParams();
+    console.log({ tableContentType })
+    console.log({ address })
+    console.log({ contract_address })
     const fetchData = async () => {
         try {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/transactions/${address}/${contract_address}`)
@@ -73,8 +73,8 @@ function TransactionTable({ selectedRows }) {
     const numberWithCommas = (num) => {
         const nn = Number(num)
         return nn.toFixed(3)
-      };
-      
+    };
+
 
 
 
@@ -86,7 +86,7 @@ function TransactionTable({ selectedRows }) {
 
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
-              {sortedData && sortedData.items.length > 0 && (
+            {sortedData && sortedData.items.length > 0 && (
                 <div className="flex flex-row justify-between px-10 items-center">
 
                     <div className="flex flex-row my-3  items-center">
@@ -99,7 +99,7 @@ function TransactionTable({ selectedRows }) {
                         <span className='text-sm'> Address</span>
                         <p className="text-sm text-gray-400">{sortedData?.address}</p>
                     </div>
-                   
+
                 </div>
             )}
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
@@ -120,22 +120,22 @@ function TransactionTable({ selectedRows }) {
                             {filterBy === "name" && sortOrders.name === 'desc' && (
                                 <AiFillCaretUp />
                             )} */}
-                           </th>
+                        </th>
                         <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" >
-                        <div className="flex flex-row  gap-2 justify-center items-center">
+                            <div className="flex flex-row  gap-2 justify-center items-center">
                                 Transaction Hash
                             </div>
-                           </th>
-                           <th className="px-4 py-2" >
+                        </th>
+                        <th className="px-4 py-2" >
                             From Address
                         </th>
-                           <th className="px-4 py-2" >
+                        <th className="px-4 py-2" >
                             To Address
                         </th>
-                           <th className="px-4 py-2" >
+                        <th className="px-4 py-2" >
                             Delta Quote
                         </th>
-{/* 
+                        {/* 
                         <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 Wallet_Address {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
@@ -181,34 +181,34 @@ function TransactionTable({ selectedRows }) {
                             <td className="px-4 py-2 text-center ">{index + 1}</td>
                             <td className="px-4 py-2 text-center ">{item.transfers[0].contract_name}</td>
                             <td className="px-4 py-2 ">{
-                              numberWithCommas( Number(item.transfers[0].delta).toFixed(3) / Number(item.transfers[0].contract_decimals))
+                                numberWithCommas(Number(item.transfers[0].delta).toFixed(3) / Number(item.transfers[0].contract_decimals))
                             }</td>
                             <td className="px-4 py-2 text-center ">
-                            <Link to={`#`}>
+                                <Link to={`#`}>
                                     {item.tx_hash
                                         .slice(0, 8)}........{item.tx_hash.slice(60, item.tx_hash
                                             .length)}
                                 </Link>
                             </td>
                             <td className="px-4 py-2 text-center ">
-                            <Link to={`#`}>
-                                    {item.from_address
-                                        .slice(0, 8)}........{item.from_address.slice(38, item.from_address
+                                <Link to={`#`}>
+                                    {item.transfers[0].from_address
+                                        .slice(0, 8)}........{item.transfers[0].from_address.slice(38, item.transfers[0].from_address
                                             .length)}
                                 </Link>
                             </td>
                             <td className="px-4 py-2 text-center ">
-                            <Link to={"#"}>
-                                    {item.to_address
-                                        .slice(0, 8)}........{item.to_address.slice(38, item.to_address
+                                <Link to={"#"}>
+                                    {item.transfers[0].to_address
+                                        .slice(0, 8)}........{item.transfers[0].to_address.slice(38, item.to_address
                                             .length)}
                                 </Link>
                             </td>
                             <td className="px-4 py-2 text-center ">
-                            {item.transfers[0].pretty_delta_quote}
+                                {item.transfers[0].pretty_delta_quote}
                             </td>
 
-                           
+
 
                         </tr>
                     )) : (

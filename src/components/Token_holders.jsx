@@ -11,21 +11,26 @@ function Token_holders({ selectedRows }) {
     const [sortOrders, setSortOrders] = useState({ name: 'asc', id: 'asc', price_btc: 'asc' });
     const [filterBy, setFilterBy] = useState("")
     const location = useLocation();
-    const [blockNumberINput, setBlockNumberINput] = useState(100000)
-
+    const [blockNumberINput, setBlockNumberINput] = useState(739284929)
+    const [isLoading, setIsLoading] = useState(false)
     const queryParams = new URLSearchParams(location.search);
     const tokenId = queryParams.get('tokenId');
-
+    const [updateData, setupdateData] = useState(false)
 
 
     const fetchData = async () => {
+        setIsLoading(true)
         try {
-              let response = await axios.get(`https://appslk-second.onrender.com/fetch/token_holders/${tokenId}/${blockNumberINput}`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/token_holders/${tokenId}/${blockNumberINput}`)
             // let response = await axios.get(`http://localhost:5000/fetch/token_holders/${tokenId}/${blockNumberINput}`)
             console.log({ res: response.data })
             setData(response.data)
             setSortedData(response.data)
-        } catch (error) { console.log(`Error ${error}`) }
+            setIsLoading(false)
+        } catch (error) {
+            console.log(`Error ${error}`)
+            setIsLoading(false)
+        }
 
     }
 
@@ -78,39 +83,42 @@ function Token_holders({ selectedRows }) {
     };
 
 
-
+    const numberWithCommas = (num) => {
+        const nn = parseInt(num)
+        return nn.toLocaleString();
+      };
 
     useEffect(() => {
         fetchData()
-    }, [blockNumberINput])
+    }, [updateData])
 
     console.log({ sortedData })
 
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
-            {sortedData && sortedData.length > 0 && (
-                <div className="flex flex-row justify-between px-10 items-center">
+            <div className="flex flex-row justify-between px-10 items-center">
+                {sortedData && sortedData.length > 0 && (
+                    <div className="flex flex-row  gap-3">
+                        <div className="flex flex-row my-3  items-center">
+                            <img src={sortedData[0]?.logo_url} alt="Logo" className='h-8 w-8 mr-3' />
 
-                    <div className="flex flex-row my-3  items-center">
-                        <img src={sortedData[0]?.logo_url} alt="Logo" className='h-8 w-8 mr-3' />
+                            <p className="text-sm mr-3">{sortedData[0]?.contract_name}</p>
+                            <p className="text-sm text-gray-400">{sortedData[0]?.contract_name}</p>
+                        </div>
 
-                        <p className="text-sm mr-3">{sortedData[0]?.contract_name}</p>
-                        <p className="text-sm text-gray-400">{sortedData[0]?.contract_name}</p>
+                        <div className="">
+                            <span className='text-sm'>Contract Address</span>
+                            <p className="text-sm text-gray-400">{sortedData[0]?.contract_address}</p>
+                        </div>
                     </div>
-
-                    <div className="">
-                        <span className='text-sm'>Contract Address</span>
-                        <p className="text-sm text-gray-400">{sortedData[0]?.contract_address}</p>
-                    </div>
-                    <select value={blockNumberINput} onClick={(event) => {
-                        setBlockNumberINput(parseInt(event.target.value));
-                    }} name="coinType" className='py-1 px-4 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
-                        <option value="10000">10,000</option>
-                        <option value="20000">20,000</option>
-                        <option value="30000">30,000</option>
-                    </select>
-                </div>
-            )}
+                )}
+                <div className="flex flex-row gap-3 ml-auto my-2"> <input type="text" name="" onChange={(event) => {
+                    setBlockNumberINput(parseInt(event.target.value));
+                }} id="" className='py-1 px-2 w-[8rem] outline-none bg-white rounded-md border-gray-300 border-2 ml-3' placeholder='Block Count' />
+                    <button onClick={() => {
+                        setupdateData(prev => !prev)
+                    }} className="py-2 ml-1 px-2 bg-cyan-400 rounded-md text-white text-center">Update</button></div>
+            </div>
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
@@ -165,13 +173,15 @@ function Token_holders({ selectedRows }) {
                             </td>
 
 
-                            <td className="px-4 py-2 text-center">${Number(item.balance).toFixed(9)}</td>
+                            <td className="px-4 py-2 text-center">{numberWithCommas(Number(item.balance).toFixed())}</td>
 
 
                         </tr>
                     )) : (
                         <tr>
-                            <td colSpan="12" className='text-center  py-12  font-bold  text-gray-400'>Loading...</td>
+                            <td colSpan="12" className='text-center  py-12  font-bold  text-gray-400'>
+                                {isLoading ? "Loading..." : "No item found !"}
+                            </td>
                         </tr>
                     )}
                 </tbody>
