@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-
+import { Link , useParams } from 'react-router-dom';
 
 function TransactionTable({ selectedRows }) {
     const [data, setData] = useState(null)
@@ -88,6 +86,22 @@ function TransactionTable({ selectedRows }) {
 
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
+              {sortedData && sortedData.items.length > 0 && (
+                <div className="flex flex-row justify-between px-10 items-center">
+
+                    <div className="flex flex-row my-3  items-center">
+
+                        <p className="font-semibold mr-3">{sortedData.items[0]?.transfers[0].contract_name}</p>
+                        <p className="text-sm text-gray-400">{sortedData.items[0]?.transfers[0].contract_ticker_symbol}</p>
+                    </div>
+
+                    <div className="">
+                        <span className='text-sm'> Address</span>
+                        <p className="text-sm text-gray-400">{sortedData?.address}</p>
+                    </div>
+                   
+                </div>
+            )}
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
@@ -166,7 +180,7 @@ function TransactionTable({ selectedRows }) {
                         <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-200"}`}>
                             <td className="px-4 py-2 text-center ">{index + 1}</td>
                             <td className="px-4 py-2 text-center ">{item.transfers[0].contract_name}</td>
-                            <td className="px-4 py-2 text-center ">{
+                            <td className="px-4 py-2 ">{
                               numberWithCommas( Number(item.transfers[0].delta).toFixed(3) / Number(item.transfers[0].contract_decimals))
                             }</td>
                             <td className="px-4 py-2 text-center ">

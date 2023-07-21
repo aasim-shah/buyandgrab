@@ -11,17 +11,17 @@ function Token_holders({ selectedRows }) {
     const [sortOrders, setSortOrders] = useState({ name: 'asc', id: 'asc', price_btc: 'asc' });
     const [filterBy, setFilterBy] = useState("")
     const location = useLocation();
+    const [blockNumberINput, setBlockNumberINput] = useState(100000)
+
     const queryParams = new URLSearchParams(location.search);
     const tokenId = queryParams.get('tokenId');
-    const tokenCount = queryParams.get('tokenCount');
-    console.log({tokenId})
-    console.log({tokenCount})
 
- 
+
+
     const fetchData = async () => {
         try {
-          let response = await axios.get(`https://appslk-second.onrender.com/fetch/token_holders/${tokenId}`)
-            // let response = await axios.get(`http://localhost:5000/fetch/token_holders/${tokenId}`)
+              let response = await axios.get(`https://appslk-second.onrender.com/fetch/token_holders/${tokenId}/${blockNumberINput}`)
+            // let response = await axios.get(`http://localhost:5000/fetch/token_holders/${tokenId}/${blockNumberINput}`)
             console.log({ res: response.data })
             setData(response.data)
             setSortedData(response.data)
@@ -82,12 +82,35 @@ function Token_holders({ selectedRows }) {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [blockNumberINput])
 
     console.log({ sortedData })
 
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
+            {sortedData && sortedData.length > 0 && (
+                <div className="flex flex-row justify-between px-10 items-center">
+
+                    <div className="flex flex-row my-3  items-center">
+                        <img src={sortedData[0]?.logo_url} alt="Logo" className='h-8 w-8 mr-3' />
+
+                        <p className="text-sm mr-3">{sortedData[0]?.contract_name}</p>
+                        <p className="text-sm text-gray-400">{sortedData[0]?.contract_name}</p>
+                    </div>
+
+                    <div className="">
+                        <span className='text-sm'>Contract Address</span>
+                        <p className="text-sm text-gray-400">{sortedData[0]?.contract_address}</p>
+                    </div>
+                    <select value={blockNumberINput} onClick={(event) => {
+                        setBlockNumberINput(parseInt(event.target.value));
+                    }} name="coinType" className='py-1 px-4 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
+                        <option value="10000">10,000</option>
+                        <option value="20000">20,000</option>
+                        <option value="30000">30,000</option>
+                    </select>
+                </div>
+            )}
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
@@ -95,14 +118,7 @@ function Token_holders({ selectedRows }) {
                             Rank
                         </th>
 
-                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" onClick={() => handleSort('name')}>
-                            Name
-                            {filterBy === "name" && sortOrders.name === 'asc' &&
-                                <AiFillCaretDown />
-                            }
-                            {filterBy === "name" && sortOrders.name === 'desc' && (
-                                <AiFillCaretUp />
-                            )}</th>
+
 
 
                         <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
@@ -116,16 +132,7 @@ function Token_holders({ selectedRows }) {
                             </div>
                         </th>
 
-                        <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
-                            <div className="flex flex-row  gap-2 justify-center items-center">
-                                Contract_address {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
-                                    <AiFillCaretDown />
-                                }
-                                {filterBy === "price_btc" && sortOrders.price_btc === 'desc' && (
-                                    <AiFillCaretUp />
-                                )}
-                            </div>
-                        </th>
+
 
                         <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
@@ -149,28 +156,15 @@ function Token_holders({ selectedRows }) {
                         <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                             <td className="px-4 py-2 text-center ">{index + 1}</td>
 
-                            <td className="px-4 py-2 text-center">
-                                <div className="flex flex-row  items-center">
-                                    <img src={item.logo_url} alt="Logo" className='h-8 w-8 mr-3' />
 
-                                    <p className="text-sm mr-3">{item.contract_name}</p>
-                                    <p className="text-sm text-gray-400">{item.contract_name}</p>
-                                </div>
-                            </td>
                             <td className="px-4 py-2  text-center">
-                            <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
-                                {item.address.slice(0, 8)}.....{item.address.slice(38, item.address.length)}
+                                <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
+                                    {item.address.slice(0, 8)}.....{item.address.slice(38, item.address.length)}
                                 </Link>
 
-                                </td>
-                                
-                            <td className="px-4 py-2 text-center">
-                                <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
-                                    {item.contract_address
-                                        .slice(0, 8)}.....{item.contract_address.slice(38, item.contract_address
-                                            .length)}
-                                </Link>
                             </td>
+
+
                             <td className="px-4 py-2 text-center">${Number(item.balance).toFixed(9)}</td>
 
 

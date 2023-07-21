@@ -204,9 +204,7 @@ console.log({sortedData})
                         <th className="px-4 py-2 " >
                             7 days 
                         </th>
-                        <th className="px-4 py-2 " >
-                            TokenCount
-                        </th>
+                      
                     </tr>
                 </thead>
                 <tbody>
@@ -263,15 +261,7 @@ console.log({sortedData})
                                 {value : Number(item.quote.USD.market_cap?.toFixed()) , name : '7days'}
                             ]}/>
                             </td>
-                            <td className='py-2 px-4 text-center'>
-                                <select value={blockNumberINput} onClick={(event)=>{
-                                     setBlockNumberINput(parseInt(event.target.value));
-                                }} name="coinType" className='py-1 px-1 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
-                                    <option value="1000">1000</option>
-                                    <option value="2000">2000</option>
-                                    <option value="3000">3000</option>
-                                </select>
-                            </td>
+                           
 
                         </tr>
                     )) : (

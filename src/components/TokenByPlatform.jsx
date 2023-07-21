@@ -11,7 +11,6 @@ function TokenByPlatform({ selectedRows }) {
     console.log({selectedRows})
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
-    const [blockNumberINput, setBlockNumberINput] = useState(99999999999)
     const [extendedData, setExtendedData] = useState([]);
 
     const location = useLocation();
@@ -39,7 +38,7 @@ function TokenByPlatform({ selectedRows }) {
     const fetchData = async () => {
         try {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/latestWithPlatform/${platform}/${limit}`)
-            // let response = await axios.get(`http://localhost:5000/fetch/latestWithPlatform/${platform}/100`)
+            // let response = await axios.get(`http://localhost:5000/fetch/latestWithPlatform/${platform}/${limit}`)
             console.log({responsed : response.data})
             setData(response.data)
             setSortedData(response.data)
@@ -219,9 +218,7 @@ console.log({sortedData})
                         <th className="px-4 py-2 " >
                             7 days 
                         </th>
-                        <th className="px-4 py-2 " >
-                            TokenCount
-                        </th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -249,7 +246,7 @@ console.log({sortedData})
                             </div>
                             )}
                                 </td>
-                            <td className="px-4 py-2 text-center">${item.quote.USD.price.toFixed(2)}</td>
+                            <td className="px-4 py-2 ">${item.quote.USD.price.toFixed(2)}</td>
                             <td className="px-4 py-2 text-center ">
                                 {item.quote.USD.percent_change_1h?.toFixed(2) > 0 ? (
                                     <p className="text-green-500">{item.quote.USD.percent_change_1h?.toFixed(2)}%</p>
@@ -278,15 +275,7 @@ console.log({sortedData})
                                 {value : Number(item.quote.USD.market_cap?.toFixed()) , name : '7days'}
                             ]}/>
                             </td>
-                            <td className='py-2 px-4 text-center'>
-                                <select value={blockNumberINput} onClick={(event)=>{
-                                     setBlockNumberINput(parseInt(event.target.value));
-                                }} name="coinType" className='py-1 px-1 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
-                                    <option value="1000">1000</option>
-                                    <option value="2000">2000</option>
-                                    <option value="3000">3000</option>
-                                </select>
-                            </td>
+                          
 
                         </tr>
                     )) : (
