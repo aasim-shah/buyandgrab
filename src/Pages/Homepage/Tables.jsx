@@ -41,7 +41,7 @@ function Tables() {
       </div>
 
       <div className="flex flex-col sm:flex-row my-2 gap-4 justify-between w-11/12 mx-auto items-center   ">
-        <div className="flex flex-row justify-center items-center   gap-4">
+        <div className="flex flex-row justify-start  w-[20rem] sm:w-full overflow-x-scroll sm:overflow-x-auto items-center   gap-4">
           <Link to={`/tables/spotlight`}  className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'spotlight' && 'text-blue-600 bg-gray-100' }`}>Spotlight</Link>
 
           <Link to={`/tables/gainers`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'gainers' && 'text-blue-600 bg-gray-100' }`} >Gainers</Link>

@@ -88,7 +88,7 @@ function Token_holders({ selectedRows }) {
     const numberWithCommas = (num) => {
         const nn = parseInt(num)
         return nn.toLocaleString();
-      };
+    };
 
     useEffect(() => {
         fetchData()
@@ -98,9 +98,9 @@ function Token_holders({ selectedRows }) {
 
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
-            <div className="flex flex-row justify-between px-10 items-center">
+            <div className="flex flex-col sm:flex-row justify-between px-10 items-center">
                 {sortedData && sortedData.length > 0 && (
-                    <div className="flex flex-row  gap-3">
+                    <div className="flex flex-col   gap-1">
                         <div className="flex flex-row my-3  items-center">
                             <img src={sortedData[0]?.logo_url} alt="Logo" className='h-8 w-8 mr-3' />
 
@@ -114,14 +114,22 @@ function Token_holders({ selectedRows }) {
                         </div>
                     </div>
                 )}
-                <div className="flex flex-row gap-3 ml-auto my-2"> 
-                        <div className="">
-                            <span className='text-sm'>Inital Block</span>
-                            <p className="text-sm text-green-700 font-semibold">{actualBlockNumber}</p>
-                        </div>
-                <input type="text" name="" onChange={(event) => {
-                    setBlockNumberINput(parseInt(event.target.value));
-                }} id="" className='py-1 px-2 w-[8rem] outline-none bg-white rounded-md border-gray-300 border-2 ml-3' placeholder='Block Count' />
+                <div className="flex flex-row gap-3 ml-0 px-2 py-2 sm:w-[30rem] w-[20rem] overflow-x-scroll sm:overflow-x-auto sm:ml-auto my-2">
+                    <div className="min-w-[6rem]">
+                        <span className='text-sm'>Inital Block</span>
+                        <p className="text-sm text-green-700 font-semibold">{actualBlockNumber}</p>
+                    </div>
+                    {
+                        actualBlockNumber && (
+                            <div className="min-w-[6rem]">
+                                <span className='text-sm'>Block Height</span>
+                                <p className="text-sm text-green-700 font-semibold">{sortedData[0]?.block_height}</p>
+                            </div>
+                        )
+                    }
+                    <input type="text" name="" onChange={(event) => {
+                        setBlockNumberINput(parseInt(event.target.value));
+                    }} id="" className='py-1 px-2 w-[8rem] outline-none bg-white rounded-md border-gray-300 border-2 ml-3' placeholder='Block Count' />
                     <button onClick={() => {
                         setupdateData(prev => !prev)
                     }} className="py-2 ml-1 px-2 bg-cyan-400 rounded-md text-white text-center">Update</button></div>
@@ -129,7 +137,7 @@ function Token_holders({ selectedRows }) {
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
-                    
+
                         <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 Investor Address {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
@@ -166,14 +174,18 @@ function Token_holders({ selectedRows }) {
 
 
                             <td className="px-4 py-2  text-center">
-                                <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
+                                {/* <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
                                     {item.address.slice(0, 8)}.....{item.address.slice(38, item.address.length)}
+                                </Link> */}
+                            <Link to={`/tables/transactions/${item.address}/${item.contract_address}`}>
+                                {item.address}
                                 </Link>
-
                             </td>
 
 
-                            <td className="px-4 py-2 text-center">{numberWithCommas(Number(item.balance).toFixed())}</td>
+                            <td className="px-4 py-2 text-center">{
+                                numberWithCommas(Number(item.balance).toFixed() / Number(item.contract_decimals))
+                            }</td>
 
 
                         </tr>
