@@ -218,7 +218,19 @@ function TokenByPlatform({ selectedRows }) {
                                     </div>
                                 )}
                             </td>
-                            <td className="px-4 py-2 ">${item.quote.USD.price.toFixed(2)}</td>
+                                    
+                            <td className="px-4 py-2 ">
+                                {item.id === 5994 ? (
+                                    <span>
+                                        ${item.quote.USD.price.toFixed(7)}
+                                    </span>
+                                ): (
+                                    <span>
+                                        ${item.quote.USD.price.toFixed(2)}
+
+                                    </span>
+                                )}
+                                </td>
                             <td className="px-4 py-2 text-center ">
                                 {item.quote.USD.percent_change_1h?.toFixed(2) > 0 ? (
                                     <p className="text-green-500">{item.quote.USD.percent_change_1h?.toFixed(2)}%</p>
