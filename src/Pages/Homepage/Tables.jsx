@@ -81,7 +81,7 @@ function Tables() {
     {tableContentType === "overall" && (
       <LatestTable selectedRows={selectedRows} />     
     )}
-    {tableContentType === "trending" && (
+    {tableContentType === "most-visited" && (
       <TrendingTable selectedRows={selectedRows} />     
     )}
     {tableContentType === "token_holders" && (

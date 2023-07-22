@@ -220,7 +220,7 @@ function TokenByPlatform({ selectedRows }) {
                             </td>
                                     
                             <td className="px-4 py-2 ">
-                                {item.id === 5994 ? (
+                                {item.id === 5994 || item.id === 24478 ? (
                                     <span>
                                         ${item.quote.USD.price.toFixed(7)}
                                     </span>
