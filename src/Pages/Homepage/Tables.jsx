@@ -7,6 +7,7 @@ import Token_holders from '../../components/Token_holders';
 import TrendingTable from '../../components/TrendingTable';
 import TransactionTable from '../../components/TransactionsTable';
 import TokenByPlatform from '../../components/TokenByPlatform';
+import TokensWithPotential from '../../components/TokenswithPotential';
 
 function Tables() {
   const { tableContentType } = useParams();
@@ -14,7 +15,7 @@ function Tables() {
   const queryParams = new URLSearchParams(location.search);
   const table2ContentType = queryParams.get('platform');
   
-  const [selectedRows, setSelectedRows] = useState(25); // Default selected rows
+  const [selectedRows, setSelectedRows] = useState(50); // Default selected rows
 
   // Event handler to update the selected rows
   const handleRowChange = (event) => {
@@ -47,16 +48,9 @@ function Tables() {
           <Link  to={`/tables/most-visited`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'most-visited' && 'text-blue-600 bg-gray-100' }`}>Most Visited</Link>
 
 
-          <Link to={`/tables/gainers`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'gainers' && 'text-blue-600 bg-gray-100' }`} >Gainers</Link>
+        
 
-          <Link to={`/tables/losers`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'losers' && 'text-blue-600 bg-gray-100' }`} >Losers</Link>
-
-          <Link  to={`/tables/trending`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'trending' && 'text-blue-600 bg-gray-100' }`} >Trending</Link>
-
-       
-          <Link  to={`/tables/recently-added`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'recently-added' && 'text-blue-600 bg-gray-100' }`}>Recently Added</Link>
-
-          <Link  to={`/tables/recently-added`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'recently-added' && 'text-blue-600 bg-gray-100' }`}>Tokens with potential</Link>
+          <Link  to={`/tables/TokensWithPotential?limit=50`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'TokensWithPotential' && 'text-blue-600 bg-gray-100' }`}>Tokens with potential</Link>
          
 
         </div>
@@ -98,6 +92,9 @@ function Tables() {
     )}
     {tableContentType === "tokenByPlatform" && (
       <TokenByPlatform selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "TokensWithPotential" && (
+      <TokensWithPotential selectedRows={selectedRows} />     
     )}
     </div>
   );

@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 
 
 
-function TokenByPlatform({ selectedRows }) {
+function TokensWithPotential({ selectedRows }) {
     console.log({ selectedRows })
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
@@ -27,15 +27,11 @@ function TokenByPlatform({ selectedRows }) {
     const [filterBy, setFilterBy] = useState("")
 
 
-    if (!platform) {
-        console.log('no plate')
-    }
-
 
     const fetchData = async () => {
         try {
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/latestWithPlatform/${platform}/${limit}`)
-            // let response = await axios.get(`http://localhost:5000/fetch/latestWithPlatform/${platform}/${limit}`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokensWithPotential/${limit}`)
+            // let response = await axios.get(`http://localhost:5000/fetch/tokensWithPotential/${limit}`)
             console.log({ responsed: response.data })
             setData(response.data)
             setSortedData(response.data)
@@ -110,7 +106,7 @@ function TokenByPlatform({ selectedRows }) {
 
     useEffect(() => {
         fetchData()
-    }, [selectedRows, platform])
+    }, [selectedRows])
 
     console.log({ sortedData })
     return (
@@ -120,7 +116,7 @@ function TokenByPlatform({ selectedRows }) {
                     <tr className=' '>
                         <th className="px-4 py-2 " onClick={() => handleSort('cmc_rank')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
-                                Rank  {filterBy === "cmc_rank" && sortOrders.cmc_rank === 'asc' &&
+                                Name  {filterBy === "cmc_rank" && sortOrders.cmc_rank === 'asc' &&
                                     <AiFillCaretDown />
                                 }
                                 {filterBy === "cmc_rank" && sortOrders.cmc_rank === 'desc' && (
@@ -130,7 +126,7 @@ function TokenByPlatform({ selectedRows }) {
                         </th>
 
                         <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" onClick={() => handleSort('name')}>
-                            Name
+                            Price
                             {filterBy === "name" && sortOrders.name === 'asc' &&
                                 <AiFillCaretDown />
                             }
@@ -193,6 +189,9 @@ function TokenByPlatform({ selectedRows }) {
                         </th>
                         <th className="px-4 py-2 " >
                             7 days
+                        </th>
+                        <th className="px-4 py-2 " >
+                            Potential
                         </th>
 
                     </tr>
@@ -261,4 +260,4 @@ function TokenByPlatform({ selectedRows }) {
     )
 }
 
-export default TokenByPlatform
+export default TokensWithPotential

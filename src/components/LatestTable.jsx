@@ -9,10 +9,7 @@ function LatestTable({ selectedRows }) {
     console.log({ selectedRows })
     const [data, setData] = useState()
     const [sortedData, setSortedData] = useState(null);
-    const delayBetweenCalls = 1000; // 5 seconds delay between each API call (adjust as needed)
 
-    const [arr2, setArr2] = useState(null)
-    const [coinIds, setCoinIds] = useState([])
     const [extendedData, setExtendedData] = useState([]);
     const [sortOrders, setSortOrders] = useState({
         name: 'asc', id: 'asc', cmc_rank: "asc",
@@ -83,68 +80,18 @@ function LatestTable({ selectedRows }) {
         const newSortOrder = sortOrders[field] === 'asc' ? 'desc' : 'asc';
         // Sort the data with the new order and specified field
         if (data) {
-            const sortedData = sortDataByField(extendedData, field, newSortOrder);
-            setExtendedData(sortedData);
+            const sortedData = sortDataByField(data, field, newSortOrder);
+            setSortedData(sortedData);
             setFilterBy(field)
         }
     };
 
-    const fetchExtendedData = async () => {
-        try {
-            const extendedDataPromises = sortedData?.slice(0, selectedRows).map(async (item) => {
-                // const response = await axios.get(`http://localhost:5000/fetch/info/${item.id}`);
-                const response = await axios.get(`https://appslk-second.onrender.com/fetch/info/${item.id}`);
-                const newItem = { ...item, logo: [response.data] }
-                return newItem; // Assuming the server response is the extended data for the given item.id
-            });
-
-            const extendedDataArray = await Promise.all(extendedDataPromises);
-            setExtendedData(extendedDataArray);
-        } catch (error) {
-        }
-    };
-
-
-    const itemIdsArray = sortedData?.map((item) => item.id);
-
-    // The `itemIdsArray` now contains only the `id` properties of each item
+   
 
 
 
-    const sendIds = async () => {
-        // const response = await axios.post(`http://localhost:5000/fetch/postInfo`, itemIdsArray);
-        const response = await axios.post(`https://appslk-second.onrender.com/fetch/postInfo`, itemIdsArray);
-        console.log({ resPOst: response.data})
-        setArr2(response.data)
-    }
 
-
-    useEffect(() => {
-        if (itemIdsArray && itemIdsArray.length > 0) {
-            sendIds()
-        }
-    }, [data , selectedRows]);
-
-
-    // useEffect(() => {
-    //     if (sortedData && sortedData.length > selectedRows-2 && arr2 && arr2.length > selectedRows-2) {
-    //         const addNewFieldToArray1 = (arr1, arrx) => {
-    //             return arr1.map((item1) => {
-    //                 const matchingItem = arrx.find((arrx) => arrx.id === item1.id);
-    //                 return {
-    //                     ...item1,
-    //                     logo: matchingItem ? matchingItem.logo : 'N/A', // Add newField based on the match
-    //                 };
-    //             });
-    //         };
-
-    //         const updatedArray1 = addNewFieldToArray1(sortedData, arr2);
-
-    //         setSortedData(updatedArray1);
-    //     }
-        
-    // }, [data , selectedRows]);
-
+   
     const numberWithCommas = (num) => {
         const nn = parseInt(num)
         return nn.toLocaleString();
@@ -164,7 +111,6 @@ function LatestTable({ selectedRows }) {
 
 
     console.log({ sortedData })
-    console.log({ arr2 })
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
@@ -257,9 +203,7 @@ function LatestTable({ selectedRows }) {
                             <td className="px-4 py-2 text-center">
                                 {item.platform ? (
                                     <Link to={`/tables/token_holders?tokenId=${item.platform.token_address}`} className="flex flex-row  items-center">
-                                        {item.logo && (
-                                            <img src={item.logo} alt="Logo" className='h-8 w-8 mr-3' />
-                                        )}
+                                          <img src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.id}.png`} alt="Logo" className='h-8 w-8 mr-3' />
                                         <p className="text-sm mr-3">{item.name}</p>
                                         <p className="text-sm text-gray-400">{item.symbol}</p>
                                     </Link>
@@ -268,9 +212,9 @@ function LatestTable({ selectedRows }) {
                                         {/* {item.logo && (
                                             <img src={item.logo} alt="Logo" className='h-8 w-8 mr-3' />
                                         )} */}
-                                       {arr2 && arr2.length > 0 ?(
-                                         <img src={arr2?.find(x => x.id === item.id ).logo} alt="" className='h-8 w-8 mr-3' />
-                                       ): null}
+                                        {/* //  <img src={arr2?.find(x => x.id === item.id ).logo} alt="" className='h-8 w-8 mr-3' /> */}
+                                        {/* <img src={fetchLogoData(item.id)} alt="Logo" className='h-8 w-8 mr-3' /> */}
+                                        <img src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.id}.png`} alt="Logo" className='h-8 w-8 mr-3' />
                                         <p className="text-sm mr-3">{item.name}</p>
                                         <p className="text-sm text-gray-400">{item.symbol}</p>
                                     </div>
