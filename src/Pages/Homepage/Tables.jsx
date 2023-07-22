@@ -50,7 +50,7 @@ function Tables() {
 
         
 
-          <Link  to={`/tables/TokensWithPotential?limit=50`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'TokensWithPotential' && 'text-blue-600 bg-gray-100' }`}>Tokens with potential</Link>
+          <Link  to={`/tables/TokensWithPotential`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'TokensWithPotential' && 'text-blue-600 bg-gray-100' }`}>Tokens with potential</Link>
          
 
         </div>

@@ -16,7 +16,7 @@ function TokensWithPotential({ selectedRows }) {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const platform = queryParams.get('platform');
-    const limit = queryParams.get('limit');
+    // const limit = queryParams.get('limit');
 
     const [sortOrders, setSortOrders] = useState({
         name: 'asc', id: 'asc', cmc_rank: "asc",
@@ -31,7 +31,7 @@ function TokensWithPotential({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokensWithPotential/${limit}`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokensWithPotential/${selectedRows}`)
             // let response = await axios.get(`http://localhost:5000/fetch/tokensWithPotential/${limit}`)
             console.log({ responsed: response.data })
             setData(response.data)
@@ -126,7 +126,7 @@ function TokensWithPotential({ selectedRows }) {
                             </div>
                         </th>
 
-                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-start items-center" onClick={() => handleSort('name')}>
+                        <th className="px-4 py-2 flex flex-row gap-2 justify-start items-center" onClick={() => handleSort('name')}>
                             Price
                             {filterBy === "name" && sortOrders.name === 'asc' &&
                                 <AiFillCaretDown />
@@ -248,7 +248,7 @@ function TokensWithPotential({ selectedRows }) {
                             
                             <td className='px-4 py-2 text-center'>
                                {
-                                Number(item.potential).toFixed(5)
+                                Number(item.potential).toFixed(1)+"x"
                                }
                             </td>
 
