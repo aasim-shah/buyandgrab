@@ -116,7 +116,7 @@ function TokensWithPotential({ selectedRows }) {
                 <thead className='text-[12px]'>
                     <tr className=' '>
                         <th className="px-4 py-2 " onClick={() => handleSort('cmc_rank')}>
-                            <div className="flex flex-row  gap-2 justify-center items-center">
+                            <div className="flex flex-row  gap-2 justify-start items-center">
                                 Name  {filterBy === "cmc_rank" && sortOrders.cmc_rank === 'asc' &&
                                     <AiFillCaretDown />
                                 }
@@ -126,7 +126,7 @@ function TokensWithPotential({ selectedRows }) {
                             </div>
                         </th>
 
-                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" onClick={() => handleSort('name')}>
+                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-start items-center" onClick={() => handleSort('name')}>
                             Price
                             {filterBy === "name" && sortOrders.name === 'asc' &&
                                 <AiFillCaretDown />
@@ -136,8 +136,7 @@ function TokensWithPotential({ selectedRows }) {
                             )}</th>
 
 
-                        <th className="px-4 py-2">Price</th>
-                        <th className="px-4 py-2 " onClick={() => handleSort('percent_change_1h')}>
+                        <th className="px-4 py-2 text-start" onClick={() => handleSort('percent_change_1h')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 1h%  {filterBy === "percent_change_1h" && sortOrders.percent_change_1h === 'asc' &&
                                     <AiFillCaretDown />
@@ -201,7 +200,6 @@ function TokensWithPotential({ selectedRows }) {
                     {sortedData && sortedData.length > 0 ? sortedData.slice(0, selectedRows).map((item, index) => (
 
                         <tr key={item.id} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
-                            <td className="px-4 py-2 text-center ">{item.cmc_rank}</td>
 
                             <td className="px-4 py-2 text-center">
                                 {item.platform ? (
