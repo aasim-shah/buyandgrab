@@ -14,7 +14,7 @@ function Tables() {
   const queryParams = new URLSearchParams(location.search);
   const table2ContentType = queryParams.get('platform');
   
-  const [selectedRows, setSelectedRows] = useState(10); // Default selected rows
+  const [selectedRows, setSelectedRows] = useState(25); // Default selected rows
 
   // Event handler to update the selected rows
   const handleRowChange = (event) => {
@@ -42,7 +42,10 @@ function Tables() {
 
       <div className="flex flex-col sm:flex-row my-2 gap-4 justify-between w-11/12 mx-auto items-center   ">
         <div className="flex flex-row justify-start  w-[20rem] sm:w-full overflow-x-scroll sm:overflow-x-auto items-center   gap-4">
-          <Link to={`/tables/spotlight`}  className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'spotlight' && 'text-blue-600 bg-gray-100' }`}>Spotlight</Link>
+          <Link to={`/tables/overall`}  className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'overall' && 'text-blue-600 bg-gray-100' }`}>Overall Tokens</Link>
+
+          <Link  to={`/tables/most-visited`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'most-visited' && 'text-blue-600 bg-gray-100' }`}>Most Visited</Link>
+
 
           <Link to={`/tables/gainers`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'gainers' && 'text-blue-600 bg-gray-100' }`} >Gainers</Link>
 
@@ -50,9 +53,10 @@ function Tables() {
 
           <Link  to={`/tables/trending`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'trending' && 'text-blue-600 bg-gray-100' }`} >Trending</Link>
 
-          <Link  to={`/tables/most-visited`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'most-visited' && 'text-blue-600 bg-gray-100' }`}>Most Visited</Link>
-
+       
           <Link  to={`/tables/recently-added`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'recently-added' && 'text-blue-600 bg-gray-100' }`}>Recently Added</Link>
+
+          <Link  to={`/tables/recently-added`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'recently-added' && 'text-blue-600 bg-gray-100' }`}>Tokens with potential</Link>
          
 
         </div>
@@ -60,8 +64,9 @@ function Tables() {
             <p className="text-[12px]">Rows</p>
           <select value={selectedRows} onChange={handleRowChange} name="coinType" className='py-1 px-1 bg-gray-200 rounded-md text-[12px] font-semibold outline-none' id="">
             <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
           </select>
         </div>
       </div>
@@ -79,7 +84,7 @@ function Tables() {
          
         </div>
         </div>
-    {tableContentType === "spotlight" && (
+    {tableContentType === "overall" && (
       <LatestTable selectedRows={selectedRows} />     
     )}
     {tableContentType === "trending" && (

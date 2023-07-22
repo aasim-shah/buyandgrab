@@ -2,7 +2,6 @@ import React from 'react';
 import { LineChart, CartesianGrid, Line } from 'recharts';
 
 const ChartComponent = ({chartData}) => {
-    console.log(chartData)
     const generateRandomData = (count) => {
         const data = [];
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];

@@ -6,26 +6,28 @@ import { Link } from 'react-router-dom';
 
 
 function LatestTable({ selectedRows }) {
-    console.log({selectedRows})
-    const [data, setData] = useState(null)
+    console.log({ selectedRows })
+    const [data, setData] = useState()
     const [sortedData, setSortedData] = useState(null);
-    const [blockNumberINput, setBlockNumberINput] = useState(99999999999)
+    const delayBetweenCalls = 1000; // 5 seconds delay between each API call (adjust as needed)
 
+    const [arr2, setArr2] = useState(null)
+    const [coinIds, setCoinIds] = useState([])
     const [extendedData, setExtendedData] = useState([]);
-    const [sortOrders, setSortOrders] = useState({ 
-    name: 'asc', id: 'asc', cmc_rank: "asc"  , 
-    percent_change_1h : "asc",
-    percent_change_24h : "asc",
-    percent_change_7d : "asc",
-    market_cap : "asc"
-});
+    const [sortOrders, setSortOrders] = useState({
+        name: 'asc', id: 'asc', cmc_rank: "asc",
+        percent_change_1h: "asc",
+        percent_change_24h: "asc",
+        percent_change_7d: "asc",
+        market_cap: "asc"
+    });
     const [filterBy, setFilterBy] = useState("")
 
     const fetchData = async () => {
         try {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/latestWithoutPlatform/${selectedRows}`)
             // let response = await axios.get(`http://localhost:5000/fetch/latestWithoutPlatform/${selectedRows}`)
-            console.log({responsed : response.data})
+            console.log({ responsed: response.data })
             setData(response.data)
             setSortedData(response.data)
         } catch (error) { console.log(`Error ${error}`) }
@@ -35,21 +37,21 @@ function LatestTable({ selectedRows }) {
 
 
     const sortDataByField = (dataToSort, field, order) => {
-      
+
         const dataArray = Array.isArray(dataToSort) ? dataToSort : [];
 
         const sorted = [...dataArray].sort((a, b) => {
             let valueA = a[field];
             let valueB = b[field];
 
-            if(valueA === undefined){
+            if (valueA === undefined) {
                 valueA = a.quote.USD[field]
             }
-            if(valueB=== undefined){
+            if (valueB === undefined) {
                 valueB = b.quote.USD[field]
             }
-            console.log({valueA})
-            console.log({valueB})
+            console.log({ valueA })
+            console.log({ valueB })
             if (order === 'asc') {
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     return valueA.localeCompare(valueB);
@@ -87,48 +89,88 @@ function LatestTable({ selectedRows }) {
         }
     };
 
-
-
-    
-  useEffect(() => {
-    // Fetch further data for each item based on item.id
     const fetchExtendedData = async () => {
-      try {
-        const extendedDataPromises = sortedData?.slice(0, selectedRows).map(async (item) => {
-        //   const response = await axios.get(`http://localhost:5000/fetch/info/${item.id}`);
-          const response = await axios.get(`https://appslk-second.onrender.com/fetch/info/${item.id}`);
-          const newItem = {...item ,  logo : [response.data]}
-          return newItem; // Assuming the server response is the extended data for the given item.id
-        });
+        try {
+            const extendedDataPromises = sortedData?.slice(0, selectedRows).map(async (item) => {
+                // const response = await axios.get(`http://localhost:5000/fetch/info/${item.id}`);
+                const response = await axios.get(`https://appslk-second.onrender.com/fetch/info/${item.id}`);
+                const newItem = { ...item, logo: [response.data] }
+                return newItem; // Assuming the server response is the extended data for the given item.id
+            });
 
-        const extendedDataArray = await Promise.all(extendedDataPromises);
-        setExtendedData(extendedDataArray);
-      } catch (error) {
-      }
+            const extendedDataArray = await Promise.all(extendedDataPromises);
+            setExtendedData(extendedDataArray);
+        } catch (error) {
+        }
     };
 
-    if (sortedData?.length > 0) {
-      fetchExtendedData();
+
+    const itemIdsArray = sortedData?.map((item) => item.id);
+
+    // The `itemIdsArray` now contains only the `id` properties of each item
+
+
+
+    const sendIds = async () => {
+        // const response = await axios.post(`http://localhost:5000/fetch/postInfo`, itemIdsArray);
+        const response = await axios.post(`https://appslk-second.onrender.com/fetch/postInfo`, itemIdsArray);
+        console.log({ resPOst: response.data})
+        setArr2(response.data)
     }
-  }, [data , selectedRows]);
 
 
-  const numberWithCommas = (num) => {
-    const nn = parseInt(num)
-    return nn.toLocaleString();
-  };
-  
+    useEffect(() => {
+        if (itemIdsArray && itemIdsArray.length > 0) {
+            sendIds()
+        }
+    }, [data , selectedRows]);
+
+
+    // useEffect(() => {
+    //     if (sortedData && sortedData.length > selectedRows-2 && arr2 && arr2.length > selectedRows-2) {
+    //         const addNewFieldToArray1 = (arr1, arrx) => {
+    //             return arr1.map((item1) => {
+    //                 const matchingItem = arrx.find((arrx) => arrx.id === item1.id);
+    //                 return {
+    //                     ...item1,
+    //                     logo: matchingItem ? matchingItem.logo : 'N/A', // Add newField based on the match
+    //                 };
+    //             });
+    //         };
+
+    //         const updatedArray1 = addNewFieldToArray1(sortedData, arr2);
+
+    //         setSortedData(updatedArray1);
+    //     }
+        
+    // }, [data , selectedRows]);
+
+    const numberWithCommas = (num) => {
+        const nn = parseInt(num)
+        return nn.toLocaleString();
+    };
+
     useEffect(() => {
         fetchData()
     }, [selectedRows])
 
-console.log({sortedData})
+
+
+
+
+
+
+
+
+
+    console.log({ sortedData })
+    console.log({ arr2 })
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
-                    <th className="px-4 py-2 " onClick={() => handleSort('cmc_rank')}>
+                        <th className="px-4 py-2 " onClick={() => handleSort('cmc_rank')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 Rank  {filterBy === "cmc_rank" && sortOrders.cmc_rank === 'asc' &&
                                     <AiFillCaretDown />
@@ -138,17 +180,17 @@ console.log({sortedData})
                                 )}
                             </div>
                         </th>
-                        
+
                         <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" onClick={() => handleSort('name')}>
-                           Name
-                              {filterBy === "name" && sortOrders.name === 'asc' &&
-                            <AiFillCaretDown />
-                        }
+                            Name
+                            {filterBy === "name" && sortOrders.name === 'asc' &&
+                                <AiFillCaretDown />
+                            }
                             {filterBy === "name" && sortOrders.name === 'desc' && (
                                 <AiFillCaretUp />
                             )}</th>
-                        
-                        
+
+
                         <th className="px-4 py-2">Price</th>
                         <th className="px-4 py-2 " onClick={() => handleSort('percent_change_1h')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
@@ -160,7 +202,7 @@ console.log({sortedData})
                                 )}
                             </div>
                         </th>
-                       
+
                         <th className="px-4 py-2 " onClick={() => handleSort('percent_change_24h')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 24h%  {filterBy === "percent_change_24h" && sortOrders.percent_change_24h === 'asc' &&
@@ -202,37 +244,40 @@ console.log({sortedData})
                             </div>
                         </th>
                         <th className="px-4 py-2 " >
-                            7 days 
+                            7 days
                         </th>
-                      
+
                     </tr>
                 </thead>
                 <tbody>
-                    {extendedData && extendedData.length > 0 ? extendedData.slice(0,selectedRows).map((item, index) => (
-                
-                        <tr key={item.id} className={` py-3 ${index % 2=== 0 && "bg-gray-100"}`}>
+                    {sortedData && sortedData.length > 0 ? sortedData.slice(0, selectedRows).map((item, index) => (
+                        <tr key={item.id} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                             <td className="px-4 py-2 text-center ">{item.cmc_rank}</td>
-                           
+
                             <td className="px-4 py-2 text-center">
-                            {item.platform  ? (
-                                <Link to={`/tables/token_holders?tokenId=${item.platform.token_address}`} className="flex flex-row  items-center">
-                                {item.logo && (
-                                <img src={item.logo[0]} alt="Logo" className='h-8 w-8 mr-3' />
+                                {item.platform ? (
+                                    <Link to={`/tables/token_holders?tokenId=${item.platform.token_address}`} className="flex flex-row  items-center">
+                                        {item.logo && (
+                                            <img src={item.logo} alt="Logo" className='h-8 w-8 mr-3' />
+                                        )}
+                                        <p className="text-sm mr-3">{item.name}</p>
+                                        <p className="text-sm text-gray-400">{item.symbol}</p>
+                                    </Link>
+                                ) : (
+                                    <div className="flex flex-row  items-center">
+                                        {/* {item.logo && (
+                                            <img src={item.logo} alt="Logo" className='h-8 w-8 mr-3' />
+                                        )} */}
+                                       {arr2 && arr2.length > 0 ?(
+                                         <img src={arr2?.find(x => x.id === item.id ).logo} alt="" className='h-8 w-8 mr-3' />
+                                       ): null}
+                                        <p className="text-sm mr-3">{item.name}</p>
+                                        <p className="text-sm text-gray-400">{item.symbol}</p>
+                                    </div>
                                 )}
-                                <p className="text-sm mr-3">{item.name}</p>
-                                <p className="text-sm text-gray-400">{item.symbol}</p>
-                            </Link>
-                            ) : (
-                                <div  className="flex flex-row  items-center">
-                                {item.logo && (
-                                <img src={item.logo[0]} alt="Logo" className='h-8 w-8 mr-3' />
-                                )}
-                                <p className="text-sm mr-3">{item.name}</p>
-                                <p className="text-sm text-gray-400">{item.symbol}</p>
-                            </div>
-                            )}
-                                </td>
+                            </td>
                             <td className="px-4 py-2 text-center">${item.quote.USD.price.toFixed(2)}</td>
+                                
                             <td className="px-4 py-2 text-center ">
                                 {item.quote.USD.percent_change_1h?.toFixed(2) > 0 ? (
                                     <p className="text-green-500">{item.quote.USD.percent_change_1h?.toFixed(2)}%</p>
@@ -257,11 +302,11 @@ console.log({sortedData})
                             <td className="px-4 py-2 text-center ">{numberWithCommas(item.quote.USD.market_cap?.toFixed(2))}</td>
                             <td className="px-4 py-2 text-center ">{numberWithCommas(item.quote.USD.volume_24h?.toFixed(2))}</td>
                             <td>
-                            <ChartComponent chartData={[
-                                {value : Number(item.quote.USD.market_cap?.toFixed()) , name : '7days'}
-                            ]}/>
+                                <ChartComponent chartData={[
+                                    { value: Number(item.quote.USD.market_cap?.toFixed()), name: '7days' }
+                                ]} />
                             </td>
-                           
+
 
                         </tr>
                     )) : (

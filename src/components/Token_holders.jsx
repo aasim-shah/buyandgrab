@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 function Token_holders({ selectedRows }) {
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
-    const [sortOrders, setSortOrders] = useState({ name: 'asc', id: 'asc', price_btc: 'asc' });
+    const [sortOrders, setSortOrders] = useState({ name: 'asc', id: 'asc', balance: 'asc' });
     const [filterBy, setFilterBy] = useState("")
     const location = useLocation();
     const [blockNumberINput, setBlockNumberINput] = useState(739284929)
@@ -43,9 +43,10 @@ function Token_holders({ selectedRows }) {
         const dataArray = Array.isArray(dataToSort) ? dataToSort : [];
 
         const sorted = [...dataArray].sort((a, b) => {
-            let valueA = a.item[field];
-            let valueB = b.item[field];
-
+            let valueA = a[field];
+            let valueB = b[field];
+            console.log({valueA})
+            console.log({valueB})
 
             if (order === 'asc') {
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
@@ -165,12 +166,12 @@ function Token_holders({ selectedRows }) {
 
 
 
-                        <th className="px-4 py-2 " onClick={() => handleSort('price_btc')}>
+                        <th className="px-4 py-2 " onClick={() => handleSort('balance')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
-                                Balance {filterBy === "price_btc" && sortOrders.price_btc === 'asc' &&
+                                Balance {filterBy === "balance" && sortOrders.balance === 'asc' &&
                                     <AiFillCaretDown />
                                 }
-                                {filterBy === "price_btc" && sortOrders.price_btc === 'desc' && (
+                                {filterBy === "balance" && sortOrders.balance === 'desc' && (
                                     <AiFillCaretUp />
                                 )}
                             </div>

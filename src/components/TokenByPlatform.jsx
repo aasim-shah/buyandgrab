@@ -18,8 +18,6 @@ function TokenByPlatform({ selectedRows }) {
     const platform = queryParams.get('platform');
     const limit = queryParams.get('limit');
 
-    console.log({platform})
-    console.log({limit})
     const [sortOrders, setSortOrders] = useState({ 
     name: 'asc', id: 'asc', cmc_rank: "asc"  , 
     percent_change_1h : "asc",
@@ -62,8 +60,7 @@ function TokenByPlatform({ selectedRows }) {
             if(valueB=== undefined){
                 valueB = b.quote.USD[field]
             }
-            console.log({valueA})
-            console.log({valueB})
+           
             if (order === 'asc') {
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     return valueA.localeCompare(valueB);
@@ -85,6 +82,7 @@ function TokenByPlatform({ selectedRows }) {
             ...prevSortOrders,
             [field]: order,
         }));
+        // handleSort("percent_change_1h")
         return sorted
     };
 
@@ -117,7 +115,7 @@ function TokenByPlatform({ selectedRows }) {
 
         const extendedDataArray = await Promise.all(extendedDataPromises);
         setExtendedData(extendedDataArray);
-      } catch (error) {
+      } catch (error) { 
       }
     };
 
