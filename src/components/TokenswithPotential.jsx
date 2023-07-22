@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 
 function TokensWithPotential({ selectedRows }) {
     console.log({ selectedRows })
+    const [potential, setPotential] = useState(0)
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
 
@@ -245,6 +246,12 @@ function TokensWithPotential({ selectedRows }) {
                                 <ChartComponent chartData={[
                                     { value: Number(item.quote.USD.market_cap?.toFixed()), name: '7days' }
                                 ]} />
+                            </td>
+                            
+                            <td className='px-4 py-2 text-center'>
+                               {
+                                Number(item.potential).toFixed(5)
+                               }
                             </td>
 
 
