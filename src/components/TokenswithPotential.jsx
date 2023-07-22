@@ -23,7 +23,8 @@ function TokensWithPotential({ selectedRows }) {
         percent_change_1h: "asc",
         percent_change_24h: "asc",
         percent_change_7d: "asc",
-        market_cap: "asc"
+        market_cap: "asc",
+        potential: "asc",
     });
     const [filterBy, setFilterBy] = useState("")
 
@@ -32,10 +33,11 @@ function TokensWithPotential({ selectedRows }) {
     const fetchData = async () => {
         try {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokensWithPotential/${selectedRows}`)
-            // let response = await axios.get(`http://localhost:5000/fetch/tokensWithPotential/${limit}`)
+            // let response = await axios.get(`http://localhost:5000/fetch/tokensWithPotential/${selectedRows}`)
             console.log({ responsed: response.data })
             setData(response.data)
             setSortedData(response.data)
+
         } catch (error) { console.log(`Error ${error}`) }
 
     }
@@ -190,10 +192,16 @@ function TokensWithPotential({ selectedRows }) {
                         <th className="px-4 py-2 " >
                             7 days
                         </th>
-                        <th className="px-4 py-2 " >
-                            Potential
+                        <th className="px-4 py-2 " onClick={() => handleSort('potential')}>
+                            <div className="flex flex-row  gap-2 justify-center items-center">
+                                Potential  {filterBy === "potential" && sortOrders.potential === 'asc' &&
+                                    <AiFillCaretDown />
+                                }
+                                {filterBy === "potential" && sortOrders.volume_24h === 'desc' && (
+                                    <AiFillCaretUp />
+                                )}
+                            </div>
                         </th>
-
                     </tr>
                 </thead>
                 <tbody>

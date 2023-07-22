@@ -35,10 +35,8 @@ function Tables() {
 
   return (
     <div className="mx-auto  w-full  flex flex-col" >
-      <div className="w-11/12 mx-auto bg-gray-300 mt-12 flex justify-center items-center mb-4 h-[20rem]">
-      <p className="text-lg font-semibold text-gray-500">
-        Image
-      </p>
+      <div className="w-11/12 mx-auto bg-black mt-12 flex justify-center items-center mb-4 h-[20rem]">
+    <img src="https://media.discordapp.net/attachments/1008571037862080542/1132273520588619797/NFTHouse9_coins_cyber_punk_theme_bf196595-8813-4948-8f88-357a8ec61f40.png?width=1025&height=284" className='w-full h-[20rem]' alt="" />
       </div>
 
       <div className="flex flex-col sm:flex-row my-2 gap-4 justify-between w-11/12 mx-auto items-center   ">
@@ -61,6 +59,8 @@ function Tables() {
             <option value="25">25</option>
             <option value="50">50</option>
             <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
           </select>
         </div>
       </div>
