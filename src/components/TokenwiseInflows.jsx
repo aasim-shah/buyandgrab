@@ -37,7 +37,7 @@ function TokenwiseInflows({ selectedRows }) {
     const fetchData = async () => {
         try {
             // let response = await axios.get(`https://appslk-second.onrender.com/fetch/latestWihoutPlatform/${selectedRows}}`)
-            let response = await axios.get(`http://localhost:5000/fetch/tokenwise_inflows`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
             setData(response.data)
             setSortedData(response.data)
         } catch (error) { console.log(`Error ${error}`) }
