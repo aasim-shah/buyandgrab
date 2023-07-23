@@ -8,6 +8,7 @@ import TrendingTable from '../../components/TrendingTable';
 import TransactionTable from '../../components/TransactionsTable';
 import TokenByPlatform from '../../components/TokenByPlatform';
 import TokensWithPotential from '../../components/TokenswithPotential';
+import TokenwiseInflows from '../../components/TokenwiseInflows';
 
 function Tables() {
   const { tableContentType } = useParams();
@@ -49,6 +50,8 @@ function Tables() {
         
 
           <Link  to={`/tables/TokensWithPotential`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'TokensWithPotential' && 'text-blue-600 bg-gray-100' }`}>Tokens with potential</Link>
+         
+          <Link  to={`/tables/tokenwise_inflows`} className={`py-1 px-2 rounded-md hover:bg-gray-100 text-[11px] font-semibold ${tableContentType === 'tokenwise_inflows' && 'text-blue-600 bg-gray-100' }`}> Tokenwise Inflows</Link>
          
 
         </div>
@@ -95,6 +98,9 @@ function Tables() {
     )}
     {tableContentType === "TokensWithPotential" && (
       <TokensWithPotential selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "tokenwise_inflows" && (
+      <TokenwiseInflows selectedRows={selectedRows} />     
     )}
     </div>
   );
