@@ -19,7 +19,7 @@ function TokenwiseInflows({ selectedRows }) {
     const limit = queryParams.get('limit');
 
     const [sortOrders, setSortOrders] = useState({
-        name: 'asc', 
+        name: 'asc',
         value: 'asc',
         value_1_hour: 'asc',
         value_3_hours: "asc",
@@ -130,13 +130,24 @@ function TokenwiseInflows({ selectedRows }) {
     console.log({ sortedData })
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
+            <div className="flex flex-row my-3  items-center w-11/12 mx-auto">
+                <img src={`${sortedData && sortedData[0]?.token_logo}`} className={`w-8 h-8 mr-3`} alt="" />
+                <p className="font-semibold mr-3">{sortedData && sortedData[0]?.token_name}</p>
+                <p className="text-sm text-gray-400">{sortedData && sortedData[0]?.token_symbol}</p>
+            </div>
+
+            <div className=" w-full sm:w-11/12 mx-auto">
+                <span className='text-sm'> Investor</span>
+                <p className="text-sm text-gray-400">{sortedData && sortedData[0].address}</p>
+            </div>
+
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
-                      
 
-                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center" 
-                        onClick={() => handleSort('name')}>
+
+                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center"
+                            onClick={() => handleSort('name')}>
                             Name
                             {filterBy === "name" && sortOrders.name === 'asc' &&
                                 <AiFillCaretDown />
@@ -146,7 +157,7 @@ function TokenwiseInflows({ selectedRows }) {
                             )}</th>
 
 
-                        <th className="px-4 py-2"  onClick={() => handleSort('value')}>
+                        {/* <th className="px-4 py-2"  onClick={() => handleSort('value')}>
                         <div className="flex flex-row  gap-2 justify-center items-center">
 
                             Value
@@ -156,8 +167,9 @@ function TokenwiseInflows({ selectedRows }) {
                             {filterBy === "value" && sortOrders.value === 'desc' && (
                                 <AiFillCaretUp />
                             )}</div>
-                             </th>
-                        <th className="px-4 py-2 " onClick={() => handleSort('value_1_hour')}>
+                             </th> */}
+
+                        {/* <th className="px-4 py-2 " onClick={() => handleSort('value_1_hour')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 1h  {filterBy === "value_1_hour" && sortOrders.value_1_hour === 'asc' &&
                                     <AiFillCaretDown />
@@ -166,9 +178,9 @@ function TokenwiseInflows({ selectedRows }) {
                                     <AiFillCaretUp />
                                 )}
                             </div>
-                        </th>
+                        </th> */}
 
-                        <th className="px-4 py-2 " onClick={() => handleSort('value_3_hours')}>
+                        {/* <th className="px-4 py-2 " onClick={() => handleSort('value_3_hours')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 3h  {filterBy === "value_3_hours" && sortOrders.value_3_hours === 'asc' &&
                                     <AiFillCaretDown />
@@ -177,8 +189,8 @@ function TokenwiseInflows({ selectedRows }) {
                                     <AiFillCaretUp />
                                 )}
                             </div>
-                        </th>
-                        <th className="px-4 py-2 " onClick={() => handleSort('value_24_hours')}>
+                        </th> */}
+                        {/* <th className="px-4 py-2 " onClick={() => handleSort('value_24_hours')}>
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 1d  {filterBy === "value_24_hours" && sortOrders.value_24_hours === 'asc' &&
                                     <AiFillCaretDown />
@@ -187,18 +199,23 @@ function TokenwiseInflows({ selectedRows }) {
                                     <AiFillCaretUp />
                                 )}
                             </div>
-                        </th>
+                        </th> */}
                         <th className="px-4 py-2 " >
                             <div className="flex flex-row  gap-2 justify-center items-center">
-                             Contract Address
+                                Contract Address
                             </div>
                         </th>
                         <th className="px-4 py-2 " >
                             <div className="flex flex-row  gap-2 justify-center items-center">
-                             Transaction Hash
+                                Transaction Hash
                             </div>
                         </th>
-                      
+                        <th className="px-4 py-2 " >
+                            <div className="flex flex-row  gap-2 justify-center items-center">
+                                Token Amount Transfered
+                            </div>
+                        </th>
+
 
                     </tr>
                 </thead>
@@ -208,38 +225,49 @@ function TokenwiseInflows({ selectedRows }) {
                         <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
 
                             <td className="px-4 py-2 text-center">
-                                
-                                    <Link to={`/tables/token_holders?tokenId=${item.token_name}`} className="flex flex-row  items-center">
-                                        <img src={`${item.token_logo}`} alt="Logo" className='h-8 w-8 mr-3' />
-                                        <p className="text-sm mr-3">{item.token_name}</p>
-                                        <p className="text-sm text-gray-400">{item.token_symbol}</p>
-                                    </Link>
-                            
-                            </td>
-                                    
-                            <td className="px-4 py-2 ">
-                               
-                                    <span>
-                                        {numberWithCommas(Number(item.value))}
 
-                                    </span>
-                                </td>
-                            <td className="px-4 py-2 text-center ">
+                                <Link to={`/tables/token_holders?tokenId=${item.token_name}`} className="flex flex-row  items-center">
+                                    <img src={`${item.token_logo}`} alt="Logo" className='h-8 w-8 mr-3' />
+                                    <p className="text-sm mr-3">{item.token_name}</p>
+                                    <p className="text-sm text-gray-400">{item.token_symbol}</p>
+                                </Link>
+
+                            </td>
+
+                            {/* <td className="px-4 py-2 ">
+
+                                <span>
+                                    {numberWithCommas(Number(item.value))}
+
+                                </span>
+                            </td> */}
+
+                            {/* <td className="px-4 py-2 text-center ">
                             {numberWithCommas(Number(item.value_1_hour.value) / addZerosAtEnd(Number(item.token_decimals)))}
-                            </td>
-                            <td className="px-4 py-2 text-center ">
+                            </td> */}
+
+                            {/* <td className="px-4 py-2 text-center ">
                             {numberWithCommas(Number(item.value_3_hours.value) / addZerosAtEnd(Number(item.token_decimals)))}
+                            </td> */}
+
+                            {/* <td className="px-4 py-2 text-center ">
+                            {numberWithCommas(Number(item.value_24_hours.value) / addZerosAtEnd(Number(item.token_decimals)))}                            
+                            </td> */}
+
+                            <td className="px-4 py-2 text-center ">
+                                {item.from_address
+                                    .slice(0, 8)}........{item.from_address.slice(37, item.from_address
+                                        .length)}
                             </td>
                             <td className="px-4 py-2 text-center ">
-                            {numberWithCommas(Number(item.value_24_hours.value) / addZerosAtEnd(Number(item.token_decimals)))}                            </td>
-                           
-                            <td className="px-4 py-2 text-center ">
-                                {item.from_address}
+                                {item.transaction_hash
+                                    .slice(0, 8)}........{item.transaction_hash.slice(60, item.transaction_hash
+                                        .length)}
                             </td>
                             <td className="px-4 py-2 text-center ">
-                            {item.transaction_hash}
+                                {numberWithCommas(Number(item.value) / addZerosAtEnd(Number(item.token_decimals)))}
                             </td>
-                           
+
 
 
                         </tr>
