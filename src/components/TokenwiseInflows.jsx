@@ -36,7 +36,7 @@ function TokenwiseInflows({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            // let response = await axios.get(`https://appslk-second.onrender.com/fetch/latestWihoutPlatform/${selectedRows}}`)
+            // let response = await axios.get(`http://localhost:5000/fetch/tokenwise_inflows`)
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
             setData(response.data)
             setSortedData(response.data)
@@ -105,9 +105,20 @@ function TokenwiseInflows({ selectedRows }) {
 
 
 
+    function addZerosAtEnd(x) {
+        if (typeof x !== 'number' || x < 0 || !Number.isInteger(x)) {
+            throw new Error('Input must be a non-negative integer');
+        }
+        const newNumber = '1' + '0'.repeat(x);
+        return Number(newNumber)
+    }
 
 
     const numberWithCommas = (num) => {
+        const nn = Number(num);
+        return nn.toLocaleString();
+    };
+    const stingWithCommas = (num) => {
         const nn = num;
         return nn.toLocaleString();
     };
@@ -194,7 +205,7 @@ function TokenwiseInflows({ selectedRows }) {
                 <tbody>
                     {sortedData && sortedData.length > 0 ? sortedData.slice(0, selectedRows).map((item, index) => (
 
-                        <tr key={item.id} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
+                        <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
 
                             <td className="px-4 py-2 text-center">
                                 
@@ -209,19 +220,18 @@ function TokenwiseInflows({ selectedRows }) {
                             <td className="px-4 py-2 ">
                                
                                     <span>
-                                        ${numberWithCommas(Number(item.value))}
+                                        {numberWithCommas(Number(item.value))}
 
                                     </span>
                                 </td>
                             <td className="px-4 py-2 text-center ">
-                            {numberWithCommas(item.value_1_hour)}
+                            {numberWithCommas(Number(item.value_1_hour.value) / addZerosAtEnd(Number(item.token_decimals)))}
                             </td>
                             <td className="px-4 py-2 text-center ">
-                                {numberWithCommas(item.value_3_hours)}
+                            {numberWithCommas(Number(item.value_3_hours.value) / addZerosAtEnd(Number(item.token_decimals)))}
                             </td>
                             <td className="px-4 py-2 text-center ">
-                                {numberWithCommas(item.value_24_hours)}
-                            </td>
+                            {numberWithCommas(Number(item.value_24_hours.value) / addZerosAtEnd(Number(item.token_decimals)))}                            </td>
                            
                             <td className="px-4 py-2 text-center ">
                                 {item.from_address}
