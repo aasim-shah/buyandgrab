@@ -9,6 +9,7 @@ import TransactionTable from '../../components/TransactionsTable';
 import TokenByPlatform from '../../components/TokenByPlatform';
 import TokensWithPotential from '../../components/TokenswithPotential';
 import TokenwiseInflows from '../../components/TokenwiseInflows';
+import TokensWithTimeframes from '../../components/TokensWithTimeframes';
 
 function Tables() {
   const { tableContentType } = useParams();
@@ -102,6 +103,9 @@ function Tables() {
     {tableContentType === "tokenwise_inflows" && (
       <TokenwiseInflows selectedRows={selectedRows} />     
     )}
+    {/* {tableContentType === "tokenwise_inflows" && (
+      <TokensWithTimeframes selectedRows={selectedRows} />     
+    )} */}
     </div>
   );
 }
