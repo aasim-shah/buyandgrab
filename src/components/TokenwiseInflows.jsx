@@ -149,15 +149,15 @@ function TokenwiseInflows({ selectedRows }) {
                 </div>
                 <div className=" w-full sm:w-11/12 mx-auto mr-2">
                     <span className='text-sm'> 1Hour Total </span>
-                    <p className="text-sm text-gray-400">{numberWithCommas(rawData.totalSum1h)}</p>
+                    <p className="text-sm text-gray-400">{numberWithCommas(rawData?.totalSum1h / 18)}</p>
                 </div>
                 <div className=" w-full sm:w-11/12 mx-auto mr-2">
                     <span className='text-sm'> 3Hour Total </span>
-                    <p className="text-sm text-gray-400">{numberWithCommas(rawData.totalSum3h)}</p>
+                    <p className="text-sm text-gray-400">{numberWithCommas(rawData?.totalSum3h / 18)}</p>
                 </div>
                 <div className=" w-full sm:w-11/12 mx-auto">
                     <span className='text-sm'> 24 Hour Total </span>
-                    <p className="text-sm text-gray-400">{numberWithCommas(rawData.totalSum24h)}</p>
+                    <p className="text-sm text-gray-400">{numberWithCommas(rawData?.totalSum24h / 18)}</p>
                 </div>
             </div>
 
