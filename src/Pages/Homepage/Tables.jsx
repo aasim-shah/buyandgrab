@@ -10,6 +10,9 @@ import TokenByPlatform from '../../components/TokenByPlatform';
 import TokensWithPotential from '../../components/TokenswithPotential';
 import TokenwiseInflows from '../../components/TokenwiseInflows';
 import TokensWithTimeframes from '../../components/TokensWithTimeframes';
+import TokenwiseInflows3 from '../../components/TokenwiseInflows3';
+import TokenwiseInflows4 from '../../components/TokenwiseInflows4';
+import TokenwiseInflows5 from '../../components/TokenwiseInflows5';
 
 function Tables() {
   const { tableContentType } = useParams();
@@ -100,11 +103,20 @@ function Tables() {
     {tableContentType === "TokensWithPotential" && (
       <TokensWithPotential selectedRows={selectedRows} />     
     )}
-    {tableContentType === "tokenwise_inflows" && (
+    {/* {tableContentType === "tokenwise_inflows" && (
       <TokenwiseInflows selectedRows={selectedRows} />     
-    )}
+    )} */}
     {/* {tableContentType === "tokenwise_inflows" && (
       <TokensWithTimeframes selectedRows={selectedRows} />     
+    )} */}
+    {/* {tableContentType === "tokenwise_inflows" && (
+      <TokenwiseInflows3 selectedRows={selectedRows} />     
+    )} */}
+    {tableContentType === "tokenwise_inflows" && (
+      <TokenwiseInflows4 selectedRows={selectedRows} />     
+    )}
+    {/* {tableContentType === "tokenwise_inflows" && (
+      <TokenwiseInflows5 selectedRows={selectedRows} />     
     )} */}
     </div>
   );

@@ -9,7 +9,7 @@ import moment from 'moment';
 
 
 
-function TokenwiseInflows({ selectedRows }) {
+function TokenwiseInflows3({ selectedRows }) {
     console.log({ selectedRows })
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
@@ -31,17 +31,21 @@ function TokenwiseInflows({ selectedRows }) {
     const [filterBy, setFilterBy] = useState("")
 
 
-    if (!platform) {
-        console.log('no plate')
-    }
-
 
     const fetchData = async () => {
         try {
-            // let response = await axios.get(`http://localhost:5000/fetch/tokenwise_inflows`)
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
-            setData(response.data.items)
-            setSortedData(response.data.items)
+            let response = await axios.get(`http://localhost:5000/fetch/get_trxs`)
+            // let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
+            const dd = response.data
+            const myArray = [];
+            for (const key in dd) {
+                myArray.push(dd[key]);
+            }
+            console.log(myArray)
+            console.log(typeof myArray)
+            setData(response.data)
+
+            setSortedData(response.data)
             setRawData(response.data)
         } catch (error) { console.log(`Error ${error}`) }
 
@@ -133,7 +137,7 @@ function TokenwiseInflows({ selectedRows }) {
     console.log({ sortedData })
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
-            <div className="flex flex-row justify-between items-center">
+            {/* <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-col">
                     <div className="flex flex-row my-3  items-center w-11/12 mx-auto">
                         <img src={`${sortedData && sortedData[0]?.token_logo}`} className={`w-8 h-8 mr-3`} alt="" />
@@ -159,14 +163,14 @@ function TokenwiseInflows({ selectedRows }) {
                     <span className='text-sm'> 24 Hour Total </span>
                     <p className="text-sm text-gray-400">{numberWithCommas(rawData?.totalSum24h / 18)}</p>
                 </div>
-            </div>
+            </div> */}
 
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
 
 
-                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem] justify-center items-center"
+                        <th className="px-4 py-2 flex flex-row gap-2 w-[15rem]  items-center"
                             onClick={() => handleSort('name')}>
                             Date
                             {filterBy === "name" && sortOrders.name === 'asc' &&
@@ -222,10 +226,10 @@ function TokenwiseInflows({ selectedRows }) {
                         </th> */}
                         <th className="px-4 py-2 " >
                             <div className="flex flex-row  gap-2 justify-center items-center">
-                                Reciving Address
+                                To Address
                             </div>
                         </th>
-                      
+
                         <th className="px-4 py-2 " >
                             <div className="flex flex-row  gap-2 justify-center items-center">
                                 Transaction Hash
@@ -236,56 +240,42 @@ function TokenwiseInflows({ selectedRows }) {
                                 Token Amount Transfered
                             </div>
                         </th>
+                        <th className="px-4 py-2 " >
+                            <div className="flex flex-row  gap-2 justify-center items-center">
+                            Quote Value
+                            </div>
+                        </th>
 
 
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedData && sortedData.length > 0 ? sortedData.slice(0, selectedRows).map((item, index) => (
+                    {sortedData && sortedData.length > 0 ? sortedData.map((item, index) => (
+                            <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
 
-                        <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
+                                <td className="px-4 py-2">
+                                    {moment(item.block_signed_at).format("DD/MM/YYYY - HH:MM:SS")}
+                                </td>
 
-                            <td className="px-4 py-2 text-center">
-                                {moment(item.block_timestamp).format("DD/MM/YYYY - HH:MM:SS")}
-                            </td>
 
-                            {/* <td className="px-4 py-2 ">
 
-                                <span>
+                                <td className="px-4 py-2 text-center ">
+                                    {item.to_address?.slice(0, 8)}........{item.to_address?.slice(37, item.to_address?.length)}
+                                </td>
+                                <td className="px-4 py-2 text-center ">
+                                    {item.tx_hash?.slice(0, 8)}........{item.tx_hash?.slice(60, item.tx_hash?.length)}
+                                </td>
+                                <td className="px-4 py-2 text-center ">
                                     {numberWithCommas(Number(item.value))}
-
-                                </span>
-                            </td> */}
-
-                            {/* <td className="px-4 py-2 text-center ">
-                            {numberWithCommas(Number(item.value_1_hour.value) / addZerosAtEnd(Number(item.token_decimals)))}
-                            </td> */}
-
-                            {/* <td className="px-4 py-2 text-center ">
-                            {numberWithCommas(Number(item.value_3_hours.value) / addZerosAtEnd(Number(item.token_decimals)))}
-                            </td> */}
-
-                            {/* <td className="px-4 py-2 text-center ">
-                            {numberWithCommas(Number(item.value_24_hours.value) / addZerosAtEnd(Number(item.token_decimals)))}                            
-                            </td> */}
-
-                            <td className="px-4 py-2 text-center ">
-                                {item.to_address
-                                    .slice(0, 8)}........{item.to_address.slice(37, item.to_address
-                                        .length)}
-                            </td>
-                            <td className="px-4 py-2 text-center ">
-                                {item.transaction_hash
-                                    .slice(0, 8)}........{item.transaction_hash.slice(60, item.transaction_hash
-                                        .length)}
-                            </td>
-                            <td className="px-4 py-2 text-center ">
-                                {numberWithCommas(Number(item.value) / addZerosAtEnd(Number(item.token_decimals)))}
-                            </td>
+                                </td>
+                                <td className="px-4 py-2 text-center ">
+                                    {stingWithCommas(item.pretty_value_quote)}
+                                </td>
 
 
 
-                        </tr>
+                            </tr>
+                        
                     )) : (
                         <tr>
                             <td colSpan="12" className='text-center  py-12  font-bold  text-gray-400'>Loading...</td>
@@ -297,4 +287,4 @@ function TokenwiseInflows({ selectedRows }) {
     )
 }
 
-export default TokenwiseInflows
+export default TokenwiseInflows3
