@@ -13,6 +13,7 @@ import TokensWithTimeframes from '../../components/TokensWithTimeframes';
 import TokenwiseInflows3 from '../../components/TokenwiseInflows3';
 import TokenwiseInflows4 from '../../components/TokenwiseInflows4';
 import TokenwiseInflows5 from '../../components/TokenwiseInflows5';
+import TokenwiseInflows6 from '../../components/TokenwiseInflows6';
 
 function Tables() {
   const { tableContentType } = useParams();
@@ -112,12 +113,15 @@ function Tables() {
     {/* {tableContentType === "tokenwise_inflows" && (
       <TokenwiseInflows3 selectedRows={selectedRows} />     
     )} */}
-    {tableContentType === "tokenwise_inflows" && (
+    {/* {tableContentType === "tokenwise_inflows" && (
       <TokenwiseInflows4 selectedRows={selectedRows} />     
-    )}
+    )} */}
     {/* {tableContentType === "tokenwise_inflows" && (
       <TokenwiseInflows5 selectedRows={selectedRows} />     
     )} */}
+    {tableContentType === "tokenwise_inflows" && (
+      <TokenwiseInflows6 selectedRows={selectedRows} />     
+    )}
     </div>
   );
 }

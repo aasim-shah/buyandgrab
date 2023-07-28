@@ -9,14 +9,11 @@ import moment from 'moment';
 
 
 
-function TokenwiseInflows5({ selectedRows }) {
+function TokenwiseInflows6({ selectedRows }) {
     console.log({ selectedRows })
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
     const [rawData, setRawData] = useState(null);
-    const [fetch1H, setFetch1H] = useState(false)
-    const [fetch3H, setFetch3H] = useState(false)
-    const [fetch24H, setFetch24H] = useState(false)
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -26,7 +23,6 @@ function TokenwiseInflows5({ selectedRows }) {
     const [sortOrders, setSortOrders] = useState({
         sender_name: 'asc',
         value: 'asc',
-        value_1h: 'asc',
         pretty_value_quote: 'asc',
 
     });
@@ -36,8 +32,8 @@ function TokenwiseInflows5({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get(`http://localhost:5000/fetch/get_trxs`)
-            // let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
+            // let response = await axios.get(`http://localhost:8000/fetch/get_trxs`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/get_trx`)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
@@ -62,30 +58,27 @@ function TokenwiseInflows5({ selectedRows }) {
 
         const dataArray = Array.isArray(dataToSort) ? dataToSort : [];
 
-        console.log({ dataArray })
+        console.log({dataArray})
         const sorted = [...dataArray].sort((a, b) => {
-            console.log({ a: a })
-            let valueA ;
-            let valueB ;
-            console.log({field})
-          if(field === "value_1h"){
-             valueA = a.log_events[0].decoded?.params[2]?.value;
-            valueB = b.log_events[0].decoded?.params[2]?.value;
-          }
+            console.log({a : a})
+            let valueA = a.log_events[0].decoded.params[2][field];
+            let valueB = b.log_events[0].decoded.params[2][field];
 
             if (valueA === undefined && field === "pretty_value_quote") {
                 valueA = a.data[0][field]
+            }
+            if (valueB === undefined && field === "pretty_value_quote") {
                 valueB = b.data[0][field]
             }
-          
             if (valueA === undefined && field === "sender_name") {
-                valueA = a.log_events[0][field]
-                valueB = b.log_events[0][field]
+                valueA =  a.log_events[0][field]
             }
-         
-
-            console.log({ valueA })
-            console.log({ valueB })
+            if (valueB === undefined && field === "sender_name") {
+                valueB =  b.log_events[0][field]
+            }
+            
+            console.log({valueA})
+            console.log({valueB})
             if (order === 'asc') {
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     return valueA.localeCompare(valueB);
@@ -124,22 +117,6 @@ function TokenwiseInflows5({ selectedRows }) {
         }
     };
 
-    const handleSort1H = (field) =>{
-        if(fetch1H){
-            console.log("Already fetched 1h")
-            const newSortOrder = sortOrders[field] === 'asc' ? 'desc' : 'asc';
-            // Sort the data with the new order and specified field
-            if (data) {
-                const sortedData = sortDataByField(data, field, newSortOrder);
-                setSortedData(sortedData);
-                setFilterBy(field)
-            }
-        }else{
-            fetchDataByTimefram(1)
-            setFetch1H(true)
-            console.log("fetching 1h")
-           }
-    }
 
 
 
@@ -161,24 +138,9 @@ function TokenwiseInflows5({ selectedRows }) {
         return nn.toLocaleString();
     };
 
-    const fetchDataByTimefram = async(timeFrame) =>{
-        try {
-            let response = await axios.get(`http://localhost:5000/fetch/get_trxs?timeFrame=${timeFrame}`)
-            // let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
-            const dd = response.data
-            const myArray = [];
-            for (const key in dd) {
-                myArray.push(dd[key]);
-            }
-            console.log(myArray)
-            console.log(typeof myArray)
-            setData(response.data)
-
-            setSortedData(response.data)
-            setRawData(response.data)
-        } catch (error) { console.log(`Error ${error}`) }
-
-    }
+    // useEffect(() => {
+    //     fetchData()
+    // }, [selectedRows, platform])
 
     useEffect(() => {
         const timerId = setTimeout(() => {
@@ -190,15 +152,12 @@ function TokenwiseInflows5({ selectedRows }) {
         // Clean up the timer when the component unmounts or when the effect is re-run
         return () => clearTimeout(timerId);
       }, []); 
-    
-    // useEffect(() => {
-    //     fetchData()
-    // }, [selectedRows])
 
+      
     console.log({ sortedData })
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
-            
+           
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
                 <thead className='text-[12px]'>
                     <tr className=' '>
@@ -210,88 +169,102 @@ function TokenwiseInflows5({ selectedRows }) {
                             <div className="flex flex-row  gap-2  items-center">
 
                                 Logo
+                              </div>
+                        </th>
+
+                        <th className="px-4 py-2" onClick={() => handleSort('sender_name')}>
+                            <div className="flex flex-row  gap-2  items-center">
+
+                                Token
+                                {filterBy === "sender_name" && sortOrders.sender_name === 'asc' &&
+                                    <AiFillCaretDown />
+                                }
+                                {filterBy === "sender_name" && sortOrders.sender_name === 'desc' && (
+                                    <AiFillCaretUp />
+                                )}</div>
+                        </th>
+
+                      
+
+
+
+                        <th className="px-4 py-2 "
+                           >
+                            <div className="flex flex-row  gap-2  items-center">
+Date
+                               </div>
+                               </th>
+                     
+                        <th className="px-4 py-2  " >
+                            <div className="flex flex-row w-[14rem]  gap-2 justify-center items-center">
+                                Interacted Address
                             </div>
                         </th>
 
-                        <th className="px-4 py-2" onClick={() => handleSort('sender_name')}>
+                        <th className="px-4 py-2 " >
+                            <div className="flex flex-row  gap-2 justify-center items-center">
+                                Transaction Hash
+                            </div>
+                        </th>
+                        <th className="px-4 py-2 "
+                            onClick={() => handleSort('value')}>
                             <div className="flex flex-row  gap-2  items-center">
 
-                                Token Name
-                                {filterBy === "sender_name" && sortOrders.sender_name === 'asc' &&
+                                Tokens Transfered
+                                {filterBy === "value" && sortOrders.value === 'asc' &&
                                     <AiFillCaretDown />
                                 }
-                                {filterBy === "sender_name" && sortOrders.sender_name === 'desc' && (
+                                {filterBy === "value" && sortOrders.value === 'desc' && (
                                     <AiFillCaretUp />
-                                )}</div>
-                        </th>
-                        <th className="px-4 py-2" onClick={() => handleSort1H('value_1h')}>
-                            <div className="flex flex-row  gap-2  items-center">
-
-                                1 Hour
-                                {filterBy === "value_1h" && sortOrders.value_1h === 'asc' &&
-                                    <AiFillCaretDown />
-                                }
-                                {filterBy === "value_1h" && sortOrders.value_1h === 'desc' && (
-                                    <AiFillCaretUp />
-                                )}
-                               </div>
-                        </th>
-                        <th className="px-4 py-2" onClick={() => handleSort('sender_name')}>
-                            <div className="flex flex-row  gap-2  items-center">
-
-                                3 Hours
-                                {filterBy === "sender_name" && sortOrders.sender_name === 'asc' &&
-                                    <AiFillCaretDown />
-                                }
-                                {filterBy === "sender_name" && sortOrders.sender_name === 'desc' && (
-                                    <AiFillCaretUp />
-                                )}</div>
-                        </th>
-                        <th className="px-4 py-2" onClick={() => handleSort('sender_name')}>
-                            <div className="flex flex-row  gap-2  items-center">
-
-                                24 Hours
-                                {filterBy === "sender_name" && sortOrders.sender_name === 'asc' &&
-                                    <AiFillCaretDown />
-                                }
-                                {filterBy === "sender_name" && sortOrders.sender_name === 'desc' && (
-                                    <AiFillCaretUp />
-                                )}</div>
-                        </th>
-
-
+                                )}</div></th>
+                     
+                     
 
 
                     </tr>
                 </thead>
                 <tbody>
                     {sortedData && sortedData.length > 0 ? sortedData.map((item, index) => (
-        item.log_events[0].decoded && item.log_events[0].sender_name  &&  item.log_events[0].sender_logo_url &&  item.log_events[0].decoded.name === "Transfer"  &&  ( 
 
-                        <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
-                            <td className="px-4 py-2 text-center ">
-                                <Link to={`/tables/token_holders?tokenId=${item}`} className="flex flex-row  items-center">
-                                    <img src={`${item.log_events[0]?.sender_logo_url}`} alt="" className='h-8 w-8 mr-3' />
+                       item.log_events[0].decoded && item.log_events[0].sender_name  &&  item.log_events[0].sender_logo_url &&  item.log_events[0].decoded.name === "Transfer"  && item.log_events[0].sender_name !== "ETHDEX" &&  ( 
+                            <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
+                                <td className="px-4 py-2 text-center ">
+                                    <Link to={`#`} className="flex flex-row  items-center">
+                                        {/* <img src={`https://logos.covalenthq.com/tokens/${item.log_events[0].sender_address}.png`} alt="" className='h-8 w-8 mr-3' /> */}
 
-                                    {/* <img src={`https://logos.covalenthq.com/tokens/${item.to_address}.png`} alt="" className='h-8 w-8 mr-3' /> */}
+                                        <img src={`${item.log_events[0]?.sender_logo_url}`} alt="" className='h-8 w-8 mr-3' />
+                                    </Link>
+                                </td>
 
-                                </Link>
-                            </td>
+                                <td className="px-4 py-2">
+                                    {item.log_events[0].sender_name}
+                                </td>
 
-                            <td className="px-4 py-2">
-                                {item.log_events[0].sender_name}
-                            </td>
+                                
+                                <td className="px-4 py-2">
+                                        {moment(item.block_signed_at).format("DD/MM/YYYY - HH:MM:SS")}
+                                </td>
 
-                          
-                            <td className="px-4 py-2  ">
-                                    {numberWithCommas(item.log_events[0]?.decoded?.params[2]?.value / addZerosAtEnd(
+                                <td className="px-4 py-2 text-center ">
+                                    {item.from_address?.slice(0, 8)}........{item.from_address?.slice(37, item.from_address?.length)}
+                                </td>
+                                <td className="px-4 py-2 text-center ">
+                                    {item.tx_hash?.slice(0, 8)}........{item.tx_hash?.slice(60, item.tx_hash?.length)}
+                                </td>
+                                <td className="px-4 py-2  ">
+                                    {numberWithCommas(item.log_events[0]?.decoded.params[2]?.value / addZerosAtEnd(
                                          Number(
                                             item.log_events[0]?.sender_contract_decimals || 0
                                         )
                                     ))}
                                 </td>
+                            
 
-                        </tr>
+
+
+                            </tr>
+                        
+
                     ))) : (
                         <tr>
                             <td colSpan="12" className='text-center  py-12  font-bold  text-gray-400'>Loading...</td>
@@ -303,4 +276,4 @@ function TokenwiseInflows5({ selectedRows }) {
     )
 }
 
-export default TokenwiseInflows5
+export default TokenwiseInflows6

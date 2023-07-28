@@ -32,8 +32,8 @@ function TokenwiseInflows4({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            // let response = await axios.get(`http://localhost:5000/fetch/get_trxs4`)
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/get_trxs4`)
+            let response = await axios.get(`http://localhost:5000/fetch/get_trxs4`)
+            // let response = await axios.get(`https://appslk-second.onrender.com/fetch/get_trx4`)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
@@ -199,12 +199,7 @@ function TokenwiseInflows4({ selectedRows }) {
                                 )}</div>
                         </th>
 
-                        <th className="px-4 py-2">
-                            <div className="flex flex-row  gap-2  items-center">
-
-                                From
-                               </div>
-                        </th>
+                      
 
 
 
@@ -230,7 +225,7 @@ Date
                             onClick={() => handleSort('value')}>
                             <div className="flex flex-row  gap-2  items-center">
 
-                                Value
+                                Tokens Transfered
                                 {filterBy === "value" && sortOrders.value === 'asc' &&
                                     <AiFillCaretDown />
                                 }
@@ -241,7 +236,7 @@ Date
                             onClick={() => handleSort('pretty_value_quote')}>
                             <div className="flex flex-row  gap-2  items-center">
 
-                              pretty_value_quote  Value
+                              Quote
                                 {filterBy === "pretty_value_quote" && sortOrders.pretty_value_quote === 'asc' &&
                                     <AiFillCaretDown />
                                 }
@@ -263,24 +258,17 @@ Date
                                     <tr key={innerItem.block_signed_at} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                                         <td className="px-4 py-2 text-center ">
                                             <Link to={`/tables/token_holders?tokenId=${item.platform.token_address}`} className="flex flex-row  items-center">
-                                                <img src={`${innerItem.log_events[Number(ind)]?.sender_logo_url}`} alt="Logo" className='h-8 w-8 mr-3' />
-                                                {/* <p className="text-sm mr-3">{item.name}</p> */}
-                                                {/* <p className="text-sm text-gray-400">{item.symbol}</p> */}
+                                                <img src={`https://logos.covalenthq.com/tokens/1/${item.platform.token_address}.png`} alt="" className='h-8 w-8 mr-3' />
+                                              
                                             </Link>
                                         </td>
 
 
                                         <td className="px-4 py-2">
-                                            {innerItem.log_events[ind]?.sender_name}
+                                            {item.name}
                                         </td>
 
-                                        <td className="px-4 py-2">
-                                            {innerItem.log_events[0].sender_address.slice(0, 8)}........{
-
-                                                innerItem.log_events[0].sender_address.slice(36, 100)}
-
-                                        </td>
-
+                                       
 
 
                                         <td className="px-4 py-2">
@@ -294,7 +282,9 @@ Date
                                             {innerItem.tx_hash?.slice(0, 8)}........{innerItem.tx_hash?.slice(60, innerItem.tx_hash?.length)}
                                         </td>
                                         <td className="px-4 py-2  ">
-                                            {numberWithCommas(innerItem.log_events[0]?.decoded.params[2]?.value)}
+                                            {numberWithCommas(innerItem.log_events[0]?.decoded.params[2]?.value / addZerosAtEnd(
+                                                Number(innerItem.log_events[0]?.sender_contract_decimals || 0)
+                                            ))}
                                         </td>
                                         <td className="px-4 py-2 text-center ">
                                             {innerItem.pretty_value_quote}
@@ -308,7 +298,7 @@ Date
                             <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                                 <td className="px-4 py-2 text-center ">
                                     <Link to={`/tables/token_holders?tokenId=${item}`} className="flex flex-row  items-center">
-                                        <img src={`${item.data[0].log_events[0]?.sender_logo_url}`} alt="Logo" className='h-8 w-8 mr-3' />
+                                        <img src={`${item.data[0].log_events[0]?.sender_logo_url}`} alt="" className='h-8 w-8 mr-3' />
 
                                     </Link>
                                 </td>
@@ -317,10 +307,7 @@ Date
                                     {item.data[0].log_events[0].sender_name}
                                 </td>
 
-                                <td className="px-4 py-2">
-                                    {item.data[0].log_events[0].sender_address.slice(0, 8)}.....
-                                    {item.data[0].log_events[0].sender_address.slice(36, 118)}
-                                </td>
+                                
                                 <td className="px-4 py-2">
                                     {moment(item.block_signed_at).format("DD/MM/YYYY - HH:MM:SS")}
                                 </td>
@@ -331,8 +318,12 @@ Date
                                 <td className="px-4 py-2 text-center ">
                                     {item.data[0].tx_hash?.slice(0, 8)}........{item.data[0].tx_hash?.slice(60, item.data[0].tx_hash?.length)}
                                 </td>
-                                <td className="px-4 py-2 text-center ">
-                                    {numberWithCommas(item.data[0].log_events[0]?.decoded.params[2]?.value)}
+                                <td className="px-4 py-2  ">
+                                    {numberWithCommas(item.data[0].log_events[0]?.decoded.params[2]?.value / addZerosAtEnd(
+                                         Number(
+                                            item.data[0].log_events[0]?.sender_contract_decimals || 0
+                                        )
+                                    ))}
                                 </td>
                                 <td className="px-4 py-2 text-center ">
                                     {(item.data[0].pretty_value_quote)}
