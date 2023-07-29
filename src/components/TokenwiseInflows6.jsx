@@ -33,7 +33,7 @@ function TokenwiseInflows6({ selectedRows }) {
     const fetchData = async () => {
         try {
             // let response = await axios.get(`http://localhost:8000/fetch/get_trxs`)
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/get_trx`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/get_trxs`)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
