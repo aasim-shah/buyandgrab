@@ -14,6 +14,9 @@ import TokenwiseInflows3 from '../../components/TokenwiseInflows3';
 import TokenwiseInflows4 from '../../components/TokenwiseInflows4';
 import TokenwiseInflows5 from '../../components/TokenwiseInflows5';
 import TokenwiseInflows6 from '../../components/TokenwiseInflows6';
+import OneHourTrxTable from '../../components/OneHourTrxTable';
+import ThreHoursTrxs from '../../components/ThreeHoursTrxs';
+// import OneHourTrxTable from '../../components/OneHourTrxTable';
 
 function Tables() {
   const { tableContentType } = useParams();
@@ -119,8 +122,17 @@ function Tables() {
     {/* {tableContentType === "tokenwise_inflows" && (
       <TokenwiseInflows5 selectedRows={selectedRows} />     
     )} */}
-    {tableContentType === "tokenwise_inflows" && (
+    {/* {tableContentType === "tokenwise_inflows" && (
       <TokenwiseInflows6 selectedRows={selectedRows} />     
+    )} */}
+    {tableContentType === "tokenwise_inflows" && (
+      <OneHourTrxTable selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "threeHoursTrxs" && (
+      <ThreHoursTrxs selectedRows={selectedRows} />     
+    )}
+    {tableContentType === "twentyFourHoursTrxs" && (
+      <ThreHoursTrxs selectedRows={selectedRows} />     
     )}
     </div>
   );
