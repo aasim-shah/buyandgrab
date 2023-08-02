@@ -36,7 +36,7 @@ function OneHourTrxTable({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs`)
             // let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
             const dd = response.data
             const myArray = [];
