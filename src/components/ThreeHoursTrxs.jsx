@@ -18,6 +18,7 @@ function ThreHoursTrxs({ selectedRows }) {
     const [fetch1H, setFetch1H] = useState(false)
     const [fetch3H, setFetch3H] = useState(false)
     const [fetch24H, setFetch24H] = useState(false)
+    const [isLoading, setisLoading] = useState(true)
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -34,22 +35,24 @@ function ThreHoursTrxs({ selectedRows }) {
 
 
     const fetchData = async () => {
+        setisLoading(true)
         try {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs?timeframe=720`)
-            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=720`)
+            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=720 `)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
                 myArray.push(dd[key]);
             }
             const flatArray = myArray.flat()
-            // console.log(flatArray)
+            // console.log(flatArray)   
             console.log(typeof myArray)
             setData(flatArray)
 
             setSortedData(flatArray)
             setRawData(response.data)
-        } catch (error) { console.log(`Error ${error}`) }
+            setisLoading(false)
+        } catch (error) {setisLoading(false) }
 
     }
 
@@ -182,14 +185,7 @@ function ThreHoursTrxs({ selectedRows }) {
     }
 
     useEffect(() => {
-        const timerId = setTimeout(() => {
-            // Place the code you want to run after 10 seconds here
-            //   console.log('useEffect ran after 10 seconds');
-            fetchData()
-        }, 1000 * 60); // 10000 milliseconds = 10 seconds
-
-        // Clean up the timer when the component unmounts or when the effect is re-run
-        return () => clearTimeout(timerId);
+       fetchData()
     }, []);
 
 
@@ -258,14 +254,13 @@ function ThreHoursTrxs({ selectedRows }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedData ? sortedData.map((item, index) => (
-                     item.oneHourValue &&    (
+                    {sortedData ? sortedData.slice().sort((a, b) => a.block_height - b.block_height).map((item, index) => (
+                     item.oneHourValue &&  item.oneHourValue > 0 ? (
 
                             <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                                 <td className="px-4 py-2 text-center ">
                                     <Link to={`/tables/token_holders`} className="flex flex-row  items-center">
-                                        {/* <img src={`${item.log_events && item.log_events[0]?.sender_logo_url}`} alt="" className='h-8 w-8 mr-3' /> */}
-
+                                      
                                         <img src={`https://logos.covalenthq.com/tokens/${item.to_address}.png`} alt="" className='h-8 w-8 mr-3' />
 
                                     </Link>
@@ -281,7 +276,7 @@ function ThreHoursTrxs({ selectedRows }) {
                                 </td>
 
                             </tr>
-                        ))) : (
+                        ) : null)) : (
                         <tr>
                             <td ></td>
                             <td className='w-full block  my-20 text-center' colSpan={12}><RiseLoader color="green"  size={25}/></td>

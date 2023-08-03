@@ -14,6 +14,8 @@ function TwentyFourHoursTrxs({ selectedRows }) {
     console.log({ selectedRows })
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
+    const [isLoading, setisLoading] = useState(true)
+
     const [rawData, setRawData] = useState(null);
     const [fetch1H, setFetch1H] = useState(false)
     const [fetch3H, setFetch3H] = useState(false)
@@ -34,22 +36,24 @@ function TwentyFourHoursTrxs({ selectedRows }) {
 
 
     const fetchData = async () => {
+        setisLoading(true)
         try {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs?timeframe=5760`)
-            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=5760`)
+            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=5760 `)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
                 myArray.push(dd[key]);
             }
             const flatArray = myArray.flat()
-            // console.log(flatArray)
+            // console.log(flatArray)   
             console.log(typeof myArray)
             setData(flatArray)
 
             setSortedData(flatArray)
             setRawData(response.data)
-        } catch (error) { console.log(`Error ${error}`) }
+            setisLoading(false)
+        } catch (error) {setisLoading(false) }
 
     }
 
@@ -182,14 +186,7 @@ function TwentyFourHoursTrxs({ selectedRows }) {
     }
 
     useEffect(() => {
-        const timerId = setTimeout(() => {
-            // Place the code you want to run after 10 seconds here
-            //   console.log('useEffect ran after 10 seconds');
-            fetchData()
-        }, 1000 * 60); // 10000 milliseconds = 10 seconds
-
-        // Clean up the timer when the component unmounts or when the effect is re-run
-        return () => clearTimeout(timerId);
+      fetchData()
     }, []);
 
 
@@ -198,6 +195,8 @@ function TwentyFourHoursTrxs({ selectedRows }) {
     // useEffect(() => {
     //     fetchData()
     // }, [selectedRows])
+
+
 
     console.log({ sortedData })
     return (
@@ -259,7 +258,7 @@ function TwentyFourHoursTrxs({ selectedRows }) {
                 </thead>
                 <tbody>
                     {sortedData ? sortedData.map((item, index) => (
-                     item.oneHourValue &&    (
+                      item.oneHourValue &&  item.oneHourValue > 0 ?  (
 
                             <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                                 <td className="px-4 py-2 text-center ">
@@ -281,7 +280,7 @@ function TwentyFourHoursTrxs({ selectedRows }) {
                                 </td>
 
                             </tr>
-                        ))) : (
+                        ): null)) : (
                         <tr>
                             <td ></td>
                             <td className='w-full block  my-20 text-center' colSpan={12}><RiseLoader color="green"  size={25}/></td>
