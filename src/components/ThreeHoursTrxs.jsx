@@ -6,6 +6,7 @@ import ChartComponent from './ChartComponent';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
+import { RiseLoader } from 'react-spinners';
 
 
 
@@ -25,9 +26,7 @@ function ThreHoursTrxs({ selectedRows }) {
 
     const [sortOrders, setSortOrders] = useState({
         sender_name: 'asc',
-        value: 'asc',
-        value_1h: 'asc',
-        pretty_value_quote: 'asc',
+        oneHourValue : 'asc'
 
     });
     const [filterBy, setFilterBy] = useState("")
@@ -36,23 +35,25 @@ function ThreHoursTrxs({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs`)
-            // let response = await axios.get(`https://appslk-second.onrender.com/fetch/tokenwise_inflows`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs?timeframe=720`)
+            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=720`)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
                 myArray.push(dd[key]);
             }
-            console.log(myArray)
+            const flatArray = myArray.flat()
+            // console.log(flatArray)
             console.log(typeof myArray)
-            setData(response.data)
+            setData(flatArray)
 
-            setSortedData(response.data)
+            setSortedData(flatArray)
             setRawData(response.data)
         } catch (error) { console.log(`Error ${error}`) }
 
     }
 
+    
 
 
 
@@ -68,9 +69,9 @@ function ThreHoursTrxs({ selectedRows }) {
             let valueA;
             let valueB;
             console.log({ field })
-            if (field === "value_1h") {
-                valueA = a.log_events[0].decoded?.params[2]?.value;
-                valueB = b.log_events[0].decoded?.params[2]?.value;
+            if (field === "oneHourValue") {
+                valueA = a.oneHourValue
+                valueB = b.oneHourValue
             }
 
             if (valueA === undefined && field === "pretty_value_quote") {
@@ -78,9 +79,9 @@ function ThreHoursTrxs({ selectedRows }) {
                 valueB = b.data[0][field]
             }
 
-            if (valueA === undefined && field === "sender_name") {
-                valueA = a.log_events[0][field]
-                valueB = b.log_events[0][field]
+            if (valueA === undefined && field === "sender_name" && a.log_events && b.log_events) {
+                valueA = a.log_events && a.log_events[0]?.field
+                valueB = b.log_events && b.log_events[0]?.field
             }
 
 
@@ -201,20 +202,20 @@ function ThreHoursTrxs({ selectedRows }) {
     console.log({ sortedData })
     return (
         <div className="w-11/12 mx-auto rounded-md overflow-x-scroll bg-gray-50 p-1">
-            <div className="flex justify-between items-center gap-3 px-8 my-8">
-                <div className="">
+            <div className="flex justify-end items-center gap-3 px-5 my-4">
+                {/* <div className="">
                     <p className="font-bold">
-                        Total  Three Hours Tranasctions Amount
+                        Total One Hour Tranasctions Amount
                     </p>
                     <p className="text-gray-500 max-w-[13rem] overflowX-scroll">
                         =  {sortedData?.totalSum.toLocaleString()}
                     </p>
 
-                </div>
+                </div> */}
                 <div className="flex flex-row gap-3">
                     <Link to={"/tables/tokenwise_inflows"} className='py-1 hover:bg-gray-200 px-3 rounded-md border-gray-400  border-2'>One Hour</Link>
-                    <Link to={"/tables/threeHoursTrxs"} className='py-1 hover:bg-gray-200 px-3 rounded-md border-gray-400  border-2'>Three Hour</Link>
-                    <Link to={"/tables/twentyFourHoursTrxs"} className='py-1 hover  :bg-gray-200 px-3 rounded-md border-gray-400  border-2'>TwentyFour Hour</Link>
+                    <Link to={"/tables/threeHoursTrxs"} className='py-1 hover:bg-gray-200 px-3 rounded-md border-gray-400  border-2'>Three Hours</Link>
+                    <Link to={"/tables/twentyFourHoursTrxs"} className='py-1 hover:bg-gray-200 px-3 rounded-md border-gray-400  border-2'>TwentyFour Hours</Link>
                 </div>
             </div>
             <table className="table table-auto   w-full  text-black text-sm font-semibold">
@@ -242,14 +243,14 @@ function ThreHoursTrxs({ selectedRows }) {
                                     <AiFillCaretUp />
                                 )}</div>
                         </th>
-                        <th className="px-4 py-2" onClick={() => handleSort1H('value_1h')}>
+                        <th className="px-4 py-2" onClick={() => handleSort1H('oneHourValue')}>
                             <div className="flex flex-row  gap-2  items-center">
 
                                 3 Hour
-                                {filterBy === "value_1h" && sortOrders.value_1h === 'asc' &&
+                                {filterBy === "oneHourValue" && sortOrders.oneHourValue === 'asc' &&
                                     <AiFillCaretDown />
                                 }
-                                {filterBy === "value_1h" && sortOrders.value_1h === 'desc' && (
+                                {filterBy === "oneHourValue" && sortOrders.oneHourValue === 'desc' && (
                                     <AiFillCaretUp />
                                 )}
                             </div>
@@ -257,8 +258,8 @@ function ThreHoursTrxs({ selectedRows }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedData?.totalSum ? sortedData.totalVAlues.map((item, index) => (
-                        (
+                    {sortedData ? sortedData.map((item, index) => (
+                     item.oneHourValue &&    (
 
                             <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                                 <td className="px-4 py-2 text-center ">
@@ -282,7 +283,9 @@ function ThreHoursTrxs({ selectedRows }) {
                             </tr>
                         ))) : (
                         <tr>
-                            <td colSpan="12" className='text-center  py-12  font-bold  text-gray-400'>Loading...</td>
+                            <td ></td>
+                            <td className='w-full block  my-20 text-center' colSpan={12}><RiseLoader color="green"  size={25}/></td>
+                            <td></td>
                         </tr>
                     )}
                 </tbody>

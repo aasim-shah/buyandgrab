@@ -6,14 +6,11 @@ import ChartComponent from './ChartComponent';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
-
-
 import { RiseLoader } from 'react-spinners';
 
 
 
-
-function OneHourTrxTable({ selectedRows }) {
+function TwentyFourHoursTrxs({ selectedRows }) {
     console.log({ selectedRows })
     const [data, setData] = useState(null)
     const [sortedData, setSortedData] = useState(null);
@@ -29,9 +26,7 @@ function OneHourTrxTable({ selectedRows }) {
 
     const [sortOrders, setSortOrders] = useState({
         sender_name: 'asc',
-        value: 'asc',
-        value_1h: 'asc',
-        pretty_value_quote: 'asc',
+        oneHourValue : 'asc'
 
     });
     const [filterBy, setFilterBy] = useState("")
@@ -40,8 +35,8 @@ function OneHourTrxTable({ selectedRows }) {
 
     const fetchData = async () => {
         try {
-            let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs?timeframe=240`)
-            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=600`)
+            let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs?timeframe=5760`)
+            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=5760`)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
@@ -74,9 +69,9 @@ function OneHourTrxTable({ selectedRows }) {
             let valueA;
             let valueB;
             console.log({ field })
-            if (field === "value_1h") {
-                valueA = a.log_events[0].decoded?.params[2]?.value;
-                valueB = b.log_events[0].decoded?.params[2]?.value;
+            if (field === "oneHourValue") {
+                valueA = a.oneHourValue
+                valueB = b.oneHourValue
             }
 
             if (valueA === undefined && field === "pretty_value_quote") {
@@ -84,9 +79,9 @@ function OneHourTrxTable({ selectedRows }) {
                 valueB = b.data[0][field]
             }
 
-            if (valueA === undefined && field === "sender_name") {
-                valueA = a.log_events[0][field]
-                valueB = b.log_events[0][field]
+            if (valueA === undefined && field === "sender_name" && a.log_events && b.log_events) {
+                valueA = a.log_events && a.log_events[0]?.field
+                valueB = b.log_events && b.log_events[0]?.field
             }
 
 
@@ -248,14 +243,14 @@ function OneHourTrxTable({ selectedRows }) {
                                     <AiFillCaretUp />
                                 )}</div>
                         </th>
-                        <th className="px-4 py-2" onClick={() => handleSort1H('value_1h')}>
+                        <th className="px-4 py-2" onClick={() => handleSort1H('oneHourValue')}>
                             <div className="flex flex-row  gap-2  items-center">
 
-                                1 Hour
-                                {filterBy === "value_1h" && sortOrders.value_1h === 'asc' &&
+                                24 Hour
+                                {filterBy === "oneHourValue" && sortOrders.oneHourValue === 'asc' &&
                                     <AiFillCaretDown />
                                 }
-                                {filterBy === "value_1h" && sortOrders.value_1h === 'desc' && (
+                                {filterBy === "oneHourValue" && sortOrders.oneHourValue === 'desc' && (
                                     <AiFillCaretUp />
                                 )}
                             </div>
@@ -264,7 +259,7 @@ function OneHourTrxTable({ selectedRows }) {
                 </thead>
                 <tbody>
                     {sortedData ? sortedData.map((item, index) => (
-                     item.oneHourValue &&   (
+                     item.oneHourValue &&    (
 
                             <tr key={index} className={` py-3 ${index % 2 === 0 && "bg-gray-100"}`}>
                                 <td className="px-4 py-2 text-center ">
@@ -288,7 +283,7 @@ function OneHourTrxTable({ selectedRows }) {
                             </tr>
                         ))) : (
                         <tr>
-                             <td ></td>
+                            <td ></td>
                             <td className='w-full block  my-20 text-center' colSpan={12}><RiseLoader color="green"  size={25}/></td>
                             <td></td>
                         </tr>
@@ -299,4 +294,4 @@ function OneHourTrxTable({ selectedRows }) {
     )
 }
 
-export default OneHourTrxTable
+export default TwentyFourHoursTrxs

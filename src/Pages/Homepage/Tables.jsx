@@ -16,6 +16,7 @@ import TokenwiseInflows5 from '../../components/TokenwiseInflows5';
 import TokenwiseInflows6 from '../../components/TokenwiseInflows6';
 import OneHourTrxTable from '../../components/OneHourTrxTable';
 import ThreHoursTrxs from '../../components/ThreeHoursTrxs';
+import TwentyFourHoursTrxs from '../../components/TwentyFourHoursTrxs';
 // import OneHourTrxTable from '../../components/OneHourTrxTable';
 
 function Tables() {
@@ -132,7 +133,7 @@ function Tables() {
       <ThreHoursTrxs selectedRows={selectedRows} />     
     )}
     {tableContentType === "twentyFourHoursTrxs" && (
-      <ThreHoursTrxs selectedRows={selectedRows} />     
+      <TwentyFourHoursTrxs selectedRows={selectedRows} />     
     )}
     </div>
   );
