@@ -41,7 +41,7 @@ function OneHourTrxTable({ selectedRows }) {
     const fetchData = async () => {
         try {
             let response = await axios.get(`https://appslk-second.onrender.com/fetch/getOneHourTrxs?timeframe=240`)
-            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=600`)
+            // let response = await axios.get(`http://localhost:8000/fetch/getOneHourTrxs?timeframe=240`)
             const dd = response.data
             const myArray = [];
             for (const key in dd) {
